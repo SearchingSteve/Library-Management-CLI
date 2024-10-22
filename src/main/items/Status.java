@@ -1,5 +1,7 @@
 package main.items;
 
-public class Status {
-    
+public enum Status {
+    AVAILABLE,
+    CHECKED_OUT,
+    OVERDUE,
 }

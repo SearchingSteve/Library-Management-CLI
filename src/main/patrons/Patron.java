@@ -1,5 +1,5 @@
 package main.patrons;
 
-public class Patron {
+public abstract class Patron {
     
 }
