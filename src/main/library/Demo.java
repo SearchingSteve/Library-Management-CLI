@@ -1,5 +1,5 @@
 package main.library;
 
-public class Library {
+public class Demo {
     
 }
