@@ -2,12 +2,40 @@ package main.items;
 
 // Periodical class is a subclass of LibraryItem
 public class Periodical extends LibraryItem {
+    // ASSIGN ATTRIBUTE
     private String periodicalType;
 
-    // Constructor
-    public Periodical(String title, String ISBN, String publisher, int availableCopies, Status status,
+    // CONSTRUCTOR
+    public Periodical(int itemID, String title, Author author,  String ISBN, String publisher, int availableCopies, Status status,
             String periodicalType) {
-        super(title, ISBN, publisher, availableCopies, status);
+        super(itemID, title, author, ISBN, publisher, availableCopies, status);
         this.periodicalType = periodicalType;
     }
+
+    // GETTER AND SETTER 
+
+    public String getPeriodicalType(){
+        return periodicalType;
+    }
+
+    public void setPeriodicalType(String periodicalType){
+        this.periodicalType = periodicalType;
+    }
+
+
+    // DISPLAY PERIODICAL DETAILS
+
+    @Override 
+    public String toString(){
+        return "Periodical{ " + 
+        "title= " + getTitle() +
+        "author= " +  getAuthor().getName() +
+        ", ISBN= " + getISBN() + 
+        ", publisher= " + getPublisher() +
+        ", available copies= " + getAvailableCopies() + 
+        ", status= " + getStatus() + 
+        ", periodical type= " + getPeriodicalType() +
+        "}";
+    }
+
 }
