@@ -3,6 +3,7 @@ package main.authors;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import main.items.LibraryItem;
 public class Author {
     // ASSIGN ATTRIBUTES
     private String author_name;
@@ -28,6 +29,10 @@ public class Author {
 
     public void setDOB(Date DOB){
         this.DOB = DOB;
+    }
+
+    public String getName(){
+        return author_name;
     }
 
     public List<LibraryItem> getListOfItems(){
