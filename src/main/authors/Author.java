@@ -3,11 +3,16 @@ package main.authors;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import main.items.LibraryItem;
 public class Author {
     // ASSIGN ATTRIBUTES
     private String author_name;
     private Date DOB;
     private List<LibraryItem> listOfItems;
+
+    // create static list so authors are kept track of
+    // memory/ database is simulated for methods that manage author info
+    private static List<Author> authorList = new ArrayList<>();
 
     // CONSTRUCTOR
     public Author(String author_name, Date DOB){
@@ -30,6 +35,10 @@ public class Author {
         this.DOB = DOB;
     }
 
+    public String getName(){
+        return author_name;
+    }
+
     public List<LibraryItem> getListOfItems(){
         return listOfItems;
     }
@@ -39,19 +48,38 @@ public class Author {
     // becuase the system is not connected to a memory or database, the 
     // author managment methods simulate information being updated by
     // printing success messages 
-    public void newAuthor(){
-        System.out.println("Author " + author_name + "added successfully!");
+    public static boolean newAuthor(Author author){
+        if (!authorList.contains(author)){
+            authorList.add(author);
+            System.out.println("Author " + author.getName() + "added successfully!");
+            return true;
+        }System.out.println("Author " + author.getName() + "is already in the system.");
+        return false;
     }
 
-    public void editAuthor(String newName, Date newDOB){
-        this.author_name = newName;
-        this.DOB = newDOB;
+    public static boolean editAuthor(String oldName, String newName, Date newDOB){
+        for(Author author : authorList){
+            if (author.getName().equals(oldName)){
+                author.setName(newName);
+                author.setDOB(newDOB);
+                System.out.println("Author " + newName + "information updated!");
+                return true;
+            }
+        }
         
-        System.out.println("Author " + newName + "information updated!");
+        System.out.println("Author " + newName + "is not currently in the system. cannot edit.");
+        return false;
     }
 
-    public void removeAuthor(){
-        System.out.println("Author " + author_name + "deleted successfully!");
+    public static boolean removeAuthor(String authorName){
+        for(Author author : authorList){
+            if(author.getName().equals(authorName)){
+                authorList.remove(author);
+                System.out.println("Author " + authorName + "deleted successfully!");
+                return true;
+            }
+        }System.out.println("Author" + authorName + "is not currently in the system. cannot be deleted.");
+        return false;
     }
 
     // addLibraryItem and removeLibraryItem manage library items associated
