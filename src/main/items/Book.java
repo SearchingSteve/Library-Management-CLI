@@ -1,7 +1,8 @@
 package main.items;
 
 // IMPORT STATUS ENUM
-import main.items.Status;
+
+import main.authors.Author;
 
 // Book class is a subclass of LibraryItem
 public class Book extends LibraryItem {
@@ -10,8 +11,8 @@ public class Book extends LibraryItem {
 
     
     // CONSTRUCTOR
-    public Book(String title, String ISBN, Author author, String publisher, int availableCopies, Status status, String bookType) {
-        super(title, ISBN, author, publisher, availableCopies, status);
+    public Book(int itemID, String title, String ISBN, Author author, String publisher, int availableCopies, Status status, String bookType) {
+        super(itemID, title, author, ISBN, publisher, availableCopies, status);
         this.bookType = bookType;
     }
 
@@ -25,7 +26,13 @@ public class Book extends LibraryItem {
         this.bookType = bookType;
     }
 
+    @Override
+    public String getType(){
+        return "book";
+    }
+
     // DISPLAY BOOK INFORMATION
+    @Override
     public String toString(){
         return "Book Information{ " + 
         "title= " + getTitle() +
