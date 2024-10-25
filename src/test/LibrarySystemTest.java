@@ -17,7 +17,7 @@ public class LibrarySystemTest {
 
     // Test adding a new item to the library
 
-    // Test editiing an item in the library
+    // Test editing an item in the library
 
     // Test removing an item from the library
     
