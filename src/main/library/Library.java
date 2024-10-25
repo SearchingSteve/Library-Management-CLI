@@ -13,14 +13,14 @@ import main.patrons.Patron;
 
 // Main class for the library
 public class Library {
-    private Map<String, LibraryItem> itemMap; // String = itemID
-    private Map<String, Patron> patronMap; // String = patronID
+    private static HashMap<String, LibraryItem> itemMap = new HashMap<>(); // String = itemID
+    private static HashMap<String, Patron> patronMap = new HashMap<>(); // String = patronID
 
-    // Constructor
-    public Library(){
-        this.itemMap = new HashMap<>();
-        this.patronMap = new HashMap<>();
-    }
+    // // Constructor
+    // public Library(){
+    //     this.itemMap = new HashMap<>();
+    //     this.patronMap = new HashMap<>();
+    // }
 
     
     public List<LibraryItem> searchByTitle(String title) {
