@@ -101,8 +101,7 @@ public abstract class LibraryItem {
     // public abstract String getItemType(); // if using same method name getItemType() in book/periodicals wiht @override
     
     //else if using different method names in book/periodicals, we can use the following:
-    public abstract String getBookType();
-    public abstract String getPeriodicalType();
+    public abstract String getType();
 
     // No setItemType() method here as we don't want to change the type of an item once it's created
     
