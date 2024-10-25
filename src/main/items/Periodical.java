@@ -1,6 +1,8 @@
 package main.items;
 import main.authors.Author;
 
+import main.authors.Author;
+
 // Periodical class is a subclass of LibraryItem
 public class Periodical extends LibraryItem {
     // ASSIGN ATTRIBUTE
@@ -26,6 +28,11 @@ public class Periodical extends LibraryItem {
     @Override
     public String getItemType() {
         return "Periodical";
+    }
+
+     @Override
+    public String getType(){
+        return "periodical";
     }
 
 

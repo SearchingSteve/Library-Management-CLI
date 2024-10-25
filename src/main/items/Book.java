@@ -9,6 +9,7 @@ public class Book extends LibraryItem {
 
     
     // CONSTRUCTOR
+
     public Book(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies, Status status, String bookType) {
         super(itemID, title, author, ISBN, publisher, availableCopies, status);
         this.bookType = bookType;
@@ -23,6 +24,7 @@ public class Book extends LibraryItem {
         super.setAuthor(author);
     }
 
+
     public String getBookType(){
         return bookType;
     }
@@ -34,17 +36,18 @@ public class Book extends LibraryItem {
     @Override
     public String getItemType() {
         return "Book";
+
     }
 
     // DISPLAY BOOK INFORMATION
+    @Override
     public String toString(){
         return "Book Information{ " + 
         "title= " + getTitle() +
          ", ISBN= " + getISBN() + 
+         ", author= " + getAuthor().getName() + 
          ", publisher= " + getPublisher() + 
          ", available copies= " + getAvailableCopies() + 
-         ", status= " + getStatus() + 
-         ", author= " + getAuthor() + 
          ", book type= " + getBookType() + 
          "}";
     }
