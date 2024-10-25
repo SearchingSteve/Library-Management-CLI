@@ -105,6 +105,9 @@ public class LibraryMenu {
                         libraryItem = new Periodical(itemID, title, author, ISBN, publisher, availableCopies, Status.AVAILABLE,
                                 periodicalType);
                     }
+
+                    // Append to library item map
+                    
                     break;
 
                 case 2:

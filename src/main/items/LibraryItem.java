@@ -21,7 +21,7 @@ public abstract class LibraryItem {
         this.itemID = itemID;
         this.title = title;
         this.author = author;
-         this.ISBN = ISBN;
+        this.ISBN = ISBN;
         this.publisher = publisher;
         this.availableCopies = availableCopies;
         this.status = status;
