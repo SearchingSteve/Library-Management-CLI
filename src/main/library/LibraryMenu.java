@@ -9,8 +9,12 @@
 
 package main.library;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
 import java.util.Scanner;
 
+import main.authors.Author;
 import main.items.Book;
 import main.items.LibraryItem;
 import main.items.Periodical;
@@ -34,43 +38,75 @@ public class LibraryMenu {
             choice = scanner.nextInt();
 
             switch (choice) {
+                // Add a library item
                 case 1:
                     System.out.println("Adding a new library item...");
-                    // Add logic to add a library item
                     System.out.println("Enter the type of Library item?: ");
                     String itemType = scanner.nextLine();
-
+                    System.out.print("Enter item ID: ");
+                    String itemID = scanner.nextLine();
                     System.out.print("Enter Title: ");
                     String title = scanner.nextLine();
+
+                    System.out.print("Enter author name: ");
+                    String authorName = scanner.nextLine();
+                    System.out.print("Enter author Date of Birth (YYYY-MM-DD): ");
+                    String authorDOBString = scanner.nextLine();
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date authorDOB = null;
+                    try {
+                        authorDOB = dateFormat.parse(authorDOBString);
+                    } catch (ParseException e) {
+                        System.out.println("Invalid date format. Please enter a date in the format YYYY-MM-DD.");
+                        break;
+                    }
+                    Author author = new Author(authorName, authorDOB);
+
                     System.out.print("Enter ISBN: ");
                     String ISBN = scanner.nextLine();
                     System.out.print("Enter publisher: ");
                     String publisher = scanner.nextLine();
-                    System.out.print("Enter total copies: ");
-                    int totalCopies = scanner.nextInt();
+                    System.out.print("Enter total copies in the system: ");
+                    int totalCopies;
+                    do {
+                        totalCopies = scanner.nextInt();
+                        if (totalCopies < 0) {
+                            System.out.println("Total copies cannot be negative. Please enter a valid number.");
+                        }
+                    } while (totalCopies < 0);
+                    
                     System.out.print("Enter available copies: ");
-                    int availableCopies = scanner.nextInt();
+                    int availableCopies;
+                    do {
+                        availableCopies = scanner.nextInt();
+                        if (availableCopies < 0) {
+                            System.out.println("Available copies cannot be negative. Please enter a valid number.");
+                        } else if (availableCopies > totalCopies) {
+                            System.out.println("Available copies cannot exceed total copies. Please enter a valid number.");
+                        }
+                    } while (availableCopies < 0 || availableCopies > totalCopies);
+                    
                     scanner.nextLine();
                     LibraryItem libraryItem;
 
                     // Assume function to add book to inventory
                     if (itemType.equalsIgnoreCase("Book")) {
-                        System.out.print("Enter author: ");
-                        String author = scanner.nextLine();
                         System.out.print("Enter book type (e.g. Print, Electronic, Audio): ");
                         String bookType = scanner.nextLine();
-                        libraryItem = new Book(title, ISBN, publisher, availableCopies, Status.AVAILABLE,
-                                author, bookType);
+                        libraryItem = new Book(itemID, title, author, ISBN, publisher, availableCopies, Status.AVAILABLE,
+                                bookType);
                     }
                     
                     // Assume function to add periodical to inventory
                     else if (itemType.equalsIgnoreCase("Periodical")) {
                         System.out.print("Enter periodical type (e.g. Print, Electronic): ");
                         String periodicalType = scanner.nextLine();
-                        libraryItem = new Periodical(title, ISBN, publisher, availableCopies, Status.AVAILABLE,
+                        libraryItem = new Periodical(itemID, title, author, ISBN, publisher, availableCopies, Status.AVAILABLE,
                                 periodicalType);
                     }
                     break;
+
                 case 2:
                     System.out.println("Editing an existing library item...");
                     // Add logic to edit a library item
