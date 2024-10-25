@@ -1,7 +1,6 @@
 package main.items;
 import main.authors.Author;
 
-import main.authors.Author;
 
 // Periodical class is a subclass of LibraryItem
 public class Periodical extends LibraryItem {
@@ -30,10 +29,6 @@ public class Periodical extends LibraryItem {
         return "Periodical";
     }
 
-     @Override
-    public String getType(){
-        return "periodical";
-    }
 
 
     // DISPLAY PERIODICAL DETAILS

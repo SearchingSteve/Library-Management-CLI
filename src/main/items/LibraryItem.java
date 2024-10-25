@@ -89,8 +89,6 @@ public abstract class LibraryItem {
     // Abstract method for returning type of item. (will need same method naming and override in book/periodical subclasses - getItemType())
     public abstract String getItemType(); // if using same method name getItemType() in book/periodicals wiht @override
     
-    public abstract String getBookType();
-    public abstract String getPeriodicalType();
 
     // No setItemType() method here as we don't want to change the type of an item once it's created
 
