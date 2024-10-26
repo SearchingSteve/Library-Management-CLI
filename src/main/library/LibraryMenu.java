@@ -138,44 +138,62 @@ public class LibraryMenu {
                     // display all current details to user including prompts to edit information.
 
                     //edit title
-                    System.out.println("Enter new title: ");
+
+                    System.out.println("Enter new title (leave blank and hit enter to keep unchanged.): ");
                     String newTitle = scanner.nextLine();
-                    itemToEdit.setTitle(newTitle);
+                
+                    if(!newTitle.isEmpty()){
+                        itemToEdit.setTitle(newTitle);
+                    }
 
                     // edit author info
                     System.out.println("Current Author: " + itemToEdit.getAuthor().getName());
-                    System.out.println("Enter new author: ");
+                    System.out.println("Enter new author (leave blank and hit enter to keep unchanged.): ");
                     String newAuthorName = scanner.nextLine();
+                    if(!newAuthorName.isEmpty()){
+                        System.out.println("Enter Author's date of birth (yyyy-mm-dd): ");
+                        String newAuthorDOBString = scanner.nextLine();
                     
-                    System.out.println("Enter Author's date of birth (yyyy-mm-dd): ");
-                    String newAuthorDOBString = scanner.nextLine();
 
-                    SimpleDateFormat menuDateFormat = new SimpleDateFormat("yyyy-mm-dd");
-                    Date newAuthorDOB;
-                    try{
-                        newAuthorDOB = menuDateFormat.parse(newAuthorDOBString);
-                    }catch(ParseException e){
-                        System.out.println("Please enter date in the format yyyy-mm-dd");
-                        break;
+                        Date newAuthorDOB;
+                        try{
+                            SimpleDateFormat Case2DateFormat = new SimpleDateFormat("yyyy-mm-dd");
+                            Case2DateFormat.setLenient(false);
+                            newAuthorDOB = Case2DateFormat.parse(newAuthorDOBString);
+
+                            itemToEdit.setAuthor(new Author(newAuthorName, newAuthorDOB));
+                        }catch(ParseException e){
+                            System.out.println("Please enter date in the format yyyy-mm-dd");
+                            break;
+                        }
                     }
 
-                    Author newAuthor = new Author(newAuthorName, newAuthorDOB);
-                    itemToEdit.setAuthor(newAuthor);
-
                     // edit isbn
-                    System.out.println("Eneter new ISBN: ");
+                    System.out.println("Enter new ISBN (leave blank and hit enter to keep unchanged.): ");
                     String newISBN = scanner.nextLine();
-                    itemToEdit.setISBN(newISBN);
+                    
+                    if(!newISBN.isEmpty()){
+                        itemToEdit.setISBN(newISBN);
+                    }
 
                     // edit publisher
-                    System.out.println("Enter new publisher: ");
+                    System.out.println("Enter new publisher (leave blank and hit enter to keep unchanged.): ");
                     String newPublisher = scanner.nextLine();
-                    itemToEdit.setPublisher(newPublisher);
+
+                    if(!newPublisher.isEmpty()){
+                        itemToEdit.setPublisher(newPublisher);
+                    }
+
 
                     // edit available copies
-                    System.out.println("Enter new availale copies: ");
-                    int newAvailableCopies = scanner.nextInt();
-                    itemToEdit.setAvailableCopies(newAvailableCopies);
+                    System.out.println("Enter new availale copies (leave blank and hit enter to keep unchanged.): ");
+                    String newAvailableCopies = scanner.nextLine();
+
+                    if(!newAvailableCopies.isEmpty()){
+                        int newAvailableCopiesInt = Integer.parseInt(newAvailableCopies);
+                        itemToEdit.setAvailableCopies(newAvailableCopiesInt);
+                    }
+                    
 
                     // print success message
                     System.out.println("Item Edited Successfully!");
