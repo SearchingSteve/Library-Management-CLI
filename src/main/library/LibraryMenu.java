@@ -139,6 +139,7 @@ public class LibraryMenu {
 
                     //edit title
 
+                    System.out.println("Current Title: " + itemToEdit.getTitle());
                     System.out.println("Enter new title (leave blank and hit enter to keep unchanged.): ");
                     String newTitle = scanner.nextLine();
                 
@@ -169,6 +170,7 @@ public class LibraryMenu {
                     }
 
                     // edit isbn
+                    System.out.println("Current ISBN: " + itemToEdit.getISBN());
                     System.out.println("Enter new ISBN (leave blank and hit enter to keep unchanged.): ");
                     String newISBN = scanner.nextLine();
                     
@@ -177,6 +179,7 @@ public class LibraryMenu {
                     }
 
                     // edit publisher
+                    System.out.println("Current Publisher: " + itemToEdit.getPublisher());
                     System.out.println("Enter new publisher (leave blank and hit enter to keep unchanged.): ");
                     String newPublisher = scanner.nextLine();
 
@@ -186,6 +189,7 @@ public class LibraryMenu {
 
 
                     // edit available copies
+                    System.out.println("Current Available Copies: " + itemToEdit.getAvailableCopies());
                     System.out.println("Enter new availale copies (leave blank and hit enter to keep unchanged.): ");
                     String newAvailableCopies = scanner.nextLine();
 
