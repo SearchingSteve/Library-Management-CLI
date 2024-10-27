@@ -3,6 +3,8 @@ package main.patrons;
 import main.items.LibraryItem;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Patron {
     // Initialize instance variables for the Patron class
@@ -10,7 +12,8 @@ public abstract class Patron {
     private String name;
     private String address;
     private String phoneNumber;
-    private List<LibraryItem> borrowedLibraryItems;
+    // private List<LibraryItem> borrowedLibraryItems;
+    private Map<String, Integer> borrowedLibraryItems; // String == itemID, Integer = quantity
 
     // Constructor for the Patron class
     public Patron(String id, String name, String address, String phoneNumber) {
@@ -18,7 +21,7 @@ public abstract class Patron {
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.borrowedLibraryItems = new ArrayList<>();
+        this.borrowedLibraryItems = new HashMap<>();
     }
 
     // Basic getters for instance variables of the Patron class
@@ -38,7 +41,7 @@ public abstract class Patron {
         return this.phoneNumber;
     }
 
-    public List<LibraryItem> getBorrowedLibraryItems() {
+    public Map<String, Integer> getBorrowedLibraryItems() {
         return this.borrowedLibraryItems;
     }
 
@@ -60,13 +63,19 @@ public abstract class Patron {
     }
 
     // Methods to add and return borrowed items from the Patron's list
-    public void addBorrowedItems(LibraryItem libraryItem) {
-        this.borrowedLibraryItems.add(libraryItem);
+    public void addBorrowedItems(String itemID, int quantity) {
+        this.borrowedLibraryItems.put(itemID, quantity);
     }
 
-    public void returnBorrowedItems(LibraryItem libraryItem) {
-        this.borrowedLibraryItems.remove(libraryItem);
+    public void returnBorrowedItems(String itemID, int quantity) {
+        this.borrowedLibraryItems.remove(itemID, quantity);
     }
+
+    // Method to check quantity borrowed of a specific item
+public int checkQuantityBorrowed(String itemID) {
+    return this.borrowedLibraryItems.getOrDefault(itemID, 0); // Return 0 if itemID is not found
+}
+
 
     // Displays the Patron's information in a string format
     public String toString() {

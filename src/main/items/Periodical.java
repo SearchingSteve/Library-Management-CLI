@@ -10,7 +10,7 @@ public class Periodical extends LibraryItem {
     // CONSTRUCTOR
     public Periodical(String itemID, String title, Author author,  String ISBN, String publisher, int availableCopies, Status status,
             String periodicalType) {
-        super(itemID, title, author, ISBN, publisher, availableCopies, status);
+        super("P" + itemID, title, author, ISBN, publisher, availableCopies, status);
         this.periodicalType = periodicalType;
     }
 

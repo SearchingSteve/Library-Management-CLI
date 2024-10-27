@@ -11,7 +11,7 @@ public class Book extends LibraryItem {
     // CONSTRUCTOR
 
     public Book(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies, Status status, String bookType) {
-        super(itemID, title, author, ISBN, publisher, availableCopies, status);
+        super("B" +itemID, title, author, ISBN, publisher, availableCopies, status);
         this.bookType = bookType;
     }
 

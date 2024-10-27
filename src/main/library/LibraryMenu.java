@@ -14,7 +14,8 @@ import java.util.Date;
 import java.text.ParseException;
 import java.util.Scanner;
 
-import main.library.Library;
+
+import main.patrons.Patron;
 import main.authors.Author;
 import main.items.Book;
 import main.items.LibraryItem;
@@ -27,10 +28,13 @@ public class LibraryMenu {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Library library = new Library();
+        int choice = 0;
+
         library.initializeMockItems();
-        int choice =0;
+        library.initializeMockPatrons();
 
         library.displayAllItems();
+        library.displayAllPatrons();
 
         do {
             System.out.println("\nWelcome to the Library Management System");
@@ -44,13 +48,16 @@ public class LibraryMenu {
             System.out.print("Enter your choice (1-6): ");
 
             try {
-                String input = scanner.nextLine(); 
+                String input = scanner.nextLine();
                 choice = Integer.parseInt(input.trim());
 
                 switch (choice) {
                     // Add a library item
+                    // ** Error handling issues:
+                    // - If user does specify type as Book or Periodical, the program will crash. Cannot build a new item without specifying one of these type.
                     case 1:
-                    System.out.print("Adding a new library item...\nEnter the type of Library item (Book/Periodical): ");
+                        System.out.print(
+                                "Adding a new library item...\nEnter the type of Library item (Book/Periodical): ");
                         String itemType = scanner.nextLine();
                         System.out.print("Enter item ID: ");
                         String itemID = scanner.nextLine();
@@ -121,96 +128,172 @@ public class LibraryMenu {
                         library.addLibraryItem(newItem); // add new library item to library
                         break;
 
-
-                    // Edit a library item    
+                    // Edit a library item
                     case 2:
-                    System.out.print("Editing an existing library item...\nPlease enter item ID: ");
-                    String editItemID = scanner.nextLine();
+                        System.out.print("Editing an existing library item...\nPlease enter item ID: ");
+                        String editItemID = scanner.nextLine();
                         LibraryItem itemToEdit = library.getItemByID(editItemID);
 
                         if (itemToEdit == null) {
-                            System.out.println("Library item not found in system. Please retry.");
                             break;
-                        }
-                        else {
-                            System.out.println("Item found. Please enter new details for the item.");
-                        
-                        // display all current details to user including prompts to edit information.
+                        } else {
+                            System.out.println("Item found. Please enter new details for the item");
 
-                        // edit title
-                        System.out.println("Current Title: " + itemToEdit.getTitle());
-                        System.out.println("Enter new title (leave blank and hit enter to keep unchanged.): ");
-                        String newTitle = scanner.nextLine();
+                            // display all current details to user including prompts to edit information.
 
-                        if (!newTitle.isEmpty()) {
-                            itemToEdit.setTitle(newTitle);
-                        }
+                            // edit title
+                            System.out.println("Current Title: " + itemToEdit.getTitle());
+                            System.out.print("Enter new title (leave blank and hit enter to keep unchanged): ");
+                            String newTitle = scanner.nextLine();
 
-                        // edit author info
-                        System.out.println("Current Author: " + itemToEdit.getAuthor().getName());
-                        System.out.println("Enter new author (leave blank and hit enter to keep unchanged.): ");
-                        String newAuthorName = scanner.nextLine();
-
-                        if (!newAuthorName.isEmpty()) {
-                            System.out.println("Enter Author's date of birth (yyyy-mm-dd): ");
-                            String newAuthorDOBString = scanner.nextLine();
-                            Date newAuthorDOB;
-                            try {
-                                SimpleDateFormat Case2DateFormat = new SimpleDateFormat("yyyy-mm-dd");
-                                Case2DateFormat.setLenient(false);
-                                newAuthorDOB = Case2DateFormat.parse(newAuthorDOBString);
-                                itemToEdit.setAuthor(new Author(newAuthorName, newAuthorDOB));
-                            } catch (ParseException e) {
-                                System.out.println("Please enter date in the format yyyy-mm-dd");
+                            if (!newTitle.isEmpty()) {
+                                itemToEdit.setTitle(newTitle);
                             }
+
+                            // edit author info
+                            System.out.println("Current Author: " + itemToEdit.getAuthor().getName());
+                            System.out.print("Enter new author (leave blank and hit enter to keep unchanged): ");
+                            String newAuthorName = scanner.nextLine();
+
+                            if (!newAuthorName.isEmpty()) {
+                                System.out.println("Enter Author's date of birth (yyyy-mm-dd): ");
+                                String newAuthorDOBString = scanner.nextLine();
+                                Date newAuthorDOB;
+                                try {
+                                    SimpleDateFormat Case2DateFormat = new SimpleDateFormat("yyyy-mm-dd");
+                                    Case2DateFormat.setLenient(false);
+                                    newAuthorDOB = Case2DateFormat.parse(newAuthorDOBString);
+                                    itemToEdit.setAuthor(new Author(newAuthorName, newAuthorDOB));
+                                } catch (ParseException e) {
+                                    System.out.println("Please enter date in the format yyyy-mm-dd");
+                                }
+                            }
+
+                            // edit isbn
+                            System.out.println("Current ISBN: " + itemToEdit.getISBN());
+                            System.out.print("Enter new ISBN (leave blank and hit enter to keep unchanged): ");
+                            String newISBN = scanner.nextLine();
+
+                            if (!newISBN.isEmpty()) {
+                                itemToEdit.setISBN(newISBN);
+                            }
+
+                            // edit publisher
+                            System.out.println("Current Publisher: " + itemToEdit.getPublisher());
+                            System.out.print("Enter new publisher (leave blank and hit enter to keep unchanged): ");
+                            String newPublisher = scanner.nextLine();
+
+                            if (!newPublisher.isEmpty()) {
+                                itemToEdit.setPublisher(newPublisher);
+                            }
+
+                            // edit available copies
+                            System.out.println("Current Available Copies: " + itemToEdit.getAvailableCopies());
+                            System.out.print("Enter new availale copies (leave blank and hit enter to keep unchanged): ");
+                            String newAvailableCopies = scanner.nextLine();
+
+                            if (!newAvailableCopies.isEmpty()) {
+                                int newAvailableCopiesInt = Integer.parseInt(newAvailableCopies);
+                                itemToEdit.setAvailableCopies(newAvailableCopiesInt);
+                            }
+
                         }
-
-                        // edit isbn
-                        System.out.println("Current ISBN: " + itemToEdit.getISBN());
-                        System.out.println("Enter new ISBN (leave blank and hit enter to keep unchanged.): ");
-                        String newISBN = scanner.nextLine();
-
-                        if (!newISBN.isEmpty()) {
-                            itemToEdit.setISBN(newISBN);
-                        }
-
-                        // edit publisher
-                        System.out.println("Current Publisher: " + itemToEdit.getPublisher());
-                        System.out.println("Enter new publisher (leave blank and hit enter to keep unchanged.): ");
-                        String newPublisher = scanner.nextLine();
-
-                        if (!newPublisher.isEmpty()) {
-                            itemToEdit.setPublisher(newPublisher);
-                        }
-
-                        // edit available copies
-                        System.out.println("Current Available Copies: " + itemToEdit.getAvailableCopies());
-                        System.out
-                                .println("Enter new availale copies (leave blank and hit enter to keep unchanged.): ");
-                        String newAvailableCopies = scanner.nextLine();
-
-                        if (!newAvailableCopies.isEmpty()) {
-                            int newAvailableCopiesInt = Integer.parseInt(newAvailableCopies);
-                            itemToEdit.setAvailableCopies(newAvailableCopiesInt);
-                        }
-
                         // print success message
                         System.out.println("Item Edited Successfully!");
                         break;
-                    }
 
-
+                    // Delete a library item
                     case 3:
-                        System.out.println("Deleting a library item...");
-                        // Add logic to delete a library item
+                        System.out.print("Deleting an existing library item...\nPlease enter item ID: ");
+                        String deleteItemID = scanner.nextLine();
+                        library.removeLibraryItem(deleteItemID);
                         break;
+
+                        // Borrow a library item
                     case 4:
-                        System.out.println("Borrowing a library item...");
-                        // Add logic to borrow a library item
+                        System.out.print("Borrowing a library item...\nPlease enter item ID: ");
+                        String borrowItemID = scanner.nextLine();
+                        LibraryItem itemToBorrow = library.getItemByID(borrowItemID);
+                        if (itemToBorrow == null) {
+                            break; // break out of the case statement. Could replace to ask user for input again.
+                        }
+                        if (itemToBorrow.getAvailableCopies() <= 0) {
+                            System.out.println("No copies currently available for item ID: " + borrowItemID);
+                            break;
+                        }
+                        System.out.print("Please enter patron ID: ");
+                        String patronID = scanner.nextLine();
+                        Patron patron = library.getPatronByID(patronID);
+                        if (patron == null) {
+                            break; // break out of the case statement. Could replace to ask user for input again.
+                        }
+                        int amountBorrowed = 0;
+                        while (true) {
+                            System.out.print("Enter the number of copies to borrow (available copies: " + itemToBorrow.getAvailableCopies() + "): ");
+                            input = scanner.nextLine();
+                            try {
+                                amountBorrowed = Integer.parseInt(input);
+                                if (amountBorrowed <= 0) {
+                                    System.out.println("Please enter a positive number.");
+                                } else if (amountBorrowed > itemToBorrow.getAvailableCopies()) {
+                                    System.out.println("Only " + itemToBorrow.getAvailableCopies() + " copies are available. Please enter a smaller number.");
+                                } else {
+                                    break; // Break the loop if input is valid
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Invalid input. Please enter a numeric value.");
+                            }
+                        }
+                    
+
+                        // Lend item to patron
+                        library.lendLibraryItem(itemToBorrow, patron, amountBorrowed);
+                        System.out.println("Item borrowed successfully.");
+                        
+                        
+                        //library.displayAllItems();
                         break;
+
+
+
+                        
                     case 5:
-                        System.out.println("Returning a library item...");
                         // Add logic to return a library item
+                        System.out.print("Returning a library item...\nPlease enter item ID: ");
+                        String returnItemID = scanner.nextLine();
+                        LibraryItem itemToReturn = library.getItemByID(returnItemID);
+                        if (itemToReturn == null) {
+                            break; // break out of the case statement. Could replace to ask user for input again.
+                        }
+                        System.out.print("Please enter patron ID: ");
+                        patronID = scanner.nextLine(); // reusing patronID variable, overwriting previous value
+                        patron = library.getPatronByID(patronID); // reusing patron variable, overwriting previous value
+                        if (patron == null) {
+                            break; // break out of the case statement. Could replace to ask user for input again.
+                        }
+                        int borrowedCopies = patron.checkQuantityBorrowed(itemToReturn.getItemID());
+                        if (borrowedCopies <= 0) {
+                            System.out.println("Patron has not borrowed any copies of item ID: " + returnItemID);
+                            break;
+                        }
+                        else{
+                        while (true) {
+                            System.out.print("Enter the number of copies to return (borrowed copies: " + borrowedCopies + "): ");
+                            input = scanner.nextLine();
+                            try {
+                                borrowedCopies = Integer.parseInt(input);
+                                break; // Break the loop if input is valid
+                            } catch (NumberFormatException e) {
+                                System.out.println("Invalid input. Please enter a numeric value.");
+                            }
+                        }
+                        
+
+                        // Return item to library
+                        library.returnLibraryItem(itemToReturn, patron, borrowedCopies);
+                    }
+                        
+                        // library.displayAllItems();
                         break;
                     case 6:
                         System.out.println("Exiting the system. Goodbye!");
@@ -225,4 +308,6 @@ public class LibraryMenu {
         } while (choice != 6);
         scanner.close();
     }
+    
 }
+

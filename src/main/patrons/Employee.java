@@ -1,14 +1,9 @@
 package main.patrons;
 
 public class Employee extends Patron {
-    private static int employeeIdCounter = 100; // Counter to keep track of the id of the Employee
-    // private int employeeId;
-    // Initalize variable id to only represent id of Employee
 
     public Employee(String employeeId, String name, String address, String phoneNumber) {
-        super("E" + employeeIdCounter, name, address, phoneNumber); // Call the constructor of the superclass Student to
-                                                                    // initialize the Employee fields
-        employeeIdCounter++;
+        super("E" + employeeId, name, address, phoneNumber); 
     }
 
     public void editEmployee(String name, String address, String phoneNumber) {

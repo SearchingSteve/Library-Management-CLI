@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import main.items.Book;
@@ -14,7 +13,9 @@ import main.items.LibraryItem;
 import main.items.Periodical;
 import main.items.Status;
 import main.authors.Author;
+import main.patrons.Employee;
 import main.patrons.Patron;
+import main.patrons.Student;
 
 // Main class for the library
 public class Library {
@@ -22,29 +23,42 @@ public class Library {
     private static HashMap<String, Patron> patronMap = new HashMap<>(); // String = patronID
 
     public void initializeMockItems() {
-        addLibraryItem(new Book("B001", "Effective Java", new Author("Joshua Bloch", parseDate("1970-01-01")),
+        addLibraryItem(new Book("001", "Effective Java", new Author("Joshua Bloch", parseDate("1970-01-01")),
                 "1234567890", "Addison-Wesley", 10, Status.AVAILABLE, "Print"));
-        addLibraryItem(new Book("B002", "Clean Code", new Author("Robert C. Martin", parseDate("1970-01-01")),
+        addLibraryItem(new Book("002", "Clean Code", new Author("Robert C. Martin", parseDate("1970-01-01")),
                 "1234567891", "Prentice Hall", 15, Status.AVAILABLE, "Electronic"));
-        addLibraryItem(new Book("B003", "Design Patterns", new Author("Erich Gamma", parseDate("1965-03-10")),
+        addLibraryItem(new Book("003", "Design Patterns", new Author("Erich Gamma", parseDate("1965-03-10")),
                 "1234567892", "Addison-Wesley", 8, Status.AVAILABLE, "Audio"));
-        addLibraryItem(new Periodical("P001", "The Economist", new Author("John Micklethwait", parseDate("1987-05-15")),
+        addLibraryItem(new Periodical("001", "The Economist", new Author("John Micklethwait", parseDate("1987-05-15")),
                 "1234567893", "The Economist Newspaper", 30, Status.AVAILABLE, "Print"));
         addLibraryItem(
-                new Periodical("P002", "National Geographic", new Author("Susan Goldberg", parseDate("1985-02-17")),
+                new Periodical("002", "National Geographic", new Author("Susan Goldberg", parseDate("1985-02-17")),
                         "1234567894", "National Geographic Society", 25, Status.AVAILABLE, "Electronic"));
-        addLibraryItem(new Book("B004", "The Pragmatic Programmer", new Author("Andrew Hunt", parseDate("1969-04-01")),
+        addLibraryItem(new Book("004", "The Pragmatic Programmer", new Author("Andrew Hunt", parseDate("1969-04-01")),
                 "1234567895", "Addison-Wesley Professional", 12, Status.AVAILABLE, "Print"));
-        addLibraryItem(new Book("B005", "Code Complete", new Author("Steve McConnell", parseDate("1964-07-21")),
+        addLibraryItem(new Book("005", "Code Complete", new Author("Steve McConnell", parseDate("1964-07-21")),
                 "1234567896", "Microsoft Press", 18, Status.AVAILABLE, "Electronic"));
-        addLibraryItem(new Periodical("P003", "Science", new Author("Jeremy Berg", parseDate("1950-03-15")),
+        addLibraryItem(new Periodical("003", "Science", new Author("Jeremy Berg", parseDate("1950-03-15")),
                 "1234567897", "American Association for the Advancement of Science", 20, Status.AVAILABLE, "Print"));
-        addLibraryItem(new Book("B006", "Refactoring", new Author("Martin Fowler", parseDate("1963-12-18")),
+        addLibraryItem(new Book("006", "Refactoring", new Author("Martin Fowler", parseDate("1963-12-18")),
                 "1234567898", "Addison-Wesley", 5, Status.AVAILABLE, "Audio"));
         addLibraryItem(
-                new Book("B007", "Artificial Intelligence", new Author("Stuart Russell", parseDate("1962-05-20")),
+                new Book("007", "Artificial Intelligence", new Author("Stuart Russell", parseDate("1962-05-20")),
                         "1234567899", "Pearson", 10, Status.AVAILABLE, "Print"));
     }
+
+  public void initializeMockPatrons() {
+    addPatron(new Student("001", "John Doe", "1234 Elm St, Springfield, IL", "123-555-1234"));
+    addPatron(new Employee("002", "Jane Doe", "5678 Oak St, Springfield, IL", "123-555-5678"));
+    addPatron(new Student("003", "Alice Smith", "9101 Pine St, Springfield, IL", "123-555-9101"));
+    addPatron(new Employee("004", "Bob Smith", "1122 Birch St, Springfield, IL", "456-555-1122"));
+    addPatron(new Student("005", "Charlie Brown", "3344 Maple St, Springfield, IL", "456-555-3344"));
+    addPatron(new Employee("006", "Lucy Brown", "5566 Cedar St, Springfield, IL", "456-555-5566"));
+    addPatron(new Student("007", "Snoopy Dog", "7788 Pine St, Springfield, IL", "456-555-7788"));
+    addPatron(new Employee("008", "Woodstock Bird", "9900 Elm St, Springfield, IL", "456-555-9900"));
+    addPatron(new Student("009", "Linus Van Pelt", "1122 Oak St, Springfield, IL", "789-555-1122"));
+    addPatron(new Employee("010", "Sally Brown", "3344 Birch St, Springfield, IL", "789-555-3344"));
+}
 
     private Date parseDate(String date) {
         try {
@@ -69,12 +83,28 @@ public class Library {
         return new ArrayList<>(patronMap.values());
     }
 
+    public void displayAllPatrons() {
+        for (Patron patron : patronMap.values()){
+            System.out.println(patron);
+        }
+    }
+
     public LibraryItem getItemByID(String itemID) {
-        return itemMap.get(itemID);
+        if (itemMap.containsKey(itemID)) {
+            return itemMap.get(itemID);
+        } else {
+            System.out.println("Item with ID " + itemID + " not found in the library.");
+            return null;
+        }
     }
 
     public Patron getPatronByID(String patronID) {
-        return patronMap.get(patronID);
+        if (patronMap.containsKey(patronID)) {
+            return patronMap.get(patronID);
+        } else {
+            System.out.println("Patron with ID " + patronID + " not found in the library.");
+            return null;
+        }
     }
 
     // Search for library items by title, author, or ISBN
@@ -106,21 +136,13 @@ public class Library {
     }
 
     // Remove a library item
-    public void removeLibraryItem(LibraryItem item) {
-        if (!itemMap.containsKey(item.getItemID())) {
-            System.err.println("Item does not exist in the library");
+    public  void removeLibraryItem(String itemID) {
+        if (itemMap.containsKey(itemID)) {
+            itemMap.remove(itemID);
+            System.out.println("Item with id " + itemID + " deleted successfully.");
         } else {
-            itemMap.remove(item.getItemID());
+            System.out.println("No item found with ID: " + itemID + ". No item deleted.");
         }
-    }
-
-    // **SARA**
-    // Edit a library item
-    public void editLibraryItem(LibraryItem item) {
-        // Add code to edit a library item
-        // Can do something simple like in case 1. Build all the item parameters in
-        // LibraryMenu,
-        // then call this method to edit the item in the map.
     }
 
     // Add a patron to the library
@@ -148,6 +170,13 @@ public class Library {
     // Lend a library item to a patron if the item is available in requested
     // quantity and the patron exists
     public void lendLibraryItem(LibraryItem libraryItem, Patron patron, int quantity) {
+
+         // Check if library item exists in the library
+         if (libraryItem == null) {
+            System.out.println("Item does not exist in the library");
+            return;
+        }
+
         // Check if patron exists in the library
         if (patron == null) {
             System.out.println("Patron does not exist in the library");
@@ -155,14 +184,13 @@ public class Library {
         }
 
         // Check if library item exists in the library in requested quantity
-        if (libraryItem.getAvailableCopies() > 0 && libraryItem != null) {
+        int availableCopies = libraryItem.getAvailableCopies();
+        if (availableCopies > 0 && libraryItem != null) {
             libraryItem.setAvailableCopies(libraryItem.getAvailableCopies() - quantity);
-            for (int i = 0; i < quantity; i++) {
-                patron.addBorrowedItems(libraryItem); // Add the borrowed item to the patron
-            }
-        } else {
-            System.out.println("Item is not available");
-        }
+            patron.addBorrowedItems(libraryItem.getItemID(), quantity); // Add the borrowed item to the patron
+            System.out.println("Lent " + quantity + " copies of " + libraryItem.getTitle() + " to " + patron.getName() + ".");
+    }        
+       
     }
 
     // Return a library item to the library
@@ -179,25 +207,15 @@ public class Library {
             return;
         }
 
-        // Check how many copies of the item the patron has borrowed
-        int borrowedItemCount = 0;
-        for (LibraryItem item : patron.getBorrowedLibraryItems()) {
-            if (item.getItemID().equals(libraryItem.getItemID())) {
-                borrowedItemCount++;
-            }
-        }
+       
 
-        // Check if the patron is returning more copies than borrowed
-        if (borrowedItemCount < quantity) {
-            System.out.println("The requested quantity to return is higher than the quantity borrowed by the patron");
-            return;
-        }
 
         // Return the item to the library and remove it from the patron's borrowed items
         libraryItem.setAvailableCopies(libraryItem.getAvailableCopies() + quantity);
-        for (int i = 0; i < quantity; i++) {
-            patron.returnBorrowedItems(libraryItem);
-        }
+            patron.returnBorrowedItems(libraryItem.getItemID(), quantity);
+            System.out.println("Returned " + quantity + " copies of " + libraryItem.getTitle() + ".");
+
+        
 
     }
 
