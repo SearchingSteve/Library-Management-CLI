@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 import main.authors.Author;
 import main.items.Book;
@@ -20,7 +22,12 @@ import main.items.LibraryItem;
 import main.items.Periodical;
 import main.items.Status;
 
+
+
 public class LibraryMenu {
+
+    // create a list of library items to be used in menu cases 
+    private static List<LibraryItem> libraryItems = new ArrayList<>();
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -113,7 +120,89 @@ public class LibraryMenu {
                 case 2:
                     System.out.println("Editing an existing library item...");
                     // Add logic to edit a library item
+                    System.out.println("Please enter item ID: ");
+                    String editItemID = scanner.nextLine();
+
+                    LibraryItem itemToEdit = null;
+                    for(LibraryItem item : libraryItems){
+                        if (item.getItemID().equals(editItemID)){
+                            itemToEdit = item;
+                            break;
+                        }
+                    }
+                    if ( itemToEdit == null){
+                        System.out.println("Library item not found in system. Please retry.");
+                        break;
+                    }
+
+                    // display all current details to user including prompts to edit information.
+
+                    //edit title
+
+                    System.out.println("Current Title: " + itemToEdit.getTitle());
+                    System.out.println("Enter new title (leave blank and hit enter to keep unchanged.): ");
+                    String newTitle = scanner.nextLine();
+                
+                    if(!newTitle.isEmpty()){
+                        itemToEdit.setTitle(newTitle);
+                    }
+
+                    // edit author info
+                    System.out.println("Current Author: " + itemToEdit.getAuthor().getName());
+                    System.out.println("Enter new author (leave blank and hit enter to keep unchanged.): ");
+                    String newAuthorName = scanner.nextLine();
+                    if(!newAuthorName.isEmpty()){
+                        System.out.println("Enter Author's date of birth (yyyy-mm-dd): ");
+                        String newAuthorDOBString = scanner.nextLine();
+                    
+
+                        Date newAuthorDOB;
+                        try{
+                            SimpleDateFormat Case2DateFormat = new SimpleDateFormat("yyyy-mm-dd");
+                            Case2DateFormat.setLenient(false);
+                            newAuthorDOB = Case2DateFormat.parse(newAuthorDOBString);
+
+                            itemToEdit.setAuthor(new Author(newAuthorName, newAuthorDOB));
+                        }catch(ParseException e){
+                            System.out.println("Please enter date in the format yyyy-mm-dd");
+                            break;
+                        }
+                    }
+
+                    // edit isbn
+                    System.out.println("Current ISBN: " + itemToEdit.getISBN());
+                    System.out.println("Enter new ISBN (leave blank and hit enter to keep unchanged.): ");
+                    String newISBN = scanner.nextLine();
+                    
+                    if(!newISBN.isEmpty()){
+                        itemToEdit.setISBN(newISBN);
+                    }
+
+                    // edit publisher
+                    System.out.println("Current Publisher: " + itemToEdit.getPublisher());
+                    System.out.println("Enter new publisher (leave blank and hit enter to keep unchanged.): ");
+                    String newPublisher = scanner.nextLine();
+
+                    if(!newPublisher.isEmpty()){
+                        itemToEdit.setPublisher(newPublisher);
+                    }
+
+
+                    // edit available copies
+                    System.out.println("Current Available Copies: " + itemToEdit.getAvailableCopies());
+                    System.out.println("Enter new availale copies (leave blank and hit enter to keep unchanged.): ");
+                    String newAvailableCopies = scanner.nextLine();
+
+                    if(!newAvailableCopies.isEmpty()){
+                        int newAvailableCopiesInt = Integer.parseInt(newAvailableCopies);
+                        itemToEdit.setAvailableCopies(newAvailableCopiesInt);
+                    }
+                    
+
+                    // print success message
+                    System.out.println("Item Edited Successfully!");
                     break;
+
                 case 3:
                     System.out.println("Deleting a library item...");
                     // Add logic to delete a library item
@@ -137,3 +226,4 @@ public class LibraryMenu {
         scanner.close();
     }
 }
+
