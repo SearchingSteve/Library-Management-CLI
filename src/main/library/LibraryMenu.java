@@ -63,8 +63,36 @@ public class LibraryMenu {
                         System.out.print(
                                 "Adding a new library item...\nEnter the type of Library item (Book/Periodical): ");
                         String itemType = scanner.nextLine();
-                        System.out.print("Enter item ID: ");
+                        if (!itemType.equalsIgnoreCase("Book") && !itemType.equalsIgnoreCase("Periodical")) {
+                            System.out.println("Invalid item type. Please enter either 'Book' or 'Periodical'.");
+                            break;
+                        }
+                        if (itemType.equalsIgnoreCase("Book")) {
+                            System.out.print("Enter item ID: B");
+                        } else {
+                            System.out.print("Enter item ID: P");
+
+                        }
+
                         String itemID = scanner.nextLine();
+                        if (itemID == null || itemID.isEmpty()) {
+                            System.out.println("Item ID cannot be empty. Please enter a valid item ID.");
+                            break;
+                        }
+                        if (itemType.equalsIgnoreCase("Book")) {
+                            if (library.getItemByID("B" + itemID) != null) {
+                                System.out.println(
+                                        "Item with ID B" + itemID + " already exists. Please enter a different ID.");
+                                break;
+                            }
+                        } else {
+                            if (library.getItemByID("P" + itemID) != null) {
+                                System.out.println(
+                                        "Item with ID P" + itemID + " already exists. Please enter a different ID.");
+                                break;
+                            }
+                        }
+
                         System.out.print("Enter Title: ");
                         String title = scanner.nextLine();
 
@@ -73,13 +101,30 @@ public class LibraryMenu {
                         System.out.print("Enter author Date of Birth (YYYY-MM-DD): ");
                         String authorDOBString = scanner.nextLine();
 
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        // Date authorDOB = null;
+                        // try {
+                        // authorDOB = dateFormat.parse(authorDOBString);
+                        // } catch (ParseException e) {
+                        // System.out.println("Invalid date format. Please enter a date in the format
+                        // YYYY-MM-DD.");
+                        // break;
+                        // }
+
                         Date authorDOB = null;
-                        try {
-                            authorDOB = dateFormat.parse(authorDOBString);
-                        } catch (ParseException e) {
-                            System.out.println("Invalid date format. Please enter a date in the format YYYY-MM-DD.");
-                            break;
+
+                        while (true) {
+                            if (Author.validateAuthorDOB(authorDOBString)) {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                try {
+                                    authorDOB = dateFormat.parse(authorDOBString);
+                                } catch (ParseException e) {
+                                    continue;
+                                }
+                                break;
+                            } else {
+                                authorDOBString = scanner.nextLine();
+                            }
                         }
                         Author author = new Author(authorName, authorDOB);
 
@@ -101,10 +146,12 @@ public class LibraryMenu {
                         do {
                             availableCopies = scanner.nextInt();
                             if (availableCopies < 0) {
-                                System.out.println("Available copies cannot be negative. Please enter a valid number.");
+                                System.out.print("Available copies cannot be negative. Please enter a valid number.");
+                                System.out.print("Enter available copies: ");
                             } else if (availableCopies > totalCopies) {
-                                System.out.println(
+                                System.out.print(
                                         "Available copies cannot exceed total copies. Please enter a valid number.");
+                                System.out.print("Enter available copies: ");
                             }
                         } while (availableCopies < 0 || availableCopies > totalCopies);
 
@@ -130,6 +177,9 @@ public class LibraryMenu {
                         }
 
                         library.addLibraryItem(newItem); // add new library item to library
+                        System.out.println("Item added successfully!");
+                        library.displayAllItems();
+                        library.displayAllPatrons();
                         break;
 
                     // Edit a library item
@@ -160,7 +210,8 @@ public class LibraryMenu {
                             String newAuthorName = scanner.nextLine();
 
                             if (!newAuthorName.isEmpty()) {
-                                System.out.println("Enter Author's date of birth (yyyy-mm-dd): ");
+                                // FIX HERE - use author dob parsing and code from case 1
+                                System.out.print("Enter Author's date of birth (yyyy-mm-dd): ");
                                 String newAuthorDOBString = scanner.nextLine();
                                 Date newAuthorDOB;
                                 try {
@@ -220,7 +271,7 @@ public class LibraryMenu {
                         String borrowItemID = scanner.nextLine();
                         LibraryItem itemToBorrow = library.getItemByID(borrowItemID);
                         if (itemToBorrow == null) {
-                            System.out.println("Item not found.");
+                            System.out.println("Item not found."); // DOES NOT PRINT
                             break; // break out of the case statement. Could replace to ask user for input again.
                         }
                         if (itemToBorrow.getAvailableCopies() <= 0) {
@@ -257,7 +308,8 @@ public class LibraryMenu {
                         library.lendLibraryItem(itemToBorrow, patron, amountBorrowed);
                         System.out.println("Item borrowed successfully.");
 
-                        // library.displayAllItems();
+                        library.displayAllItems();
+                        library.displayAllPatrons();
                         break;
 
                     case 5:
@@ -290,12 +342,12 @@ public class LibraryMenu {
                                     System.out.println("Invalid input. Please enter a numeric value.");
                                 }
                             }
-
                             // Return item to library
                             library.returnLibraryItem(itemToReturn, patron, borrowedCopies);
                         }
 
-                        // library.displayAllItems();
+                        library.displayAllItems();
+                        library.displayAllPatrons();
                         break;
                     case 6:
                         System.out.println("Exiting the system. Goodbye!");

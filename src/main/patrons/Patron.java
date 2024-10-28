@@ -64,7 +64,7 @@ public abstract class Patron {
 
     // Methods to add and return borrowed items from the Patron's list
     public void addBorrowedItems(String itemID, int quantity) {
-        this.borrowedLibraryItems.put(itemID, quantity);
+        this.borrowedLibraryItems.put(itemID, (this.checkQuantityBorrowed(itemID) + quantity));
     }
 
     public void returnBorrowedItems(String itemID, int quantity) {
@@ -73,14 +73,14 @@ public abstract class Patron {
         // Possible fix for the returns working only if the quantity is the same as
         // borrowed
 
-        // if (this.borrowedLibraryItems.containsKey(itemID)) {
-        // int currentQuantity = this.borrowedLibraryItems.get(itemID);
-        // if (currentQuantity > quantity) {
-        // this.borrowedLibraryItems.put(itemID, currentQuantity - quantity);
-        // } else {
-        // this.borrowedLibraryItems.remove(itemID);
-        // }
-        // }
+        if (this.borrowedLibraryItems.containsKey(itemID)) {
+            int currentQuantity = this.borrowedLibraryItems.get(itemID);
+            if (currentQuantity > quantity) {
+                this.borrowedLibraryItems.put(itemID, currentQuantity - quantity);
+            } else {
+                this.borrowedLibraryItems.remove(itemID);
+            }
+        }
     }
 
     // Method to check quantity borrowed of a specific item
@@ -90,6 +90,8 @@ public abstract class Patron {
 
     // Displays the Patron's information in a string format
     public String toString() {
-        return "Name: " + name + "\nAddress: " + address + "\nPhone Number: " + phoneNumber;
+        return "Name: " + name + "\nAddress: " + address + "\nPhone Number: " + phoneNumber
+                + "\nList of Borrowed Items: "
+                + borrowedLibraryItems;
     }
 }
