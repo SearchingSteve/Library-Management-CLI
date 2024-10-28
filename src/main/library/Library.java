@@ -47,18 +47,18 @@ public class Library {
                         "1234567899", "Pearson", 10, Status.AVAILABLE, "Print"));
     }
 
-  public void initializeMockPatrons() {
-    addPatron(new Student("001", "John Doe", "1234 Elm St, Springfield, IL", "123-555-1234"));
-    addPatron(new Employee("002", "Jane Doe", "5678 Oak St, Springfield, IL", "123-555-5678"));
-    addPatron(new Student("003", "Alice Smith", "9101 Pine St, Springfield, IL", "123-555-9101"));
-    addPatron(new Employee("004", "Bob Smith", "1122 Birch St, Springfield, IL", "456-555-1122"));
-    addPatron(new Student("005", "Charlie Brown", "3344 Maple St, Springfield, IL", "456-555-3344"));
-    addPatron(new Employee("006", "Lucy Brown", "5566 Cedar St, Springfield, IL", "456-555-5566"));
-    addPatron(new Student("007", "Snoopy Dog", "7788 Pine St, Springfield, IL", "456-555-7788"));
-    addPatron(new Employee("008", "Woodstock Bird", "9900 Elm St, Springfield, IL", "456-555-9900"));
-    addPatron(new Student("009", "Linus Van Pelt", "1122 Oak St, Springfield, IL", "789-555-1122"));
-    addPatron(new Employee("010", "Sally Brown", "3344 Birch St, Springfield, IL", "789-555-3344"));
-}
+    public void initializeMockPatrons() {
+        addPatron(new Student("001", "John Doe", "1234 Elm St, Springfield, IL", "123-555-1234"));
+        addPatron(new Employee("002", "Jane Doe", "5678 Oak St, Springfield, IL", "123-555-5678"));
+        addPatron(new Student("003", "Alice Smith", "9101 Pine St, Springfield, IL", "123-555-9101"));
+        addPatron(new Employee("004", "Bob Smith", "1122 Birch St, Springfield, IL", "456-555-1122"));
+        addPatron(new Student("005", "Charlie Brown", "3344 Maple St, Springfield, IL", "456-555-3344"));
+        addPatron(new Employee("006", "Lucy Brown", "5566 Cedar St, Springfield, IL", "456-555-5566"));
+        addPatron(new Student("007", "Snoopy Dog", "7788 Pine St, Springfield, IL", "456-555-7788"));
+        addPatron(new Employee("008", "Woodstock Bird", "9900 Elm St, Springfield, IL", "456-555-9900"));
+        addPatron(new Student("009", "Linus Van Pelt", "1122 Oak St, Springfield, IL", "789-555-1122"));
+        addPatron(new Employee("010", "Sally Brown", "3344 Birch St, Springfield, IL", "789-555-3344"));
+    }
 
     private Date parseDate(String date) {
         try {
@@ -84,7 +84,7 @@ public class Library {
     }
 
     public void displayAllPatrons() {
-        for (Patron patron : patronMap.values()){
+        for (Patron patron : patronMap.values()) {
             System.out.println(patron);
         }
     }
@@ -136,7 +136,7 @@ public class Library {
     }
 
     // Remove a library item
-    public  void removeLibraryItem(String itemID) {
+    public void removeLibraryItem(String itemID) {
         if (itemMap.containsKey(itemID)) {
             itemMap.remove(itemID);
             System.out.println("Item with id " + itemID + " deleted successfully.");
@@ -171,8 +171,8 @@ public class Library {
     // quantity and the patron exists
     public void lendLibraryItem(LibraryItem libraryItem, Patron patron, int quantity) {
 
-         // Check if library item exists in the library
-         if (libraryItem == null) {
+        // Check if library item exists in the library
+        if (libraryItem == null) {
             System.out.println("Item does not exist in the library");
             return;
         }
@@ -188,9 +188,10 @@ public class Library {
         if (availableCopies > 0 && libraryItem != null) {
             libraryItem.setAvailableCopies(libraryItem.getAvailableCopies() - quantity);
             patron.addBorrowedItems(libraryItem.getItemID(), quantity); // Add the borrowed item to the patron
-            System.out.println("Lent " + quantity + " copies of " + libraryItem.getTitle() + " to " + patron.getName() + ".");
-    }        
-       
+            System.out.println(
+                    "Lent " + quantity + " copies of " + libraryItem.getTitle() + " to " + patron.getName() + ".");
+        }
+
     }
 
     // Return a library item to the library
@@ -207,15 +208,23 @@ public class Library {
             return;
         }
 
-       
-
-
-        // Return the item to the library and remove it from the patron's borrowed items
-        libraryItem.setAvailableCopies(libraryItem.getAvailableCopies() + quantity);
+        // Check if quantity to return exceeds the quantity borrowed and throws an error
+        if (patron.checkQuantityBorrowed(libraryItem.getItemID()) <= quantity) {
+            System.out.println("Quantity to return exceeds the quantity borrowed.");
+            return;
+        } else if (quantity < 0) {
+            System.out.println("Quantity to return cannot be negative.");
+            return;
+        } else if (quantity == 0) {
+            System.out.println("Quantity to return cannot be zero.");
+            return;
+        } else {
+            // Return the item to the library and remove it from the patron's borrowed items
+            libraryItem.setAvailableCopies(libraryItem.getAvailableCopies() + quantity);
             patron.returnBorrowedItems(libraryItem.getItemID(), quantity);
             System.out.println("Returned " + quantity + " copies of " + libraryItem.getTitle() + ".");
 
-        
+        }
 
     }
 

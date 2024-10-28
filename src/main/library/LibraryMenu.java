@@ -14,7 +14,6 @@ import java.util.Date;
 import java.text.ParseException;
 import java.util.Scanner;
 
-
 import main.patrons.Patron;
 import main.authors.Author;
 import main.items.Book;
@@ -37,7 +36,9 @@ public class LibraryMenu {
         library.displayAllPatrons();
 
         do {
-            System.out.println("\nWelcome to the Library Management System");
+            System.out.println("----------------------------------------");
+            System.out.println("Welcome to the Library Management System");
+            System.out.println("----------------------------------------");
             // there are more options needed for the project.
             System.out.println("1. Add Library Item");
             System.out.println("2. Edit Library Item");
@@ -45,16 +46,19 @@ public class LibraryMenu {
             System.out.println("4. Borrow Library Item");
             System.out.println("5. Return Library Item");
             System.out.println("6. Exit");
+            System.out.println("----------------------------------------");
             System.out.print("Enter your choice (1-6): ");
 
             try {
                 String input = scanner.nextLine();
                 choice = Integer.parseInt(input.trim());
+                System.out.println("----------------------------------------");
 
                 switch (choice) {
                     // Add a library item
                     // ** Error handling issues:
-                    // - If user does specify type as Book or Periodical, the program will crash. Cannot build a new item without specifying one of these type.
+                    // - If user does specify type as Book or Periodical, the program will crash.
+                    // Cannot build a new item without specifying one of these type.
                     case 1:
                         System.out.print(
                                 "Adding a new library item...\nEnter the type of Library item (Book/Periodical): ");
@@ -189,7 +193,8 @@ public class LibraryMenu {
 
                             // edit available copies
                             System.out.println("Current Available Copies: " + itemToEdit.getAvailableCopies());
-                            System.out.print("Enter new availale copies (leave blank and hit enter to keep unchanged): ");
+                            System.out
+                                    .print("Enter new availale copies (leave blank and hit enter to keep unchanged): ");
                             String newAvailableCopies = scanner.nextLine();
 
                             if (!newAvailableCopies.isEmpty()) {
@@ -209,12 +214,13 @@ public class LibraryMenu {
                         library.removeLibraryItem(deleteItemID);
                         break;
 
-                        // Borrow a library item
+                    // Borrow a library item
                     case 4:
                         System.out.print("Borrowing a library item...\nPlease enter item ID: ");
                         String borrowItemID = scanner.nextLine();
                         LibraryItem itemToBorrow = library.getItemByID(borrowItemID);
                         if (itemToBorrow == null) {
+                            System.out.println("Item not found.");
                             break; // break out of the case statement. Could replace to ask user for input again.
                         }
                         if (itemToBorrow.getAvailableCopies() <= 0) {
@@ -229,14 +235,16 @@ public class LibraryMenu {
                         }
                         int amountBorrowed = 0;
                         while (true) {
-                            System.out.print("Enter the number of copies to borrow (available copies: " + itemToBorrow.getAvailableCopies() + "): ");
+                            System.out.print("Enter the number of copies to borrow (available copies: "
+                                    + itemToBorrow.getAvailableCopies() + "): ");
                             input = scanner.nextLine();
                             try {
                                 amountBorrowed = Integer.parseInt(input);
                                 if (amountBorrowed <= 0) {
                                     System.out.println("Please enter a positive number.");
                                 } else if (amountBorrowed > itemToBorrow.getAvailableCopies()) {
-                                    System.out.println("Only " + itemToBorrow.getAvailableCopies() + " copies are available. Please enter a smaller number.");
+                                    System.out.println("Only " + itemToBorrow.getAvailableCopies()
+                                            + " copies are available. Please enter a smaller number.");
                                 } else {
                                     break; // Break the loop if input is valid
                                 }
@@ -244,19 +252,14 @@ public class LibraryMenu {
                                 System.out.println("Invalid input. Please enter a numeric value.");
                             }
                         }
-                    
 
                         // Lend item to patron
                         library.lendLibraryItem(itemToBorrow, patron, amountBorrowed);
                         System.out.println("Item borrowed successfully.");
-                        
-                        
-                        //library.displayAllItems();
+
+                        // library.displayAllItems();
                         break;
 
-
-
-                        
                     case 5:
                         // Add logic to return a library item
                         System.out.print("Returning a library item...\nPlease enter item ID: ");
@@ -275,24 +278,23 @@ public class LibraryMenu {
                         if (borrowedCopies <= 0) {
                             System.out.println("Patron has not borrowed any copies of item ID: " + returnItemID);
                             break;
-                        }
-                        else{
-                        while (true) {
-                            System.out.print("Enter the number of copies to return (borrowed copies: " + borrowedCopies + "): ");
-                            input = scanner.nextLine();
-                            try {
-                                borrowedCopies = Integer.parseInt(input);
-                                break; // Break the loop if input is valid
-                            } catch (NumberFormatException e) {
-                                System.out.println("Invalid input. Please enter a numeric value.");
+                        } else {
+                            while (true) {
+                                System.out.print("Enter the number of copies to return (borrowed copies: "
+                                        + borrowedCopies + "): ");
+                                input = scanner.nextLine();
+                                try {
+                                    borrowedCopies = Integer.parseInt(input);
+                                    break; // Break the loop if input is valid
+                                } catch (NumberFormatException e) {
+                                    System.out.println("Invalid input. Please enter a numeric value.");
+                                }
                             }
-                        }
-                        
 
-                        // Return item to library
-                        library.returnLibraryItem(itemToReturn, patron, borrowedCopies);
-                    }
-                        
+                            // Return item to library
+                            library.returnLibraryItem(itemToReturn, patron, borrowedCopies);
+                        }
+
                         // library.displayAllItems();
                         break;
                     case 6:
@@ -308,6 +310,5 @@ public class LibraryMenu {
         } while (choice != 6);
         scanner.close();
     }
-    
-}
 
+}

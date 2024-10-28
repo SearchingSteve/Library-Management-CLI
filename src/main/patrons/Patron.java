@@ -69,13 +69,24 @@ public abstract class Patron {
 
     public void returnBorrowedItems(String itemID, int quantity) {
         this.borrowedLibraryItems.remove(itemID, quantity);
+
+        // Possible fix for the returns working only if the quantity is the same as
+        // borrowed
+
+        // if (this.borrowedLibraryItems.containsKey(itemID)) {
+        // int currentQuantity = this.borrowedLibraryItems.get(itemID);
+        // if (currentQuantity > quantity) {
+        // this.borrowedLibraryItems.put(itemID, currentQuantity - quantity);
+        // } else {
+        // this.borrowedLibraryItems.remove(itemID);
+        // }
+        // }
     }
 
     // Method to check quantity borrowed of a specific item
-public int checkQuantityBorrowed(String itemID) {
-    return this.borrowedLibraryItems.getOrDefault(itemID, 0); // Return 0 if itemID is not found
-}
-
+    public int checkQuantityBorrowed(String itemID) {
+        return this.borrowedLibraryItems.getOrDefault(itemID, 0); // Return 0 if itemID is not found
+    }
 
     // Displays the Patron's information in a string format
     public String toString() {
