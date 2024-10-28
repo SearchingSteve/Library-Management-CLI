@@ -1,7 +1,6 @@
-package main.items; 
-import main.authors.Author; 
+package main.items;
 
-
+import main.authors.Author;
 
 // Abstract class for all library items
 public abstract class LibraryItem {
@@ -14,10 +13,11 @@ public abstract class LibraryItem {
     private int availableCopies;
 
     // Enum for status of library items
-    private Status status;  
+    private Status status;
 
     // Constructor
-    public LibraryItem(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies, Status status) {
+    public LibraryItem(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies,
+            Status status) {
         this.itemID = itemID;
         this.title = title;
         this.author = author;
@@ -28,70 +28,69 @@ public abstract class LibraryItem {
 
     }
 
-
     // Getters and setters
-    public String getItemID(){
+    public String getItemID() {
         return itemID;
     }
 
-    public void setItemID(String itemID){
+    public void setItemID(String itemID) {
         this.itemID = itemID;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public Author getAuthor(){
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(Author author){
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
-    public String getISBN(){
+    public String getISBN() {
         return ISBN;
     }
 
-    public void setISBN(String ISBN){
+    public void setISBN(String ISBN) {
         this.ISBN = ISBN;
     }
 
-    public String getPublisher(){
+    public String getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(String publisher){
+    public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
 
-    public int getAvailableCopies(){
+    public int getAvailableCopies() {
         return availableCopies;
     }
 
-    public void setAvailableCopies(int availableCopies){
+    public void setAvailableCopies(int availableCopies) {
         this.availableCopies = availableCopies;
     }
 
-    public Status getStatus(){
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Status status){
+    public void setStatus(Status status) {
         this.status = status;
     }
 
-    // Abstract method for returning type of item. (will need same method naming and override in book/periodical subclasses - getItemType())
+    // Abstract method for returning type of item. (will need same method naming and
+    // override in book/periodical subclasses - getItemType())
     public abstract String getItemType(); // if using same method name getItemType() in book/periodicals wiht @override
-    
 
-    // No setItemType() method here as we don't want to change the type of an item once it's created
+    // No setItemType() method here as we don't want to change the type of an item
+    // once it's created
 
-
-    //ADDITIONAL METHODS FOR BOOK/PERIODICAL SUBCLASSES 
+    // ADDITIONAL METHODS FOR BOOK/PERIODICAL SUBCLASSES
 }
