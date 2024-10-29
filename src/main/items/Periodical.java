@@ -8,9 +8,9 @@ public class Periodical extends LibraryItem {
     private String periodicalType;
 
     // CONSTRUCTOR
-    public Periodical(String itemID, String title, Author author,  String ISBN, String publisher, int availableCopies, Status status,
+    public Periodical(String itemID, String title, Author author,  String ISBN, String publisher, int availableCopies, int totalCopies,  Status status,
             String periodicalType) {
-        super("P" + itemID, title, author, ISBN, publisher, availableCopies, status);
+        super("P" + itemID, title, author, ISBN, publisher, availableCopies, totalCopies, status);
         this.periodicalType = periodicalType;
     }
 
@@ -40,6 +40,7 @@ public class Periodical extends LibraryItem {
         ", ISBN= " + getISBN() + 
         ", publisher= " + getPublisher() +
         ", available copies= " + getAvailableCopies() + 
+        ", total copies= " + getTotalCopies() +
         ", status= " + getStatus() + 
         ", periodical type= " + getPeriodicalType() +
         "}";

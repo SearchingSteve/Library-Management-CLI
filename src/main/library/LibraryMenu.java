@@ -163,7 +163,7 @@ public class LibraryMenu {
                             System.out.print("Enter book type (e.g. Print, Electronic, Audio): ");
                             String bookType = scanner.nextLine();
                             newItem = new Book(itemID, title, author, ISBN, publisher, availableCopies,
-                                    Status.AVAILABLE,
+                                    totalCopies, Status.AVAILABLE,
                                     bookType);
                         }
 
@@ -172,7 +172,7 @@ public class LibraryMenu {
                             System.out.print("Enter periodical type (e.g. Print, Electronic): ");
                             String periodicalType = scanner.nextLine();
                             newItem = new Periodical(itemID, title, author, ISBN, publisher, availableCopies,
-                                    Status.AVAILABLE,
+                                    totalCopies, Status.AVAILABLE,
                                     periodicalType);
                         }
 

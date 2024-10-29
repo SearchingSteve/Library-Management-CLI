@@ -10,8 +10,8 @@ public class Book extends LibraryItem {
     
     // CONSTRUCTOR
 
-    public Book(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies, Status status, String bookType) {
-        super("B" +itemID, title, author, ISBN, publisher, availableCopies, status);
+    public Book(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies, int totalCopies, Status status, String bookType) {
+        super("B" +itemID, title, author, ISBN, publisher, availableCopies, totalCopies, status);
         this.bookType = bookType;
     }
 
@@ -50,6 +50,7 @@ public class Book extends LibraryItem {
          ", author= " + getAuthor().getName() + 
          ", publisher= " + getPublisher() + 
          ", available copies= " + getAvailableCopies() + 
+         ", total copies= " + getTotalCopies() + 
          ", book type= " + getBookType() + 
          "}";
     }

@@ -11,19 +11,21 @@ public abstract class LibraryItem {
     private String ISBN;
     private String publisher;
     private int availableCopies;
+    private int totalCopies;
 
     // Enum for status of library items
     private Status status;
 
     // Constructor
-    public LibraryItem(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies,
-            Status status) {
+    public LibraryItem(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies, 
+        int totalCopies, Status status) {
         this.itemID = itemID;
         this.title = title;
         this.author = author;
         this.ISBN = ISBN;
         this.publisher = publisher;
         this.availableCopies = availableCopies;
+        this.totalCopies = totalCopies;
         this.status = status;
 
     }
@@ -75,6 +77,14 @@ public abstract class LibraryItem {
 
     public void setAvailableCopies(int availableCopies) {
         this.availableCopies = availableCopies;
+    }
+
+    public int getTotalCopies(){
+        return totalCopies;
+    }
+
+    public void setTotalCopies(int totalCopies){
+        this.totalCopies = totalCopies;
     }
 
     public Status getStatus() {
