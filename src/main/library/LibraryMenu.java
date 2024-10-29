@@ -210,17 +210,16 @@ public class LibraryMenu {
                             String newAuthorName = scanner.nextLine();
 
                             if (!newAuthorName.isEmpty()) {
-                                
+
                                 System.out.print("Enter Author's date of birth (yyyy-mm-dd): ");
                                 String newAuthorDOBString = scanner.nextLine();
                                 Date newAuthorDOB = null;
 
-                                while (true){
+                                while (true) {
 
-                                    if (Author.validateAuthorDOB(newAuthorDOBString)){
+                                    if (Author.validateAuthorDOB(newAuthorDOBString)) {
                                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                         dateFormat.setLenient(false);
-                                    
 
                                         try {
                                             newAuthorDOB = dateFormat.parse(newAuthorDOBString);
@@ -231,7 +230,7 @@ public class LibraryMenu {
                                             newAuthorDOBString = scanner.nextLine();
                                         }
 
-                                    }else{
+                                    } else {
                                         System.out.println("Please enter date in the format yyyy-mm-dd");
                                         newAuthorDOBString = scanner.nextLine();
                                     }
@@ -241,20 +240,22 @@ public class LibraryMenu {
                             // edit isbn
                             System.out.println("Current ISBN: " + itemToEdit.getISBN());
 
-                            while(true){
+                            while (true) {
                                 System.out.print("Enter new ISBN (leave blank and hit enter to keep unchanged): ");
                                 String newISBN = scanner.nextLine();
-    
+
                                 if (!newISBN.isEmpty()) {
-                                    if(newISBN.matches("\\d{10}|\\d{13}")){
-                                    itemToEdit.setISBN(newISBN);
-                                }else{
-                                    System.out.println("ISBN must contain numbers only and be 10 or 13 digits long.");
-                                }
-                                    
+                                    if (newISBN.matches("\\d{10}|\\d{13}")) {
+                                        itemToEdit.setISBN(newISBN);
+                                        break;
+                                    } else {
+                                        System.out
+                                                .println("ISBN must contain numbers only and be 10 or 13 digits long.");
+                                    }
+                                } else {
+                                    break; // Break the loop if the input is empty
                                 }
                             }
-                      
 
                             // edit publisher
                             System.out.println("Current Publisher: " + itemToEdit.getPublisher());
@@ -267,29 +268,32 @@ public class LibraryMenu {
 
                             // edit available copies
                             System.out.println("Current Available Copies: " + itemToEdit.getAvailableCopies());
-                            
-                            while(true){
-                                System.out.print("Enter new availale copies (leave blank and hit enter to keep unchanged): ");
+
+                            while (true) {
+                                System.out.print(
+                                        "Enter new availale copies (leave blank and hit enter to keep unchanged): ");
                                 String newAvailableCopies = scanner.nextLine();
-    
+
                                 if (!newAvailableCopies.isEmpty()) {
-                                    try{
+                                    try {
                                         int newAvailableCopiesInt = Integer.parseInt(newAvailableCopies);
-                                        if(newAvailableCopiesInt <= itemToEdit.getTotalCopies()){
+                                        if (newAvailableCopiesInt <= itemToEdit.getTotalCopies()) {
                                             itemToEdit.setAvailableCopies(newAvailableCopiesInt);
-                                        }else{
+                                        } else {
                                             System.out.println("Available copies cannot exceed total copies.");
                                         }
-                                       
-                                    }catch (NumberFormatException e){
+
+                                    } catch (NumberFormatException e) {
                                         System.out.println("Invalid input. Available copies must be a numeric value.");
                                     }
                                 }
+                                // NEW LOCATION
+                                System.out.println("Item Edited Successfully!");
+                                break;
                             }
 
                         }
-                        // print success message
-                        System.out.println("Item Edited Successfully!");
+                        // OLD LOCATION
                         break;
 
                     // Delete a library item
