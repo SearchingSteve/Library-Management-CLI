@@ -76,7 +76,8 @@ public class LibraryMenu {
 
                         String itemID = scanner.nextLine();
                         if (itemID == null || itemID.isEmpty()) {
-                            System.out.println("Item ID cannot be empty. Please enter a valid item ID.");
+                            System.out.println(
+                                    "\u001B[31mItem ID cannot be empty. Please enter a valid item ID.\u001B[0m");
                             break;
                         }
                         if (itemType.equalsIgnoreCase("Book")) {
@@ -128,8 +129,27 @@ public class LibraryMenu {
                         }
                         Author author = new Author(authorName, authorDOB);
 
-                        System.out.print("Enter ISBN: ");
-                        String ISBN = scanner.nextLine();
+                        // OLD ISBN PROMPT
+                        // System.out.print("Enter ISBN: ");
+                        // String ISBN = scanner.nextLine();
+
+                        // NEW ISBN PROMPT
+                        String ISBN = "";
+                        while (true) {
+                            System.out.print("Enter ISBN: ");
+                            ISBN = scanner.nextLine();
+
+                            if (!ISBN.isEmpty()) {
+                                if (ISBN.matches("\\d{10}|\\d{13}")) {
+                                    break;
+                                } else {
+                                    System.out.println("ISBN must contain numbers only and be 10 or 13 digits long.");
+                                }
+                            } else {
+                                System.out.println("ISBN cannot be empty. Please enter a valid ISBN.");
+                            }
+                        }
+
                         System.out.print("Enter publisher: ");
                         String publisher = scanner.nextLine();
                         System.out.print("Enter total copies in the system: ");

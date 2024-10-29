@@ -44,9 +44,10 @@ public class Library {
                 "1234567893", "The Economist Newspaper", 30, 30, Status.AVAILABLE, "Print"));
         addLibraryItem(
                 new Periodical("002", "National Geographic", new Author("Susan Goldberg", parseDate("1985-02-17")),
-                        "1234567894", "National Geographic Society", 25, 29,  Status.AVAILABLE, "Electronic"));
+                        "1234567894", "National Geographic Society", 25, 29, Status.AVAILABLE, "Electronic"));
         addLibraryItem(new Periodical("003", "Science", new Author("Jeremy Berg", parseDate("1950-03-15")),
-                "1234567897", "American Association for the Advancement of Science", 20, 23, Status.AVAILABLE, "Print"));
+                "1234567897", "American Association for the Advancement of Science", 20, 23, Status.AVAILABLE,
+                "Print"));
     }
 
     public void initializeMockPatrons() {
@@ -109,7 +110,6 @@ public class Library {
         }
     }
 
-
     // Search for library items by title, author, or ISBN
     public List<LibraryItem> searchByTitle(String title) {
         return itemMap.values().stream()
@@ -150,9 +150,13 @@ public class Library {
                     return;
                 }
             });
-            itemMap.remove(itemID);
             // NEED GARBAGE COLLECTION? - set all library items refenrences to null?
-            System.out.println("Item with id " + itemID + " deleted successfully.");
+            LibraryItem bookToBeDeleted = itemMap.get(itemID);
+            String titleOfBookToBeDeleted = bookToBeDeleted.getTitle();
+            System.out
+                    .println("Item with ID " + itemID + " (Title: " + titleOfBookToBeDeleted + ")"
+                            + " deleted successfully.");
+            itemMap.remove(itemID);
         } else {
             System.out.println("No item found with ID: " + itemID + ". No item deleted.");
         }
@@ -240,7 +244,4 @@ public class Library {
 
     }
 
-
-
 }
-
