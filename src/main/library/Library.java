@@ -25,28 +25,28 @@ public class Library {
     public void initializeMockItems() {
         // Adding books first
         addLibraryItem(new Book("001", "Effective Java", new Author("Joshua Bloch", parseDate("1970-01-01")),
-                "1234567890", "Addison-Wesley", 10, Status.AVAILABLE, "Print"));
+                "1234567890", "Addison-Wesley", 10, 11, Status.AVAILABLE, "Print"));
         addLibraryItem(new Book("002", "Clean Code", new Author("Robert C. Martin", parseDate("1970-01-01")),
-                "1234567891", "Prentice Hall", 15, Status.AVAILABLE, "Electronic"));
+                "1234567891", "Prentice Hall", 15, 20, Status.AVAILABLE, "Electronic"));
         addLibraryItem(new Book("003", "Design Patterns", new Author("Erich Gamma", parseDate("1965-03-10")),
-                "1234567892", "Addison-Wesley", 8, Status.AVAILABLE, "Audio"));
+                "1234567892", "Addison-Wesley", 8, 8, Status.AVAILABLE, "Audio"));
         addLibraryItem(new Book("004", "The Pragmatic Programmer", new Author("Andrew Hunt", parseDate("1969-04-01")),
-                "1234567895", "Addison-Wesley Professional", 12, Status.AVAILABLE, "Print"));
+                "1234567895", "Addison-Wesley Professional", 12, 15, Status.AVAILABLE, "Print"));
         addLibraryItem(new Book("005", "Code Complete", new Author("Steve McConnell", parseDate("1964-07-21")),
-                "1234567896", "Microsoft Press", 18, Status.AVAILABLE, "Electronic"));
+                "1234567896", "Microsoft Press", 18, 19, Status.AVAILABLE, "Electronic"));
         addLibraryItem(new Book("006", "Refactoring", new Author("Martin Fowler", parseDate("1963-12-18")),
-                "1234567898", "Addison-Wesley", 5, Status.AVAILABLE, "Audio"));
+                "1234567898", "Addison-Wesley", 5, 6, Status.AVAILABLE, "Audio"));
         addLibraryItem(new Book("007", "Artificial Intelligence", new Author("Stuart Russell", parseDate("1962-05-20")),
-                "1234567899", "Pearson", 10, Status.AVAILABLE, "Print"));
+                "1234567899", "Pearson", 10, 13, Status.AVAILABLE, "Print"));
 
         // Adding periodicals second
         addLibraryItem(new Periodical("001", "The Economist", new Author("John Micklethwait", parseDate("1987-05-15")),
-                "1234567893", "The Economist Newspaper", 30, Status.AVAILABLE, "Print"));
+                "1234567893", "The Economist Newspaper", 30, 30, Status.AVAILABLE, "Print"));
         addLibraryItem(
                 new Periodical("002", "National Geographic", new Author("Susan Goldberg", parseDate("1985-02-17")),
-                        "1234567894", "National Geographic Society", 25, Status.AVAILABLE, "Electronic"));
+                        "1234567894", "National Geographic Society", 25, 29,  Status.AVAILABLE, "Electronic"));
         addLibraryItem(new Periodical("003", "Science", new Author("Jeremy Berg", parseDate("1950-03-15")),
-                "1234567897", "American Association for the Advancement of Science", 20, Status.AVAILABLE, "Print"));
+                "1234567897", "American Association for the Advancement of Science", 20, 23, Status.AVAILABLE, "Print"));
     }
 
     public void initializeMockPatrons() {
@@ -108,6 +108,7 @@ public class Library {
             return null;
         }
     }
+
 
     // Search for library items by title, author, or ISBN
     public List<LibraryItem> searchByTitle(String title) {
@@ -239,4 +240,7 @@ public class Library {
 
     }
 
+
+
 }
+
