@@ -246,12 +246,12 @@ public class LibraryMenu {
                                             itemToEdit.setAuthor(new Author(newAuthorName, newAuthorDOB));
                                             break;
                                         } catch (ParseException e) {
-                                            System.out.println("Please enter date in the format yyyy-mm-dd");
+                                            
                                             newAuthorDOBString = scanner.nextLine();
                                         }
 
                                     } else {
-                                        System.out.println("Please enter date in the format yyyy-mm-dd");
+                                        // System.out.println("Please enter date in the format yyyy-mm-dd");
                                         newAuthorDOBString = scanner.nextLine();
                                     }
                                 }
@@ -286,6 +286,34 @@ public class LibraryMenu {
                                 itemToEdit.setPublisher(newPublisher);
                             }
 
+                            //edit total copies
+
+                            System.out.println("Current Total Copies: " + itemToEdit.getTotalCopies());
+
+                            while(true){
+                                System.out.print("Enter New Total Copies (keep blank and hit enter to keep unchanged): ");
+                                String newTotalCopies = scanner.nextLine();
+
+                                if (!newTotalCopies.isEmpty()) {
+                                    try {
+                                            int newTotalCopiesInt = Integer.parseInt(newTotalCopies);
+                                            if(newTotalCopiesInt > 0 ){
+                                                itemToEdit.setTotalCopies(newTotalCopiesInt);
+                                                break;
+                                            }else{
+                                                System.err.println("Total Copies Must Exceed 0.");
+                                            }
+                                            
+                                    }catch (NumberFormatException e) {
+                                        System.out.println("Invalid input. Total copies must be a numeric value.");
+                                    }
+                                    
+                                }else{
+                                    break;
+                                }
+                                
+                            }
+
                             // edit available copies
                             System.out.println("Current Available Copies: " + itemToEdit.getAvailableCopies());
 
@@ -299,6 +327,7 @@ public class LibraryMenu {
                                         int newAvailableCopiesInt = Integer.parseInt(newAvailableCopies);
                                         if (newAvailableCopiesInt <= itemToEdit.getTotalCopies()) {
                                             itemToEdit.setAvailableCopies(newAvailableCopiesInt);
+                                            break;
                                         } else {
                                             System.out.println("Available copies cannot exceed total copies.");
                                         }
@@ -306,14 +335,21 @@ public class LibraryMenu {
                                     } catch (NumberFormatException e) {
                                         System.out.println("Invalid input. Available copies must be a numeric value.");
                                     }
+                                }else{
+                                    break;
                                 }
-                                // NEW LOCATION
-                                System.out.println("Item Edited Successfully!");
-                                break;
+                                // NEW LOCATION => had to change success message back to old location.
+                                // success message was being printed every time the loop was iterated
+                                // through, whether the input was valid or invalid. moved it outside
+                                // the loop to only display after all fields have been successfully 
+                                // changed.
+                               
+                               
                             }
 
                         }
-                        // OLD LOCATION
+                        // OLD LOCATION 
+                        System.out.println("Item Edited Successfully!");
                         break;
 
                     // Delete a library item
