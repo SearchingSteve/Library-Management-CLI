@@ -17,8 +17,8 @@ public abstract class LibraryItem {
     private Status status;
 
     // Constructor
-    public LibraryItem(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies, 
-        int totalCopies, Status status) {
+    public LibraryItem(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies,
+            int totalCopies, Status status) {
         this.itemID = itemID;
         this.title = title;
         this.author = author;
@@ -27,7 +27,6 @@ public abstract class LibraryItem {
         this.availableCopies = availableCopies;
         this.totalCopies = totalCopies;
         this.status = status;
-
     }
 
     // Getters and setters
@@ -79,11 +78,11 @@ public abstract class LibraryItem {
         this.availableCopies = availableCopies;
     }
 
-    public int getTotalCopies(){
+    public int getTotalCopies() {
         return totalCopies;
     }
 
-    public void setTotalCopies(int totalCopies){
+    public void setTotalCopies(int totalCopies) {
         this.totalCopies = totalCopies;
     }
 

@@ -145,9 +145,7 @@ public class Library {
         if (itemMap.containsKey(itemID)) {
             patronMap.values().forEach(patron -> {
                 if (patron.checkQuantityBorrowed(itemID) > 0) {
-                    System.out.println(
-                            "Item with ID " + itemID + " is borrowed by " + patron.getName() + ". Cannot delete.");
-                    return;
+                    patron.returnBorrowedItems(itemID, patron.checkQuantityBorrowed(itemID));
                 }
             });
             // NEED GARBAGE COLLECTION? - set all library items refenrences to null?
@@ -156,7 +154,10 @@ public class Library {
             System.out
                     .println("Item with ID " + itemID + " (Title: " + titleOfBookToBeDeleted + ")"
                             + " deleted successfully.");
+            // displayAllItems();
             itemMap.remove(itemID);
+            // displayAllItems();
+            bookToBeDeleted = null;
         } else {
             System.out.println("No item found with ID: " + itemID + ". No item deleted.");
         }
