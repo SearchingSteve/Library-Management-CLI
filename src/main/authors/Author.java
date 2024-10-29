@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import main.items.LibraryItem;
 
+
 public class Author {
     // ASSIGN ATTRIBUTES
     private String author_name;
@@ -56,8 +57,8 @@ public class Author {
             System.out.print("Enter author Date of Birth (YYYY-MM-DD): ");
             return false;
         }
-        try {
-
+        
+        try{
             parsedDate = new SimpleDateFormat("yyyy-MM-dd").parse(DOB);
         } catch (ParseException e) {
             // e.printStackTrace();
@@ -72,6 +73,15 @@ public class Author {
             return false;
         }
 
+        String[] dateParts = DOB.split("-");
+        int month = Integer.parseInt(dateParts[1]);
+        int day = Integer.parseInt(dateParts[2]);
+
+        if(month <1 || month >12 || day <1 || day> 31){
+            System.out.println("\nInvalid month or day ");
+            System.out.print("Enter author date of birth (YYYY-MM-DD): ");
+            return false;
+        }
         return true;
     }
 
