@@ -187,7 +187,6 @@ public class Library {
             patronMap.put(patron.getId(), patron);
         }
     }
-
     // Remove a patron from the library
     public void removePatron(Patron patron) {
         if (!patronMap.containsKey(patron.getId())) {
@@ -260,5 +259,7 @@ public class Library {
         }
 
     }
+
+
 
 }

@@ -20,6 +20,8 @@ import main.items.Book;
 import main.items.LibraryItem;
 import main.items.Periodical;
 import main.items.Status;
+import main.patrons.Student;
+import main.patrons.Employee;
 
 public class LibraryMenu {
 
@@ -45,10 +47,15 @@ public class LibraryMenu {
             System.out.println("3. Delete Library Item");
             System.out.println("4. Borrow Library Item");
             System.out.println("5. Return Library Item");
-            System.out.println("6. Edit a Patron");
-            System.out.println("7. Exit");
+            System.out.println("6. Add an Author ");
+            System.out.println("7. Edit an Author");
+            System.out.println("8. Delete an Author");
+            System.out.println("9. Add a Patron");
+            System.out.println("10.  Edit a Patron");
+            System.out.println("11. Delete a Patron");
+            System.out.println("12. Exit");
             System.out.println("----------------------------------------");
-            System.out.print("Enter your choice (1-7): ");
+            System.out.print("Enter your choice (1-12): ");
 
             try {
                 String input = scanner.nextLine();
@@ -502,6 +509,75 @@ public class LibraryMenu {
                         library.displayAllPatrons();
                         break;
                     case 6: 
+                    // add an author
+                    System.out.println("Add an Author... \n Enter Author ID: ");
+                    case 7: 
+                    // edit an author
+                    System.out.println("Edit an Author...\nEnter Author ID: ");
+                    case 8: 
+                    //delete an author 
+                    System.out.println("Delete an Author...\nEnter Author ID: ");
+
+                    case 9: 
+                    // add a patron
+                    String addPatronID;
+
+                    while(true){
+                        // prompt user to enter patron id
+                        System.out.println("Add a Patron...\nEnter Patron ID: ");
+                        addPatronID = scanner.nextLine().trim();
+                        // ensure id is not empty
+                        if(addPatronID.isEmpty()){
+                            System.out.println("ID cannot be empty.");
+                        // ensure id is not already in system
+                        }else if(library.getPatronByID(addPatronID) != null){
+                            System.out.println("This patron already exists.");
+                        }else{
+                            break;
+                        }
+                    }
+
+                    String patronType;
+                    while(true){
+                        // validate patrontype to be "Student" or "Employee"
+                        System.out.print("Enter patron type (student/employee): ");
+                        patronType = scanner.nextLine().trim();
+                        if(patronType.equalsIgnoreCase("Student") || patronType.equalsIgnoreCase("Employee")){
+                            break;
+                        }else if(patronType.isEmpty()){
+                            System.out.println("Patron type cannot be empty.");
+                        }else{
+                            System.out.println("Invalid patron type entered. Patron type must be student or employee");
+                        }
+                    }
+
+                    // prompt user to enter patron name
+                    System.out.println("Enter patron name: ");
+                    String patronName = scanner.nextLine();
+
+                    // prompt user to enter patron address
+                    System.out.println("Enter patron address: ");
+                    String patronAddress = scanner.nextLine();
+
+                    //prompt user to enter patron phone number
+                    System.out.println("Enter patron phone number: ");
+                    String patronPhoneNum = scanner.nextLine();
+
+                    Patron addedPatron;
+                    // if patron type = student, add new student
+                    if(patronType.equalsIgnoreCase("Student")){
+                        addedPatron = new Student(addPatronID, patronName, patronAddress, patronPhoneNum);
+                    }else{
+                        // if patron type = employee, add new employee
+                        addedPatron = new Employee(addPatronID, patronName, patronAddress, patronPhoneNum);
+                    }
+
+                    // add patron to patronMap
+                    library.addPatron(addedPatron);
+                    // display sucess messsage
+                    System.out.print("Patron added successfully!");
+
+                    case 10:
                     // edit a patron
                     // prompt user to enter patron ID
                     System.out.print("Edit a Patron...\nPlease Enter Patron ID: ");
@@ -551,18 +627,33 @@ public class LibraryMenu {
                     System.out.println("Patron Edited Sucessfully!");
                     break;
 
-                    case 7:
+                    case 11: 
+                    // delete a patron
+                    System.out.println("Delete a Patron...\nEnter Patron ID: ");
+                    patronID = scanner.nextLine();
+
+                    Patron patronToDelete = library.getPatronByID(patronID);
+                    if(patronToDelete == null){
+                        System.out.println("Patron" + patronID + "not found. Cannot be deleted");
+                    }else{
+                        library.removePatron(patronToDelete);
+                        System.out.println("Patron Deleted Successfully!");
+                    }
+
+                    break;
+                    
+                    case 12:
                         // exit menu
                         System.out.println("Exiting the system. Goodbye!");
                         break;
                     default:
-                        System.out.println("Invalid choice. Please enter a number between 1 and 7.");
+                        System.out.println("Invalid choice. Please enter a number between 1 and 12.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a numeric value.");
                 choice = 0; // Reset choice to 0 to re-enter the loop
             }
-        } while (choice != 7);
+        } while (choice != 12);
         scanner.close();
     }
 
