@@ -30,12 +30,24 @@ public abstract class Patron {
         return this.name;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
     public String getAddress() {
         return this.address;
     }
 
+    public void setAddress(String address){
+        this.address = address;
+    }
+
     public String getPhoneNumber() {
         return this.phoneNumber;
+    }
+
+    public void setPhoneNum(String phoneNumber){
+        this.phoneNumber = phoneNumber;
     }
 
     public Map<String, Integer> getBorrowedLibraryItems() {

@@ -45,9 +45,10 @@ public class LibraryMenu {
             System.out.println("3. Delete Library Item");
             System.out.println("4. Borrow Library Item");
             System.out.println("5. Return Library Item");
-            System.out.println("6. Exit");
+            System.out.println("6. Edit a Patron");
+            System.out.println("7. Exit");
             System.out.println("----------------------------------------");
-            System.out.print("Enter your choice (1-6): ");
+            System.out.print("Enter your choice (1-7): ");
 
             try {
                 String input = scanner.nextLine();
@@ -500,18 +501,68 @@ public class LibraryMenu {
                         library.displayAllItems();
                         library.displayAllPatrons();
                         break;
-                    case 6:
+                    case 6: 
+                    // edit a patron
+                    // prompt user to enter patron ID
+                    System.out.print("Edit a Patron...\nPlease Enter Patron ID: ");
+                    String editPatronID = scanner.nextLine();
+                    Patron patronToEdit = library.getPatronByID(editPatronID);
+
+                    // alert if patron cannot be found in system
+                    if(patronToEdit == null){
+                        System.out.println("Patron not found.");
+                        break;
+                    }
+
+                    // display current patron name
+                    System.out.println("Current Name: " + patronToEdit.getName());
+                    // prompt user to enter new patron name
+                    System.out.print("Enter new name (leave blank and hit enter to keep unchanged): ");
+                    String newPatronName = scanner.nextLine();
+
+                    // if empty, keep the same
+                    if(!newPatronName.isEmpty()){
+                        patronToEdit.setName(newPatronName);
+                    }
+
+                    // display current address
+                    System.out.println("Current Address: " + patronToEdit.getAddress());
+                    //prompt user to enter new address
+                    System.out.print("Enter new address (leave blank and hit enter to keep unchanged): ");
+                    String newPatronAddress = scanner.nextLine();
+
+                    // if empty, keep the same
+                    if(!newPatronAddress.isEmpty()){
+                        patronToEdit.setAddress(newPatronAddress);
+                    }
+
+                    // display current phone number
+                    System.out.println("Current Phone Number: " + patronToEdit.getPhoneNumber());
+                    // prompt user to enter new phone number
+                    System.out.print("Enter new phone number (leave blank and hit enter to keep unchanged): ");
+                    String newPatronPhone = scanner.nextLine();
+
+                    // if empty, keep the same
+                    if(!newPatronPhone.isEmpty()){
+                        patronToEdit.setPhoneNum(newPatronPhone);
+                    }
+
+                    // print success message
+                    System.out.println("Patron Edited Sucessfully!");
+                    break;
+
+                    case 7:
                         // exit menu
                         System.out.println("Exiting the system. Goodbye!");
                         break;
                     default:
-                        System.out.println("Invalid choice. Please enter a number between 1 and 6.");
+                        System.out.println("Invalid choice. Please enter a number between 1 and 7.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a numeric value.");
                 choice = 0; // Reset choice to 0 to re-enter the loop
             }
-        } while (choice != 6);
+        } while (choice != 7);
         scanner.close();
     }
 
