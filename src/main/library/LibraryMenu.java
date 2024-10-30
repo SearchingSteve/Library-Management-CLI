@@ -56,14 +56,12 @@ public class LibraryMenu {
 
                 switch (choice) {
                     // Add a library item
-                    // ** Error handling issues:
-                    // - If user does specify type as Book or Periodical, the program will crash.
-                    // Cannot build a new item without specifying one of these type.
+                 
                     case 1:
                         System.out.print(
                             // prompt user to enter type of libraryItem
                                 "Adding a new library item...\nEnter the type of Library item (Book/Periodical): ");
-                        String itemType = scanner.nextLine();
+                                String itemType = scanner.nextLine();
 
                         // validate library item type entered
                         if (!itemType.equalsIgnoreCase("Book") && !itemType.equalsIgnoreCase("Periodical")) {
@@ -185,20 +183,45 @@ public class LibraryMenu {
 
                         // Assume function to add book to inventory
                         if (itemType.equalsIgnoreCase("Book")) {
-                            System.out.print("Enter book type (e.g. Print, Electronic, Audio): ");
-                            String bookType = scanner.nextLine();
-                            newItem = new Book(itemID, title, author, ISBN, publisher, availableCopies,
+                            while(true){
+                                System.out.print("Enter book type ( Printed, Electronic, Audio): ");
+                                String bookType = scanner.nextLine();
+
+                                if (!bookType.equalsIgnoreCase("Printed") && !bookType.equalsIgnoreCase("Electronic") && !bookType.equalsIgnoreCase("Audio") ){
+                                    System.out.println("Book Type must be Printed, Electronic or Audio");
+                                }else{
+                                    // add new item if book Type is valid
+                                    newItem = new Book(itemID, title, author, ISBN, publisher, availableCopies,
                                     totalCopies, Status.AVAILABLE,
                                     bookType);
+
+                                    break;
+                                }
+                                
+                            }
+                            
                         }
 
                         // Assume function to add periodical to inventory
                         else if (itemType.equalsIgnoreCase("Periodical")) {
-                            System.out.print("Enter periodical type (e.g. Print, Electronic): ");
-                            String periodicalType = scanner.nextLine();
-                            newItem = new Periodical(itemID, title, author, ISBN, publisher, availableCopies,
+                            while (true){
+                                // prompt user to enter periodical type
+                                System.out.print("Enter periodical type ( Printed, Electronic): ");
+                                String periodicalType = scanner.nextLine();
+                                // validate periodical type to be electronic or printed 
+                                if (!periodicalType.equalsIgnoreCase("Printed") && !periodicalType.equalsIgnoreCase("Electronic")){
+                                    System.out.println("Periodical Type must be Printed or Electronic");
+                                }else{
+                                    // add new periodical if input is valid
+                                    newItem = new Periodical(itemID, title, author, ISBN, publisher, availableCopies,
                                     totalCopies, Status.AVAILABLE,
                                     periodicalType);
+
+                                    break;
+                                }
+                                
+                            }
+                           
                         }
 
                         library.addLibraryItem(newItem); // add new library item to library
