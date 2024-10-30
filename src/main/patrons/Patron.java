@@ -64,19 +64,19 @@ public abstract class Patron {
         this.phoneNumber = phoneNumber;
     }
 
-    public void deletePatron() {
-        this.name = null;
-        this.address = null;
-        this.phoneNumber = null;
-        borrowedLibraryItems = null;
-    }
+    // public void deletePatron() {
+    //     this.name = null;
+    //     this.address = null;
+    //     this.phoneNumber = null;
+    //     borrowedLibraryItems = null;
+    // }
 
-    // Methods to add and return borrowed items from the Patron's list
-    public void addBorrowedItems(String itemID, int quantity) {
+    // Methods to add and return borrowed item from the Patron's list
+    public void addBorrowedItem(String itemID, int quantity) {
         this.borrowedLibraryItems.put(itemID, (this.checkQuantityBorrowed(itemID) + quantity));
     }
 
-    public void returnBorrowedItems(String itemID, int quantity) {
+    public void returnBorrowedItem(String itemID, int quantity) {
         this.borrowedLibraryItems.remove(itemID, quantity);
 
         // Possible fix for the returns working only if the quantity is the same as
@@ -96,6 +96,8 @@ public abstract class Patron {
     public int checkQuantityBorrowed(String itemID) {
         return this.borrowedLibraryItems.getOrDefault(itemID, 0); // Return 0 if itemID is not found
     }
+
+    
 
     // Displays the Patron's information in a string format
     public String toString() {

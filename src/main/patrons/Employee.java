@@ -15,10 +15,11 @@ public class Employee extends Patron {
         super.editPatron(name, address, phoneNumber);
     }
 
-    // delete employee
-    public void deleteEmployee() {
-        super.deletePatron();
-    }
+    // DONT NEED - deletePatron() method sets object values to null. Handled by just setting the object to null, and in future garbage collection.
+    // // delete employee
+    // public void deleteEmployee() {
+    //     super.deletePatron();
+    // }
 
     // retrieve employee based on their ID
     public String getEmployeeId() {

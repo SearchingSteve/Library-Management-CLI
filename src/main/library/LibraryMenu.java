@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.util.Scanner;
 
 import main.patrons.Patron;
+import main.patrons.Student;
 import main.authors.Author;
 import main.items.Book;
 import main.items.LibraryItem;
@@ -31,11 +32,8 @@ public class LibraryMenu {
         Library library = new Library();
         int choice = 0;
 
-        library.initializeMockItems();
-        library.initializeMockPatrons();
-
-        library.displayAllItems();
-        library.displayAllPatrons();
+        // Initialize mock data -library items, authors, patrons
+        library.initializeMockData();
 
         do {
             System.out.println("----------------------------------------");
@@ -47,15 +45,18 @@ public class LibraryMenu {
             System.out.println("3. Delete Library Item");
             System.out.println("4. Borrow Library Item");
             System.out.println("5. Return Library Item");
-            System.out.println("6. Add an Author ");
-            System.out.println("7. Edit an Author");
-            System.out.println("8. Delete an Author");
-            System.out.println("9. Add a Patron");
-            System.out.println("10.  Edit a Patron");
-            System.out.println("11. Delete a Patron");
-            System.out.println("12. Exit");
+            System.out.println("6. Add Author");
+            System.out.println("7. Edit Author");
+            System.out.println("8. Delete Author");
+            System.out.println("9. Add Patron");
+            System.out.println("10. Edit Patron");
+            System.out.println("11. Delete Patron");
+            System.out.println("12. Display Library Items");
+            System.out.println("13. Display Patrons");
+            System.out.println("14. Display Authors");
+            System.out.println("15. Exit");
             System.out.println("----------------------------------------");
-            System.out.print("Enter your choice (1-12): ");
+            System.out.print("Enter your choice (1-15): ");
 
             try {
                 String input = scanner.nextLine();
@@ -117,8 +118,6 @@ public class LibraryMenu {
                         // prompt user to enter the authors DOB
                         System.out.print("Enter author Date of Birth (YYYY-MM-DD): ");
                         String authorDOBString = scanner.nextLine();
-
-
                         Date authorDOB = null;
 
                         while (true) {
@@ -148,9 +147,17 @@ public class LibraryMenu {
                             if (!ISBN.isEmpty()) {
                                 if (ISBN.matches("\\d{10}|\\d{13}")) {
                                     break;
-                                } else {
+                                }
+                                // Check if ISBN already exists in the library
+                                else if (library.getItemByID(ISBN) != null) {
+                                    System.out.println("Item with ISBN " + ISBN
+                                            + " already exists. Please enter a different ISBN.");
+                                }
+                                // Check if ISBN is 10 or 13 digits long
+                                else {
                                     System.out.println("ISBN must contain numbers only and be 10 or 13 digits long.");
                                 }
+                                // Check if ISBN is empty
                             } else {
                                 System.out.println("ISBN cannot be empty. Please enter a valid ISBN.");
                             }
@@ -233,9 +240,11 @@ public class LibraryMenu {
                         }
 
                         library.addLibraryItem(newItem); // add new library item to library
-                        System.out.println("Item added successfully!");
-                        library.displayAllItems();
-                        library.displayAllPatrons();
+                        // Also handles adding the author to the author list
+                        // and adding the item to the author's authored items list
+
+                        // library.displayAllItems();
+                        // library.displayAllPatrons();
                         break;
 
                     // Edit a library item
@@ -295,7 +304,7 @@ public class LibraryMenu {
                                             itemToEdit.setAuthor(new Author(newAuthorName, newAuthorDOB));
                                             break;
                                         } catch (ParseException e) {
-                                            
+
                                             newAuthorDOBString = scanner.nextLine();
                                         }
 
@@ -322,6 +331,11 @@ public class LibraryMenu {
                                     if (newISBN.matches("\\d{10}|\\d{13}")) {
                                         itemToEdit.setISBN(newISBN);
                                         break;
+                                    }
+                                    // Check if ISBN already exists in the library
+                                    else if (library.getItemByID(newISBN) != null) {
+                                        System.out.println("Item with ISBN " + newISBN
+                                                + " already exists. Please enter a different ISBN.");
                                     } else {
                                         System.out
                                                 .println("ISBN must contain numbers only and be 10 or 13 digits long.");
@@ -357,22 +371,22 @@ public class LibraryMenu {
 
                                 if (!newTotalCopies.isEmpty()) {
                                     try {
-                                            int newTotalCopiesInt = Integer.parseInt(newTotalCopies);
-                                            if(newTotalCopiesInt > 0 ){
-                                                itemToEdit.setTotalCopies(newTotalCopiesInt);
-                                                break;
-                                            }else{
-                                                System.err.println("Total Copies Must Exceed 0.");
-                                            }
-                                            
-                                    }catch (NumberFormatException e) {
+                                        int newTotalCopiesInt = Integer.parseInt(newTotalCopies);
+                                        if (newTotalCopiesInt > 0) {
+                                            itemToEdit.setTotalCopies(newTotalCopiesInt);
+                                            break;
+                                        } else {
+                                            System.err.println("Total Copies Must Exceed 0.");
+                                        }
+
+                                    } catch (NumberFormatException e) {
                                         System.out.println("Invalid input. Total copies must be a numeric value.");
                                     }
-                                    
-                                }else{
+
+                                } else {
                                     break;
                                 }
-                                
+
                             }
 
                             // edit available copies
@@ -400,16 +414,15 @@ public class LibraryMenu {
                                     } catch (NumberFormatException e) {
                                         System.out.println("Invalid input. Available copies must be a numeric value.");
                                     }
-                                }else{
+                                } else {
                                     break;
                                 }
                                 // NEW LOCATION (for success message)=> had to change success message back to old location.
                                 // success message was being printed every time the loop was iterated
                                 // through, whether the input was valid or invalid. moved it outside
-                                // the loop to only display after all fields have been successfully 
+                                // the loop to only display after all fields have been successfully
                                 // changed.
-                               
-                               
+
                             }
 
                         }
@@ -466,9 +479,6 @@ public class LibraryMenu {
                         // Lend item to patron
                         library.lendLibraryItem(itemToBorrow, patron, amountBorrowed);
                         System.out.println("Item borrowed successfully.");
-
-                        library.displayAllItems();
-                        library.displayAllPatrons();
                         break;
 
                     case 5:
@@ -504,19 +514,233 @@ public class LibraryMenu {
                             // Return item to library
                             library.returnLibraryItem(itemToReturn, patron, borrowedCopies);
                         }
-
-                        library.displayAllItems();
-                        library.displayAllPatrons();
                         break;
-                    case 6: 
-                    // add an author
-                    System.out.println("Add an Author... \n Enter Author ID: ");
-                    case 7: 
-                    // edit an author
-                    System.out.println("Edit an Author...\nEnter Author ID: ");
-                    case 8: 
-                    //delete an author 
-                    System.out.println("Delete an Author...\nEnter Author ID: ");
+
+
+                        
+                    // Add an author
+                    case 6:
+                        System.out.println("Adding an author..");
+                        System.out.print("Enter author name: ");
+                        authorName = scanner.nextLine();
+                        if (Author.getAuthorByName(authorName) != null) {
+                            System.out.println(
+                                    "Author " + authorName + " already exists. Please enter a different name.");
+                            break;
+                        }
+
+                        System.out.print("Enter author Date of Birth (YYYY-MM-DD): ");
+                        authorDOBString = scanner.nextLine();
+                        authorDOB = null;
+                        while (true) {
+                            if (Author.validateAuthorDOB(authorDOBString)) {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                try {
+                                    authorDOB = dateFormat.parse(authorDOBString);
+                                } catch (ParseException e) {
+                                    continue;
+                                }
+                                break;
+                            } else {
+                                authorDOBString = scanner.nextLine();
+                            }
+                        }
+                        author = new Author(authorName, authorDOB);
+                        library.addAuthor(author); // Add author to the author list
+
+                        // Prompt to add authored items to the author
+                        System.out.print("Would you like to add items authored by " + authorName + "? (Y/N): ");
+                        String addItems = scanner.nextLine();
+                        if (addItems.equalsIgnoreCase("Y")) {
+                            System.out.print("Enter the number of items to add: ");
+                            int numItems = scanner.nextInt();
+                            scanner.nextLine();
+                            for (int i = 0; i < numItems; i++) {
+                                ////
+
+                                System.out.print(
+                                        "Adding a new library item...\nEnter the type of Library item (Book/Periodical): ");
+                                itemType = scanner.nextLine();
+                                if (!itemType.equalsIgnoreCase("Book") && !itemType.equalsIgnoreCase("Periodical")) {
+                                    System.out
+                                            .println("Invalid item type. Please enter either 'Book' or 'Periodical'.");
+                                    break;
+                                }
+                                if (itemType.equalsIgnoreCase("Book")) {
+                                    System.out.print("Enter item ID: B");
+                                } else {
+                                    System.out.print("Enter item ID: P");
+
+                                }
+
+                                itemID = scanner.nextLine();
+                                if (itemID == null || itemID.isEmpty()) {
+                                    System.out.println(
+                                            "\u001B[31mItem ID cannot be empty. Please enter a valid item ID.\u001B[0m");
+                                    break;
+                                }
+                                if (itemType.equalsIgnoreCase("Book")) {
+                                    if (library.getItemByID("B" + itemID) != null) {
+                                        System.out.println(
+                                                "Item with ID B" + itemID
+                                                        + " already exists. Please enter a different ID.");
+                                        break;
+                                    }
+                                } else {
+                                    if (library.getItemByID("P" + itemID) != null) {
+                                        System.out.println(
+                                                "Item with ID P" + itemID
+                                                        + " already exists. Please enter a different ID.");
+                                        break;
+                                    }
+                                }
+
+                                System.out.print("Enter Title: ");
+                                title = scanner.nextLine();
+
+                                // NEW ISBN PROMPT
+                                ISBN = "";
+                                while (true) {
+                                    System.out.print("Enter ISBN: ");
+                                    ISBN = scanner.nextLine();
+
+                                    if (!ISBN.isEmpty()) {
+                                        if (ISBN.matches("\\d{10}|\\d{13}")) {
+                                            break;
+                                        }
+                                        // Check if ISBN already exists in the library
+                                        else if (library.getItemByID(ISBN) != null) {
+                                            System.out.println("Item with ISBN " + ISBN
+                                                    + " already exists. Please enter a different ISBN.");
+                                        }
+                                        // Check if ISBN is 10 or 13 digits long
+                                        else {
+                                            System.out.println(
+                                                    "ISBN must contain numbers only and be 10 or 13 digits long.");
+                                        }
+                                        // Check if ISBN is empty
+                                    } else {
+                                        System.out.println("ISBN cannot be empty. Please enter a valid ISBN.");
+                                    }
+                                }
+
+                                System.out.print("Enter publisher: ");
+                                publisher = scanner.nextLine();
+                                System.out.print("Enter total copies in the system: ");
+                                do {
+                                    totalCopies = scanner.nextInt();
+                                    if (totalCopies < 0) {
+                                        System.out.println(
+                                                "Total copies cannot be negative. Please enter a valid number.");
+                                    }
+                                } while (totalCopies < 0);
+
+                                System.out.print("Enter available copies: ");
+                                do {
+                                    availableCopies = scanner.nextInt();
+                                    if (availableCopies < 0) {
+                                        System.out.print(
+                                                "Available copies cannot be negative. Please enter a valid number.");
+                                        System.out.print("Enter available copies: ");
+                                    } else if (availableCopies > totalCopies) {
+                                        System.out.print(
+                                                "Available copies cannot exceed total copies. Please enter a valid number.");
+                                        System.out.print("Enter available copies: ");
+                                    }
+                                } while (availableCopies < 0 || availableCopies > totalCopies);
+
+                                scanner.nextLine();
+                                newItem = null;
+
+                                // Assume function to add book to inventory
+                                if (itemType.equalsIgnoreCase("Book")) {
+                                    System.out.print("Enter book type (e.g. Print, Electronic, Audio): ");
+                                    String bookType = scanner.nextLine();
+                                    newItem = new Book(itemID, title, author, ISBN, publisher, availableCopies,
+                                            totalCopies, Status.AVAILABLE,
+                                            bookType);
+                                }
+
+                                // Assume function to add periodical to inventory
+                                else if (itemType.equalsIgnoreCase("Periodical")) {
+                                    System.out.print("Enter periodical type (e.g. Print, Electronic): ");
+                                    String periodicalType = scanner.nextLine();
+                                    newItem = new Periodical(itemID, title, author, ISBN, publisher, availableCopies,
+                                            totalCopies, Status.AVAILABLE,
+                                            periodicalType);
+                                }
+
+                                library.addLibraryItem(newItem); // add new library item to library
+
+                                ////
+                            }
+                        }
+                        break;
+
+                    // Edit an author
+                    case 7:
+                        System.out.println("Editing an author..");
+                        authorName = "";
+                        while (true) {
+                            System.out.print("Enter author name to edit: ");
+                            authorName = scanner.nextLine();
+                            if (authorName.isEmpty()) {
+                                System.out.println("Author name cannot be empty.");
+                            } else {
+                                break;
+                            }
+                        }
+
+                        String newAuthorName = "";
+                        while (true) {
+                            System.out.print("Enter new author name: ");
+                            newAuthorName = scanner.nextLine();
+                            if (newAuthorName.isEmpty()) {
+                                System.out.println("New Author name cannot be empty.");
+                            } else {
+                                break;
+                            }
+                        }
+
+                        System.out.print("Enter author Date of Birth (YYYY-MM-DD): ");
+                        authorDOBString = scanner.nextLine();
+                        authorDOB = null;
+
+                        while (true) {
+                            if (Author.validateAuthorDOB(authorDOBString)) {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                try {
+                                    authorDOB = dateFormat.parse(authorDOBString);
+                                } catch (ParseException e) {
+                                    continue;
+                                }
+                                break;
+                            } else {
+                                authorDOBString = scanner.nextLine();
+                            }
+                        }
+                        // Edit author name to new author name and
+                        Author.editAuthor(authorName, newAuthorName, authorDOB);
+                        break;
+
+                    // Delete an author
+                    case 8:
+                        System.out.println("Deleting an author...");
+                        System.out.print("Enter author name to delete: ");
+                        authorName = scanner.nextLine();
+
+                        // Remove the author from the author list and delete their items from the
+                        // library
+                        if (Author.removeAuthor(authorName)) {
+                            library.removeAuthorItems(Author.getAuthorByName(authorName)); // Get author object by name
+                                                                                           // then pass the object to
+                                                                                           // remove their items from
+                                                                                           // library
+                            System.out.println("Author " + authorName + " and all associated items have been deleted.");
+                        } else {
+                            System.out.println("Author " + authorName + " not found.");
+                        }
+                        break;
 
                     case 9: 
                     // add a patron
@@ -552,30 +776,42 @@ public class LibraryMenu {
                     }
 
                     // prompt user to enter patron name
-                    System.out.println("Enter patron name: ");
+                    System.out.print("Enter patron name: ");
                     String patronName = scanner.nextLine();
-
+                    if (patronName.isEmpty()) {
+                        System.out.println("Patron name cannot be empty. Please enter a valid name.");
+                        break;
+                    }
                     // prompt user to enter patron address
-                    System.out.println("Enter patron address: ");
+                    System.out.print("Enter patron address: ");
                     String patronAddress = scanner.nextLine();
-
-                    //prompt user to enter patron phone number
-                    System.out.println("Enter patron phone number: ");
+                    if (patronAddress.isEmpty()) {
+                        System.out.println("Patron address cannot be empty. Please enter a valid address.");
+                        break;
+                    }
+                    // prompt user to enter patron phone number
+                    System.out.print("Enter patron phone number: ");
                     String patronPhoneNum = scanner.nextLine();
-
-                    Patron addedPatron;
+                    if (patronPhoneNum.isEmpty()) {
+                        System.out
+                                .println("Patron phone number cannot be empty. Please enter a valid phone number.");
+                        break;
+                    }
+                    
+                    Patron newPatron;
                     // if patron type = student, add new student
                     if(patronType.equalsIgnoreCase("Student")){
-                        addedPatron = new Student(addPatronID, patronName, patronAddress, patronPhoneNum);
+                        newPatron = new Student(addPatronID, patronName, patronAddress, patronPhoneNum);
                     }else{
                         // if patron type = employee, add new employee
-                        addedPatron = new Employee(addPatronID, patronName, patronAddress, patronPhoneNum);
+                        newPatron = new Employee(addPatronID, patronName, patronAddress, patronPhoneNum);
                     }
 
                     // add patron to patronMap
-                    library.addPatron(addedPatron);
+                    library.addPatron(newPatron);
                     // display sucess messsage
                     System.out.print("Patron added successfully!");
+                    
 
                     case 10:
                     // edit a patron
@@ -627,8 +863,8 @@ public class LibraryMenu {
                     System.out.println("Patron Edited Sucessfully!");
                     break;
 
+                    // Delete a patron
                     case 11: 
-                    // delete a patron
                     System.out.println("Delete a Patron...\nEnter Patron ID: ");
                     patronID = scanner.nextLine();
 
@@ -639,21 +875,44 @@ public class LibraryMenu {
                         library.removePatron(patronToDelete);
                         System.out.println("Patron Deleted Successfully!");
                     }
-
                     break;
-                    
+
+                    // Display library items
                     case 12:
-                        // exit menu
+                        System.out.print("Displaying library items...");
+                        System.out.println(
+                                "Enter itemID's to display followed by a , (comma) between each itemID or blank to display all items: ");
+                        String itemIDs = scanner.nextLine();
+                        library.displayItems(itemIDs);
+
+                    // Display patrons
+                    case 13:
+                        System.out.print("Displaying patrons...");
+                        System.out.println(
+                                "Enter patronID's to display followed by a , (comma) between each patronID or blank to display all patrons: ");
+                        String patronIDs = scanner.nextLine();
+                        library.displayPatrons(patronIDs);
+
+                    // Display Authors
+                    case 14:
+                        System.out.print("Displaying authors...");
+                        System.out.println(
+                                "Enter author names to display followed by a , (comma) between each author name or blank to display all authors: ");
+                        String authorNames = scanner.nextLine();
+                        Author.displayAuthors(authorNames);
+
+                    case 15:
                         System.out.println("Exiting the system. Goodbye!");
                         break;
                     default:
-                        System.out.println("Invalid choice. Please enter a number between 1 and 12.");
+                        System.out.println("Invalid choice. Please enter a number between 1 and 15.");
+
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a numeric value.");
                 choice = 0; // Reset choice to 0 to re-enter the loop
             }
-        } while (choice != 12);
+        } while (choice != 15);
         scanner.close();
     }
 

@@ -16,10 +16,11 @@ public class Student extends Patron {
         super.editPatron(name, address, phoneNumber);
     }
 
-    // delete a student
-    public void deleteStudent() {
-        super.deletePatron();
-    }
+    // DONT NEED - deletePatron() method sets object values to null. Handled by just setting the object to null, and in future garbage collection.
+    // // delete a student
+    // public void deleteStudent() {
+    //     super.deletePatron();
+    // }
 
     // retrieve student based on their ID
     public String getStudentId() {
