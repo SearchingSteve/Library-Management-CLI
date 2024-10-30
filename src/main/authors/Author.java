@@ -44,10 +44,12 @@ public class Author {
         return author_name;
     }
 
+    // create a list of library items associated with each author
     public List<LibraryItem> getListOfItems() {
         return listOfItems;
     }
 
+    // validate author DOB object for menu error handling
     public static boolean validateAuthorDOB(String DOB) {
         Date currentDate = new Date();
         Date parsedDate = null;
