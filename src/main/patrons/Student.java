@@ -1,13 +1,10 @@
 package main.patrons;
-// Student is a subclass of Patron
 
 /**
  * Student class is a subclass of {@link Patron} that represents a student patron 
  * in the library system. It inherits all attributes and methods from Patron.
  */
 public class Student extends Patron {
-
-    // CONSTRUCTOR
 
     /**
      * Constructs a new Student object with the specified attributes.
@@ -22,10 +19,6 @@ public class Student extends Patron {
         super("S" + studentId, name, address, phoneNumber);
     }
 
-    // METHODS 
-
-    // edit a student
-
     /**
      * Updates the student's contact information.
      * 
@@ -37,16 +30,12 @@ public class Student extends Patron {
         super.editPatron(name, address, phoneNumber);
     }
 
-    // delete a student
-
     /**
      * Deletes the student's information and clears borrowed items.
      */
     public void deleteStudent() {
         super.deletePatron();
     }
-
-    // retrieve student based on their ID
 
     /**
      * Retrieves the student's unique id.
@@ -57,8 +46,6 @@ public class Student extends Patron {
         return this.getId();
     }
 
-    // type = student
-
     /**
      * Gets the type of patron, which is "Student" for this class.
      * 
@@ -68,8 +55,6 @@ public class Student extends Patron {
     public String getType() {
         return "Student";
     }
-
-    // display values to user 
 
     /**
      * Returns a string representation of the student, including contact 
