@@ -24,9 +24,21 @@ import main.items.Status;
 import main.patrons.Student;
 import main.patrons.Employee;
 
+/**
+ * The LibraryMenu class provides a command-line interface for managing library items, authors, and patrons.
+ * Users can add, edit, delete, borrow, and return library items; manage authors and patrons; and display data.
+ */
+
 public class LibraryMenu {
 
     // create a list of library items to be used in menu cases
+
+    /**
+     * Main method to display the library management menu and handle user input.
+     * Users can select various options to interact with library items, authors, and patrons.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Library library = new Library();
@@ -35,6 +47,9 @@ public class LibraryMenu {
         // Initialize mock data -library items, authors, patrons
         library.initializeMockData();
 
+    /**
+     * Displays the library management menu with options for managing items, authors, and patrons.
+     */
         do {
             System.out.println("----------------------------------------");
             System.out.println("Welcome to the Library Management System");
@@ -66,6 +81,12 @@ public class LibraryMenu {
                 switch (choice) {
                     // Add a library item
 
+                        /**
+                        * Adds a new library item based on user input.
+                        *
+                        * @param scanner Scanner object for reading user input.
+                        * @param library The library instance to which the item is added.
+                         */
                     case 1:
                         String itemType = "";
                         System.out.println("Adding a new library item...");
@@ -281,6 +302,13 @@ public class LibraryMenu {
                         break;
 
                     // Edit a library item
+
+                        /**
+                        * Edits an existing library item based on user input.
+                         *
+                         * @param scanner Scanner object for reading user input.
+                         * @param library The library instance from which the item is edited.
+                        */
                     case 2:
                         System.out.print(
                                 "Editing an existing library item...\nPlease enter item ID (leave blank to exit this step): ");
@@ -483,13 +511,27 @@ public class LibraryMenu {
                         break;
 
                     // Delete a library item
+
+                        /**
+                        * Deletes a library item based on user input.
+                        *
+                        * @param scanner Scanner object for reading user input.
+                        * @param library The library instance from which the item is deleted.
+                         */
                     case 3:
                         System.out.print("Deleting an existing library item...\nPlease enter item ID: ");
                         String deleteItemID = scanner.nextLine();
                         library.removeLibraryItem(deleteItemID);
                         break;
 
+
                     // Borrow a library item
+                        /**
+                        * Borrows a library item by a patron based on user input.
+                         *
+                         * @param scanner Scanner object for reading user input.
+                         * @param library The library instance from which the item is borrowed.
+                         */
                     case 4:
                         System.out.print("Borrowing a library item...\nPlease enter item ID: ");
                         String borrowItemID = scanner.nextLine();
@@ -533,6 +575,12 @@ public class LibraryMenu {
                         System.out.println("Item borrowed successfully.");
                         break;
 
+                        /**
+                        * Returns a borrowed library item based on user input.
+                        *
+                         * @param scanner Scanner object for reading user input.
+                         * @param library The library instance to which the item is returned.
+                        */
                     case 5:
                         // Add logic to return a library item
                         System.out.print("Returning a library item...\nPlease enter item ID: ");
@@ -569,6 +617,12 @@ public class LibraryMenu {
                         break;
 
                     // Add an author
+                    /**
+                     * Adds a new author based on user input.
+                    *
+                    * @param scanner Scanner object for reading user input.
+                    * @param library The library instance where the author is added.
+                     */
                     case 6:
                         System.out.println("Adding an author..");
                         authorName = "";
@@ -758,6 +812,13 @@ public class LibraryMenu {
                         break;
 
                     // Edit an author
+
+                    /**
+                    * Edits an existing author based on user input.
+                    *
+                    * @param scanner Scanner object for reading user input.
+                    */
+
                     case 7:
                         System.out.println("Editing an author..");
                         authorName = "";
@@ -804,6 +865,13 @@ public class LibraryMenu {
                         break;
 
                     // Delete an author
+
+                    /**
+                    * Deletes an author and all their associated items from the library based on user input.
+                    *
+                    * @param scanner Scanner object for reading user input.
+                    * @param library The library instance from which the author is deleted.
+                    */
                     case 8:
                         System.out.println("Deleting an author...");
                         System.out.print("Enter author name to delete: ");
@@ -822,6 +890,13 @@ public class LibraryMenu {
                         }
                         break;
 
+
+                    /**
+                    * Adds a new patron based on user input.
+                    *
+                    * @param scanner Scanner object for reading user input.
+                    * @param library The library instance where the patron is added.
+                    */
                     case 9:
                         // add a patron
                         String addPatronID;
@@ -894,6 +969,12 @@ public class LibraryMenu {
                         System.out.print("Patron added successfully!");
                         break;
 
+                        /**
+                        * Edits an existing patron based on user input.
+                        *
+                        * @param scanner Scanner object for reading user input.
+                        * @param library The library instance from which the patron is edited.
+                        */
                     case 10:
                         // edit a patron
                         // prompt user to enter patron ID
@@ -944,6 +1025,12 @@ public class LibraryMenu {
                         System.out.println("Patron Edited Sucessfully!");
                         break;
 
+                        /**
+                        * Deletes a patron from the library based on user input.
+                        *
+                        * @param scanner Scanner object for reading user input.
+                        * @param library The library instance from which the patron is deleted.
+                        */
                     // Delete a patron
                     case 11:
                         System.out.println("Delete a Patron...\nEnter Patron ID: ");
@@ -959,6 +1046,13 @@ public class LibraryMenu {
                         break;
 
                     // Display library items
+
+                    /**
+                    * Displays library items based on user input.
+                    *
+                    * @param scanner Scanner object for reading user input.
+                    * @param library The library instance whose items are displayed.
+                    */
                     case 12:
                         System.out.println("Displaying library items...");
                         System.out.println(
@@ -973,6 +1067,13 @@ public class LibraryMenu {
                         scanner.nextLine();
                         break;
                     // Display patrons
+
+                    /**
+                     * Displays patrons based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     * @param library The library instance whose patrons are displayed.
+                     */
                     case 13:
                         System.out.println("Displaying patrons...");
                         System.out.println(
@@ -987,6 +1088,12 @@ public class LibraryMenu {
                         scanner.nextLine();
                         break;
                     // Display Authors
+
+                    /**
+                     * Displays authors based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     */
                     case 14:
                         System.out.println("Displaying authors...");
                         System.out.println(
