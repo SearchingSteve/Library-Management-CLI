@@ -8,6 +8,7 @@ public class Periodical extends LibraryItem {
     private String periodicalType;
 
     // CONSTRUCTOR
+    // include all libraryitem params and periodicalType (specifc to this subclass)
     public Periodical(String itemID, String title, Author author,  String ISBN, String publisher, int availableCopies, int totalCopies,  Status status,
             String periodicalType) {
         super("P" + itemID, title, author, ISBN, publisher, availableCopies, totalCopies, status);

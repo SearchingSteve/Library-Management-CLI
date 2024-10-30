@@ -1,5 +1,7 @@
+// declare package 
 package main.library;
 
+// import required libraries 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
+// import required files
 import main.items.Book;
 import main.items.LibraryItem;
 import main.items.Periodical;
@@ -19,10 +22,14 @@ import main.patrons.Student;
 
 // Main class for the library
 public class Library {
+    // create maps for LibraryItem and Patron so that adding, deleting or editing a field/item/patron
+    // is easier - all items can be located through a match (id for example) rather than a loop being 
+    // iterated through (alternative option) which would take longer and require validation.
     private static HashMap<String, LibraryItem> itemMap = new HashMap<>(); // String = itemID
     private static HashMap<String, Patron> patronMap = new HashMap<>(); // String = patronID
 
     public void initializeMockItems() {
+        // adding mock LibraryItems and Patrons as there is no database/memory connected to the system.
         // Adding books first
         addLibraryItem(new Book("001", "Effective Java", new Author("Joshua Bloch", parseDate("1970-01-01")),
                 "1234567890", "Addison-Wesley", 10, 11, Status.AVAILABLE, "Print"));
@@ -63,6 +70,7 @@ public class Library {
         addPatron(new Employee("010", "Sally Brown", "3344 Birch St, Springfield, IL", "789-555-3344"));
     }
 
+    // parse date objects for DOB in menu cases
     private Date parseDate(String date) {
         try {
             return new SimpleDateFormat("yyyy-MM-dd").parse(date);
@@ -72,26 +80,31 @@ public class Library {
         }
     }
 
+    // returns a list of all library items
     public List<LibraryItem> getAllItems() {
         return new ArrayList<>(itemMap.values());
     }
 
+    // displays all library items
     public void displayAllItems() {
         for (LibraryItem item : itemMap.values()) {
             System.out.println(item);
         }
     }
 
+    // returns a list of all patrons
     public List<Patron> getAllPatrons() {
         return new ArrayList<>(patronMap.values());
     }
 
+    // displays all patrons
     public void displayAllPatrons() {
         for (Patron patron : patronMap.values()) {
             System.out.println(patron);
         }
     }
 
+    // finds library items based on ID, returns null if no ID is found within the system
     public LibraryItem getItemByID(String itemID) {
         if (itemMap.containsKey(itemID)) {
             return itemMap.get(itemID);
@@ -101,6 +114,7 @@ public class Library {
         }
     }
 
+    // finds a patron based on their ID, returns null if no ID is found within the system
     public Patron getPatronByID(String patronID) {
         if (patronMap.containsKey(patronID)) {
             return patronMap.get(patronID);
@@ -144,19 +158,21 @@ public class Library {
     public void removeLibraryItem(String itemID) {
         if (itemMap.containsKey(itemID)) {
             patronMap.values().forEach(patron -> {
+                // ensures item is not borrowed before its deleted, removed item
                 if (patron.checkQuantityBorrowed(itemID) > 0) {
                     patron.returnBorrowedItems(itemID, patron.checkQuantityBorrowed(itemID));
                 }
             });
-            // NEED GARBAGE COLLECTION? - set all library items refenrences to null?
+            
+            
             LibraryItem bookToBeDeleted = itemMap.get(itemID);
             String titleOfBookToBeDeleted = bookToBeDeleted.getTitle();
             System.out
                     .println("Item with ID " + itemID + " (Title: " + titleOfBookToBeDeleted + ")"
                             + " deleted successfully.");
-            // displayAllItems();
-            itemMap.remove(itemID);
-            // displayAllItems();
+            // removes item from library
+            itemMap.remove(itemID); 
+            // deletes references to item
             bookToBeDeleted = null;
         } else {
             System.out.println("No item found with ID: " + itemID + ". No item deleted.");

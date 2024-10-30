@@ -9,7 +9,7 @@ public class Book extends LibraryItem {
 
     
     // CONSTRUCTOR
-
+    // include all library items params and add bookType (specific to this subclass)
     public Book(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies, int totalCopies, Status status, String bookType) {
         super("B" +itemID, title, author, ISBN, publisher, availableCopies, totalCopies, status);
         this.bookType = bookType;
