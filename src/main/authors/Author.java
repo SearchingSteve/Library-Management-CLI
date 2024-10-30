@@ -45,12 +45,10 @@ public class Author {
         return author_name;
     }
 
-
     public List<Author> getAllAuthors() {
         return new ArrayList<>(Author.authorList);
     }
 
-    
     public List<LibraryItem> getAuthoredItems() {
         return authoredItems;
     }
@@ -62,6 +60,12 @@ public class Author {
 
         if (DOB == null || DOB.isEmpty()) {
             System.out.println("\nDate of birth cannot be empty.");
+            System.out.print("Enter author Date of Birth (YYYY-MM-DD): ");
+            return false;
+        }
+
+        if (!DOB.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            System.out.println("\nInvalid date format. Please use the format YYYY-MM-DD.");
             System.out.print("Enter author Date of Birth (YYYY-MM-DD): ");
             return false;
         }
@@ -85,10 +89,25 @@ public class Author {
         int month = Integer.parseInt(dateParts[1]);
         int day = Integer.parseInt(dateParts[2]);
 
-        if (month < 1 || month > 12 || day < 1 || day > 31) {
-            System.out.println("\nInvalid month or day ");
+        if (month < 1 || month > 12) {
+            System.out.println("\nMonth must be between 1 and 12.");
             System.out.print("Enter author date of birth (YYYY-MM-DD): ");
             return false;
+        } else if (day < 1 || day > 31) {
+            System.out.println("\nDay must be between 1 and 31.");
+            System.out.print("Enter author date of birth (YYYY-MM-DD): ");
+            return false;
+        } else if ((month == 4 || month == 6 || month == 9 || month == 11) && day == 31) {
+            System.out.println("\nMonth " + month + " does not have 31 days.");
+            System.out.print("Enter author date of birth (YYYY-MM-DD): ");
+            return false;
+        } else if (month == 2) {
+            int year = Integer.parseInt(dateParts[0]);
+            if (day > 29 || (day == 29 && !((year % 4 == 0 && year % 100 != 0) || year % 400 == 0))) {
+                System.out.println("\nFebruary " + year + " does not have " + day + " days.");
+                System.out.print("Enter author date of birth (YYYY-MM-DD): ");
+                return false;
+            }
         }
         return true;
     }
@@ -165,7 +184,6 @@ public class Author {
         System.out.println("Library item " + item.getTitle() + "removed successfully!");
     }
 
-
     public static Author getAuthorByName(String authorName) {
         for (Author author : authorList) {
             if (author.getName().equals(authorName)) {
@@ -174,7 +192,6 @@ public class Author {
         }
         return null;
     }
-
 
     // displayAuthors method displays all authors or authors with given names
     public static void displayAuthors(String... authorNames) {
@@ -185,9 +202,9 @@ public class Author {
             // Display authors for the provided names
             for (String name : authorNames) {
                 Author foundAuthor = authorList.stream()
-                    .filter(author -> author.getName().equalsIgnoreCase(name))
-                    .findFirst()
-                    .orElse(null);
+                        .filter(author -> author.getName().equalsIgnoreCase(name))
+                        .findFirst()
+                        .orElse(null);
                 if (foundAuthor != null) {
                     System.out.println(foundAuthor);
                 } else {
