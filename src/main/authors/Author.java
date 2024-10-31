@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import main.items.LibraryItem;
 import main.library.Library;
-import main.library.LibraryMenu;
 
 /**
  * Author class represents an author in the library system, containing
