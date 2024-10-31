@@ -2,13 +2,13 @@
 
 # Table of Contents
 
-- [Source Code Structure](#source-code-structure)
-- [Build Process](#build-process)
-  - [Requirements](#requirements)
-  - [Compilation and Execution](#compilation-and-execution)
-- [Compiler Dependencies](#compiler-dependencies)
-- [Theoretical Database Design](#theoretical-database-design)
-- [Retrieving and Contributing to the Repository](#retrieving-and-contributing-to-the-repository)
+- [Source Code Structure](source-code-structure)
+- [Build Process](build-process)
+  - [Requirements](requirements)
+  - [Compilation and Execution](compilation-and-execution)
+- [Compiler Dependencies](compiler-dependencies)
+- [Theoretical Database Design](theoretical-database-design)
+- [Retrieving and Contributing to the Repository](retrieving-source-code-from-github-repository)
 
 ## Source Code Structure
 ```
