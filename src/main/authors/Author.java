@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import main.items.LibraryItem;
 
-
 /**
- * Author class represents an author in the library system, containing 
- * attributes for the author's name, date of birth, and associated library items.
+ * Author class represents an author in the library system, containing
+ * attributes for the author's name, date of birth, and associated library
+ * items.
  * It also provides methods to manage authors in a simulated database.
  */
 public class Author {
@@ -21,16 +21,17 @@ public class Author {
     /** List of library items authored by this author. */
     private List<LibraryItem> authoredItems;
 
-    /** 
-     * Static list to keep track of all authors in the system. 
+    /**
+     * Static list to keep track of all authors in the system.
      * Simulates an in-memory database.
      */
     public static List<Author> authorList = new ArrayList<>();
 
     /**
      * Constructs an Author with the given name and date of birth.
+     * 
      * @param author_name The author's name.
-     * @param DOB The author's date of birth.
+     * @param DOB         The author's date of birth.
      */
     public Author(String author_name, Date DOB) {
         this.author_name = author_name;
@@ -95,7 +96,7 @@ public class Author {
     }
 
     /**
-     * Validates the date of birth input for an author based on specified 
+     * Validates the date of birth input for an author based on specified
      * limitations (date format and that it is not a future date).
      *
      * @param DOB The date of birth as a string in the format "YYYY-MM-DD".
@@ -180,7 +181,7 @@ public class Author {
      *
      * @param oldName The current name of the author to be edited.
      * @param newName The new name for the author.
-     * @param newDOB The new date of birth for the author.
+     * @param newDOB  The new date of birth for the author.
      * @return True if the author was edited successfully; otherwise, false.
      */
     public static boolean editAuthor(String oldName, String newName, Date newDOB) {
@@ -192,13 +193,13 @@ public class Author {
                 return true;
             }
         }
-
         System.out.println("Author " + newName + "is not currently in the system. cannot edit.");
         return false;
     }
 
     /**
-     * Removes an author and their associated items from the system after confirmation.
+     * Removes an author and their associated items from the system after
+     * confirmation.
      *
      * @param authorName The name of the author to be removed.
      * @return True if the author was removed successfully; otherwise, false.
@@ -238,7 +239,6 @@ public class Author {
      */
     public void addAuthoredItem(LibraryItem item) {
         authoredItems.add(item);
-
         System.out.println("Library item " + item.getTitle() + "added successfully!");
     }
 
@@ -249,7 +249,6 @@ public class Author {
      */
     public void removeAuthoredItem(LibraryItem item) {
         authoredItems.remove(item);
-
         System.out.println("Library item " + item.getTitle() + "removed successfully!");
     }
 
@@ -259,7 +258,6 @@ public class Author {
      * @param authorName The name of the author to be retrieved.
      * @return The author with the specified name, or null if not found.
      */
-
     public static Author getAuthorByName(String authorName) {
         for (Author author : authorList) {
             if (author.getName().equals(authorName)) {
@@ -272,25 +270,31 @@ public class Author {
     /**
      * Displays information of authors with the specified names.
      *
-     * @param authorNames Optional names of authors to display
+     * @param authorNames Optional names of authors to display; if empty or blank,
+     *                    displays all authors.
      */
     public static void displayAuthors(String... authorNames) {
-        if (authorNames.length == 0) {
-            // No author names provided, display all authors
-            authorList.forEach(author -> System.out.println(author));
+        // Check if input is empty or consists of a single blank entry
+        if (authorNames.length == 0 || (authorNames.length == 1 && authorNames[0].isBlank())) {
+            // No author names provided or a blank input, display all authors
+            authorList.forEach(author -> System.out.println(author.getName() + " - Date of Birth: " + author.getDOB()));
         } else {
             // Display authors for the provided names
             for (String name : authorNames) {
-                Author foundAuthor = authorList.stream()
-                        .filter(author -> author.getName().equalsIgnoreCase(name))
-                        .findFirst()
-                        .orElse(null);
-                if (foundAuthor != null) {
-                    System.out.println(foundAuthor);
-                } else {
-                    System.out.println("Author with name: " + name + " not found.");
+                final String trimmedName = name.trim(); // Trim to handle any extra spaces
+                if (!trimmedName.isEmpty()) { // Only attempt lookup for non-empty names
+                    Author foundAuthor = authorList.stream()
+                            .filter(author -> author.getName().equalsIgnoreCase(trimmedName))
+                            .findFirst()
+                            .orElse(null);
+                    if (foundAuthor != null) {
+                        System.out.println(foundAuthor.getName() + " - Date of Birth: " + foundAuthor.getDOB());
+                    } else {
+                        System.out.println("Author with name: " + trimmedName + " not found.");
+                    }
                 }
             }
         }
     }
+
 }

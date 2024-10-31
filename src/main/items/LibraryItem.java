@@ -98,8 +98,5 @@ public abstract class LibraryItem {
     // override in book/periodical subclasses - getItemType())
     public abstract String getItemType(); // if using same method name getItemType() in book/periodicals wiht @override
 
-    // No setItemType() method here as we don't want to change the type of an item
-    // once it's created
-
     // ADDITIONAL METHODS FOR BOOK/PERIODICAL SUBCLASSES
 }

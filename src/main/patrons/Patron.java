@@ -64,13 +64,6 @@ public abstract class Patron {
         this.phoneNumber = phoneNumber;
     }
 
-    // public void deletePatron() {
-    //     this.name = null;
-    //     this.address = null;
-    //     this.phoneNumber = null;
-    //     borrowedLibraryItems = null;
-    // }
-
     // Methods to add and return borrowed item from the Patron's list
     public void addBorrowedItem(String itemID, int quantity) {
         this.borrowedLibraryItems.put(itemID, (this.checkQuantityBorrowed(itemID) + quantity));
