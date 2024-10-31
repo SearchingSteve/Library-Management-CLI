@@ -20,15 +20,15 @@ The Library Management System is a comprehensive software tool designed to manag
 
 ### User Documentation
 Find detailed information on what the application does, class descriptions, how to start and access the application, and a class diagram with associations between classes:
-[User Documentation](.docs/User_Documentation.md)
+[User Documentation](.docs/UserDocumentation.md)
 
 ### Development Documentation
 Contains the source code structure, build process, compiler dependencies, theoretical database design, and instructions for contributing to the project:
-[Development Documentation](.docs/Development_Documentation.md)
+[Development Documentation](.docs/DevelopmentDocumentation.md)
 
 ### Deployment Documentation
 Step-by-step instructions on installing and running the application in various environments:
-[Deployment Documentation](.docs/Deployment_Documentation.md)
+[Deployment Documentation](.docs/DeploymentDocumentation.md)
 
 ## Quick Start
 To get a local copy up and running, follow these simple steps:
