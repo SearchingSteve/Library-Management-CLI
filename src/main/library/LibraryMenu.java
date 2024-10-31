@@ -277,8 +277,6 @@ public class LibraryMenu {
                      * @param library The library instance from which the item is edited.
                      */
                     case 2:
-                    String testAuthor = "Joshua Bloch";
-                    Author.displayAuthoredItems(testAuthor);
                         System.out.print(
                                 "Editing an existing library item...\nPlease enter item ID (leave blank to exit this step): ");
                         String editItemID = scanner.nextLine();
@@ -807,23 +805,8 @@ public class LibraryMenu {
                      * @param library The library instance where the patron is added.
                      */
                     case 9:
-                        String addPatronID;
-                        while (true) {
-                            // prompt user to enter patron id
-                            System.out.println("Add a Patron...\nEnter Patron ID: ");
-                            addPatronID = scanner.nextLine().trim();
-                            // ensure id is not empty
-                            if (addPatronID.isEmpty()) {
-                                System.out.println("ID cannot be empty.");
-                                // ensure id is not already in system
-                            } else if (library.getPatronByID(addPatronID) != null) {
-                                System.out.println("This patron already exists.");
-                            } else {
-                                break;
-                            }
-                        }
 
-                        String patronType;
+                        String patronType = "";
                         while (true) {
                             // validate patrontype to be "Student" or "Employee"
                             System.out.print("Enter patron type (student/employee): ");
@@ -837,7 +820,60 @@ public class LibraryMenu {
                                         "Invalid patron type entered. Patron type must be student or employee");
                             }
                         }
+                        String addPatronID = "";
+                        while (true) {
+                            // Prompt user to enter patron ID and append "S" or "E" to the start based on
+                            // item
+                            // type
+                            if (patronType.equalsIgnoreCase("Student")) {
+                                // ID starts with "S" if Student
+                                System.out.print("Enter patron ID: S");
+                            } else {
+                                // ID starts with "E" if Employee
+                                System.out.print("Enter patron ID: E");
+                            }
 
+                            // Validate patron ID entered to not be blank, and display messages if item is
+                            // already in the system
+                            addPatronID = scanner.nextLine();
+                            if (addPatronID == null || addPatronID.isEmpty()) {
+                                System.out.println(
+                                        "\u001B[31mPatron ID cannot be empty. Please enter a valid ID.\u001B[0m");
+                            } else if (patronType.equalsIgnoreCase("Student")) {
+                                if (library.validatePatronByID("S" + addPatronID) != null) {
+                                    System.out.println(
+                                            "Item with ID S" + addPatronID
+                                                    + " already exists. Please enter a different ID.");
+                                } else {
+                                    break;
+                                }
+                            } else if (patronType.equalsIgnoreCase("Employee")) {
+                                if (library.validatePatronByID("E" + addPatronID) != null) {
+                                    System.out.println(
+                                            "Item with ID E" + addPatronID
+                                                    + " already exists. Please enter a different ID.");
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+
+                        // String addPatronID;
+                        // while (true) {
+                        // // prompt user to enter patron id
+                        // System.out.print("Add a Patron...\nEnter Patron ID: (DO NOT NEED TO ADD
+                        // PREFIX) ");
+                        // addPatronID = scanner.nextLine().trim();
+                        // // ensure id is not empty
+                        // if (addPatronID.isEmpty()) {
+                        // System.out.println("ID cannot be empty.");
+                        // // ensure id is not already in system
+                        // } else if (library.validatePatronByID(addPatronID) != null) {
+                        // System.out.println("This patron already exists.");
+                        // } else {
+                        // break;
+                        // }
+                        // }
                         // prompt user to enter patron name
                         System.out.print("Enter patron name: ");
                         String patronName = scanner.nextLine();
@@ -873,7 +909,7 @@ public class LibraryMenu {
                         // add patron to patronMap
                         library.addPatron(newPatron);
                         // display sucess messsage
-                        System.out.print("Patron added successfully!");
+                        System.out.println("Patron added successfully!");
                         break;
 
                     /**
