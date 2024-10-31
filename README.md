@@ -1,6 +1,9 @@
 
 # MidtermSprint-Java-Sem3 
-Library Management System (LMS)
+## Library Management System (LMS)
+
+Welcome to the **Library Management System (LMS)** project, hosted in the repository **MidtermSprint-Java-Sem3**. This application provides functionality to manage library items, authors, and patrons within a console-based interface.
+
 
 ## Table of Contents
 - [Overview](#overview)
@@ -39,7 +42,20 @@ cd MidtermSprint-Java-Sem3
 
 ## License
 
+This project is provided for **personal use only**. Redistribution, modification, or commercial use in any form is strictly prohibited without prior written permission from the author.
+
+For detailed license terms, refer to the [LICENSE](./LICENSE) file.
+
 ## Credits
+
+This project, **Library Management System (LMS)**, was collaboratively developed by a dedicated team:
+
+- **[Sara Woodford](https://github.com/sarwoodford)** 
+- **[Abdalnasser Ali](https://github.com/Nasser-A-Ali)** 
+- **[Stephen Crocker](https://github.com/SearchingSteve)** 
+
+Each author played an essential role in bringing this project to life, contributing unique skills and insights to create a fully functional library management system. Thanks goes out to all contributors for their hard work and dedication!
+
 
 
 
