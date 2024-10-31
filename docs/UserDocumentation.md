@@ -42,7 +42,7 @@ This application is a **Library Management System** developed to streamline the 
  
 For ease of use, the application includes an option to initialize **mock data** for demonstration and testing purposes. This comprehensive setup allows users to efficiently manage and display all aspects of library administration.
 
----
+
 ## 2. How to Start and Access the Application
  
 1. **Setup**: 
@@ -66,6 +66,7 @@ For ease of use, the application includes an option to initialize **mock data** 
 ## 3. Class Diagram
  
 The class diagram below depicts the relationships between classes, including associations between `Library`, `LibraryItem` (and its subclasses), `Author`, and `Patron` (and its subclasses).
+
 ![Midterm UML](https://github.com/user-attachments/assets/d069077a-b10d-44bd-bc39-be0ef7f46f6d)
   
 
