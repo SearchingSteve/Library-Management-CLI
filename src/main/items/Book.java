@@ -1,20 +1,18 @@
 package main.items;
-import main.authors.Author;
 
+import main.authors.Author;
 
 // Book class is a subclass of LibraryItem
 /**
- * Book class is a subclass of {@link LibraryItem} that represents a specific type of library item, a book.
- * It includes all attributes from LibraryItem and adds a specific attribute for the type of book.
+ * Book class is a subclass of {@link LibraryItem} that represents a specific
+ * type of library item, a book.
+ * It includes all attributes from LibraryItem and adds a specific attribute for
+ * the type of book.
  */
 public class Book extends LibraryItem {
-    // ASSIGN ATTRIBUTES
-     /** Type of the book (e.g., printed, audio, electronic). */
+    /** Type of the book (e.g., printed, audio, electronic). */
     private String bookType;
 
-    
-    // CONSTRUCTOR
-    // include all library items params and add bookType (specific to this subclass)
     /**
      * Constructs a new Book object with the specified attributes, including all
      * attributes from LibraryItem and an additional book type.
@@ -26,22 +24,20 @@ public class Book extends LibraryItem {
      * @param publisher       publisher of the book
      * @param availableCopies number of available copies of the book
      * @param totalCopies     total number of copies of the book
-     * @param status          current status of the book
      * @param bookType        specific type of book (e.g., fiction, non-fiction)
      */
-    public Book(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies, int totalCopies, Status status, String bookType) {
-        super("B" +itemID, title, author, ISBN, publisher, availableCopies, totalCopies, status);
+    public Book(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies,
+            int totalCopies, String bookType) {
+        super("B" + itemID, title, author, ISBN, publisher, availableCopies, totalCopies);
         this.bookType = bookType;
     }
 
-    // GETTERS AND SETTERS
-
-        /**
+    /**
      * Gets the author of the book.
      *
      * @return the author of the book
      */
-    public Author getAuthor(){
+    public Author getAuthor() {
         return super.getAuthor();
     }
 
@@ -50,7 +46,7 @@ public class Book extends LibraryItem {
      *
      * @param author the author to set
      */
-    public void setAuthor(Author author){
+    public void setAuthor(Author author) {
         super.setAuthor(author);
     }
 
@@ -59,7 +55,7 @@ public class Book extends LibraryItem {
      *
      * @return the type of the book
      */
-    public String getBookType(){
+    public String getBookType() {
         return bookType;
     }
 
@@ -68,7 +64,7 @@ public class Book extends LibraryItem {
      *
      * @param bookType the type of the book to set
      */
-    public void setBookType(String bookType){
+    public void setBookType(String bookType) {
         this.bookType = bookType;
     }
 
@@ -83,27 +79,22 @@ public class Book extends LibraryItem {
 
     }
 
-
-
-    // DISPLAY BOOK INFORMATION
-    
-        /**
+    /**
      * Returns a string representation of the book, including its title, ISBN,
      * author, publisher, available and total copies, and book type.
      *
      * @return a string with detailed information about the book
      */
     @Override
-    public String toString(){
-        return "Book Information{ " + 
-        "title= " + getTitle() +
-         ", ISBN= " + getISBN() + 
-         ", author= " + getAuthor().getName() + 
-         ", publisher= " + getPublisher() + 
-         ", available copies= " + getAvailableCopies() + 
-         ", total copies= " + getTotalCopies() + 
-         ", book type= " + getBookType() + 
-         "}";
+    public String toString() {
+        return "Book Information{ " +
+                "title= " + getTitle() +
+                ", ISBN= " + getISBN() +
+                ", author= " + getAuthor().getName() +
+                ", publisher= " + getPublisher() +
+                ", available copies= " + getAvailableCopies() +
+                ", total copies= " + getTotalCopies() +
+                ", book type= " + getBookType() +
+                "}";
     }
-
 }

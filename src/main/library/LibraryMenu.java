@@ -11,7 +11,6 @@ import main.authors.Author;
 import main.items.Book;
 import main.items.LibraryItem;
 import main.items.Periodical;
-import main.items.Status;
 import main.patrons.Employee;
 
 /**
@@ -243,7 +242,7 @@ public class LibraryMenu {
                                 } else {
                                     // Add new item if book Type is valid
                                     newItem = new Book(itemID, title, author, ISBN, publisher, availableCopies,
-                                            totalCopies, Status.AVAILABLE,
+                                            totalCopies,
                                             bookType);
                                     break;
                                 }
@@ -263,8 +262,7 @@ public class LibraryMenu {
                                 } else {
                                     // Add new periodical if input is valid
                                     newItem = new Periodical(itemID, title, author, ISBN, publisher, availableCopies,
-                                            totalCopies, Status.AVAILABLE,
-                                            periodicalType);
+                                            totalCopies, periodicalType);
                                     break;
                                 }
                             }
@@ -279,6 +277,8 @@ public class LibraryMenu {
                      * @param library The library instance from which the item is edited.
                      */
                     case 2:
+                    String testAuthor = "Joshua Bloch";
+                    Author.displayAuthoredItems(testAuthor);
                         System.out.print(
                                 "Editing an existing library item...\nPlease enter item ID (leave blank to exit this step): ");
                         String editItemID = scanner.nextLine();
@@ -708,7 +708,7 @@ public class LibraryMenu {
                                     System.out.print("Enter book type (e.g. Print, Electronic, Audio): ");
                                     String bookType = scanner.nextLine();
                                     newItem = new Book(itemID, title, author, ISBN, publisher, availableCopies,
-                                            totalCopies, Status.AVAILABLE,
+                                            totalCopies,
                                             bookType);
                                 }
 
@@ -717,7 +717,7 @@ public class LibraryMenu {
                                     System.out.print("Enter periodical type (e.g. Print, Electronic): ");
                                     String periodicalType = scanner.nextLine();
                                     newItem = new Periodical(itemID, title, author, ISBN, publisher, availableCopies,
-                                            totalCopies, Status.AVAILABLE,
+                                            totalCopies,
                                             periodicalType);
                                 }
                                 library.addLibraryItem(newItem); // add new library item to library
@@ -790,7 +790,9 @@ public class LibraryMenu {
 
                         // Remove the author from the author list and delete their items from the
                         // library
-                        if (Author.removeAuthor(authorName)) {
+                        boolean canRemoveItems = Author.removeAuthor(authorName);
+                        System.out.println("canRemoveItems: " + canRemoveItems);
+                        if (canRemoveItems) {
                             library.removeAuthorItems(Author.getAuthorByName(authorName));
                             System.out.println("Author " + authorName + " and all associated items have been deleted.");
                         } else {
@@ -806,7 +808,6 @@ public class LibraryMenu {
                      */
                     case 9:
                         String addPatronID;
-
                         while (true) {
                             // prompt user to enter patron id
                             System.out.println("Add a Patron...\nEnter Patron ID: ");
@@ -923,7 +924,7 @@ public class LibraryMenu {
 
                         // if empty, keep the same
                         if (!newPatronPhone.isEmpty()) {
-                            patronToEdit.setPhoneNum(newPatronPhone);
+                            patronToEdit.setPhoneNumber(newPatronPhone);
                         }
 
                         // print success message
@@ -957,7 +958,7 @@ public class LibraryMenu {
                      */
                     case 12:
                         System.out.println("Displaying library items...");
-                        System.out.println(
+                        System.out.print(
                                 "Enter itemIDs to display followed by a comma between each itemID or blank to display all items: ");
                         String itemIDs = scanner.nextLine();
                         library.displayItems(itemIDs);
@@ -977,7 +978,7 @@ public class LibraryMenu {
                      */
                     case 13:
                         System.out.println("Displaying patrons...");
-                        System.out.println(
+                        System.out.print(
                                 "Enter patronID's to display followed by a comma between each patronID or blank to display all patrons: ");
                         String patronIDs = scanner.nextLine();
                         library.displayPatrons(patronIDs);
@@ -996,7 +997,7 @@ public class LibraryMenu {
                      */
                     case 14:
                         System.out.println("Displaying authors...");
-                        System.out.println(
+                        System.out.print(
                                 "Enter author names to display followed by a comma between each author name or blank to display all authors: ");
                         String authorNames = scanner.nextLine();
                         Author.displayAuthors(authorNames);

@@ -22,9 +22,7 @@ public abstract class LibraryItem {
      /** Total number of copies of the item in the library. */
     private int totalCopies;
 
-    /** Status of the library item (e.g., available, checked out). */
-    private Status status;
-
+    
     /**
      * Constructs a new LibraryItem with the specified attributes.
      * 
@@ -38,7 +36,7 @@ public abstract class LibraryItem {
      * @param status          current status of the library item
      */
     public LibraryItem(String itemID, String title, Author author, String ISBN, String publisher, int availableCopies,
-            int totalCopies, Status status) {
+            int totalCopies) {
         this.itemID = itemID;
         this.title = title;
         this.author = author;
@@ -46,10 +44,7 @@ public abstract class LibraryItem {
         this.publisher = publisher;
         this.availableCopies = availableCopies;
         this.totalCopies = totalCopies;
-        this.status = status;
     }
-
-    // Getters and setters
 
     /**
      * Gets the unique identifier for the library item.
@@ -179,31 +174,12 @@ public abstract class LibraryItem {
     }
 
     /**
-     * Gets the current status of the library item.
-     * 
-     * @return the status
-     */
-
-    public Status getStatus() {
-        return status;
-    }
-
-    /**
-     * Sets the status of the library item.
-     * 
-     * @param status the status to set
-     */
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    /**
      * Gets the type of the library item (e.g., book, periodical). This method is
      * abstract and must be implemented in subclasses.
      * 
      * @return the type of item as a String
      */
-    public abstract String getItemType(); // if using same method name getItemType() in book/periodicals wiht @override
+    public abstract String getItemType(); 
 
     // ADDITIONAL METHODS FOR BOOK/PERIODICAL SUBCLASSES
 }

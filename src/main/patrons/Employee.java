@@ -31,13 +31,7 @@ public class Employee extends Patron {
         super.editPatron(name, address, phoneNumber);
     }
 
-    /**
-     * Deletes the employee's information and clears borrowed items.
-     */
-    public void deleteEmployee() {
-        super.deletePatron();
-    }
-
+  
 
     /**
      * Retrieves the employee's unique id.

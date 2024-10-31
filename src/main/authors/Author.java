@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import main.items.LibraryItem;
+import main.library.Library;
+import main.library.LibraryMenu;
 
 /**
  * Author class represents an author in the library system, containing
@@ -94,6 +96,25 @@ public class Author {
     public List<LibraryItem> getAuthoredItems() {
         return authoredItems;
     }
+
+    public static void displayAuthoredItems(String authorName) {
+        Author author = getAuthorByName(authorName);
+        if (author != null) {
+            List<LibraryItem> authoredItems = author.getAuthoredItems();
+            if (authoredItems.isEmpty()) {
+                System.out.println("Author " + authorName + " has not authored any items.");
+            } else {
+                System.out.println("Items authored by " + authorName + ":");
+                for (LibraryItem item : authoredItems) {
+                    System.out.println(item.getTitle() + " - " + item.getItemID());
+                }
+            }
+        }
+        else {
+            System.out.println("Author with name: " + authorName + " not found.");
+        }
+    }
+    
 
     /**
      * Validates the date of birth input for an author based on specified
@@ -204,33 +225,35 @@ public class Author {
      * @param authorName The name of the author to be removed.
      * @return True if the author was removed successfully; otherwise, false.
      */
-    public static boolean removeAuthor(String authorName) {
-        boolean itemCanBeRemoved = false;
-        for (Author author : authorList) {
-            if (author.getName().equals(authorName)) {
-                // Prompt user to confirm deletion (deletion will remove all author items
-                while (true) {
-                    System.out.println("Are you sure you want to delete author " + authorName + "? (Y/N)");
-                    String response = System.console().readLine();
-                    if (response.equalsIgnoreCase("Y")) {
-                        itemCanBeRemoved = true;
-                        authorList.remove(author);
-                        System.out.println("Author " + authorName + "deleted successfully!");
-                        System.out.println("All authored items by " + authorName + "have been removed.");
-                        break;
-                    } else if (response.equalsIgnoreCase("N")) {
-                        System.out.println("Author " + authorName + "deletion cancelled.");
-                        break;
-                    } else {
-                        System.out.println("Invalid response. Please enter Y or N.");
-                    }
-                }
-                return itemCanBeRemoved;
+    /**
+ * Removes an author and their associated items from the system after
+ * confirmation.
+ *
+ * @param authorName The name of the author to be removed.
+ * @return True if the author was removed successfully; otherwise, false.
+ */
+public static boolean removeAuthor(String authorName) {
+    for (Author author : authorList) {
+        if (author.getName().equalsIgnoreCase(authorName)) {
+            // Prompt user to confirm deletion (deletion will remove all author items)
+            System.out.print("Are you sure you want to delete author " + authorName + " and all associated items? (Y/N) ");
+            String response = System.console().readLine();
+            if (response.equalsIgnoreCase("Y")) {
+                Library library = new Library();
+                library.removeAuthorItems(author);  // Remove all items associated with the author
+                authorList.remove(author);  // Remove the author from the list
+                System.out.println("Author " + authorName + " and all associated items have been deleted.");
+                return true;
+            } else {
+                System.out.println("Deletion cancelled.");
             }
+            return false;
         }
-        System.out.println("Author" + authorName + "is not currently in the system. cannot be deleted.");
-        return itemCanBeRemoved;
     }
+    System.out.println("Author " + authorName + " is not currently in the system.");
+    return false;
+}
+
 
     /**
      * Adds a library item to the author's list of authored items.
@@ -296,5 +319,4 @@ public class Author {
             }
         }
     }
-
 }

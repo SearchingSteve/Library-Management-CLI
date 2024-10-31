@@ -31,13 +31,6 @@ public class Student extends Patron {
     }
 
     /**
-     * Deletes the student's information and clears borrowed items.
-     */
-    public void deleteStudent() {
-        super.deletePatron();
-    }
-
-    /**
      * Retrieves the student's unique id.
      * 
      * @return the student ID
