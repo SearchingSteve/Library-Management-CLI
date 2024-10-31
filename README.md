@@ -44,7 +44,7 @@ cd MidtermSprint-Java-Sem3
 
 This project is provided for **personal use only**. Redistribution, modification, or commercial use in any form is strictly prohibited without prior written permission from the author.
 
-For detailed license terms, refer to the [LICENSE](./LICENSE) file.
+For detailed license terms, refer to the [LICENSE](./LICENSE.md) file.
 
 ## Credits
 
