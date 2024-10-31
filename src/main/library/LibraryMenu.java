@@ -1,12 +1,3 @@
-//*
-// This is just one example of how a menu can look using a scanner
-// This isnt complete nor does it have all required sections included
-// This is just meant to give you a brief idea of how a menu could look
-// Good luck and have fun!
-//
-//
-// *//
-
 package main.library;
 
 import java.text.SimpleDateFormat;
@@ -21,25 +12,39 @@ import main.items.Book;
 import main.items.LibraryItem;
 import main.items.Periodical;
 import main.items.Status;
-import main.patrons.Student;
 import main.patrons.Employee;
 
+/**
+ * The LibraryMenu class provides a command-line interface for managing library
+ * items, authors, and patrons.
+ * Users can add, edit, delete, borrow, and return library items; manage authors
+ * and patrons; and display data.
+ */
 public class LibraryMenu {
 
-    // create a list of library items to be used in menu cases
+    /**
+     * Main method to display the library management menu and handle user input.
+     * Users can select various options to interact with library items, authors, and
+     * patrons.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Library library = new Library();
         int choice = 0;
 
-        // Initialize mock data -library items, authors, patrons
+        // Initialize mock data - library items, authors, patrons
         library.initializeMockData();
 
+        /**
+         * Displays the library management menu with options for managing items,
+         * authors, and patrons.
+         */
         do {
             System.out.println("----------------------------------------");
             System.out.println("Welcome to the Library Management System");
             System.out.println("----------------------------------------");
-            // there are more options needed for the project.
             System.out.println(" 1. Library Item - Add");
             System.out.println(" 2. Library Item - Edit");
             System.out.println(" 3. Library Item - Delete");
@@ -64,17 +69,19 @@ public class LibraryMenu {
                 System.out.println("----------------------------------------");
 
                 switch (choice) {
-                    // Add a library item
-
+                    /**
+                     * Adds a new library item based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     * @param library The library instance to which the item is added.
+                     */
                     case 1:
                         String itemType = "";
                         System.out.println("Adding a new library item...");
                         while (true) {
-                            // prompt user to enter type of libraryItem
                             System.out.print("Enter the type of Library item (Book/Periodical): ");
                             itemType = scanner.nextLine();
 
-                            // validate library item type entered
                             if (!itemType.equalsIgnoreCase("Book") && !itemType.equalsIgnoreCase("Periodical")) {
                                 System.out.println("Invalid item type. Please enter either 'Book' or 'Periodical'.");
                             } else {
@@ -92,10 +99,9 @@ public class LibraryMenu {
                             } else {
                                 // ID starts with "P" if periodical
                                 System.out.print("Enter item ID: P");
-
                             }
 
-                            // validate item ID entered to not be blank, and display messages if item is
+                            // Validate item ID entered to not be blank, and display messages if item is
                             // already in the system
                             itemID = scanner.nextLine();
                             if (itemID == null || itemID.isEmpty()) {
@@ -132,7 +138,7 @@ public class LibraryMenu {
                             }
                         }
 
-                        // prompt user to enter an author
+                        // Prompt user to enter an author
                         String authorName = "";
                         while (true) {
                             System.out.print("Enter author name: ");
@@ -145,13 +151,13 @@ public class LibraryMenu {
                         }
 
                         System.out.print("Enter author name: ");
-                        // prompt user to enter the authors DOB
+                        // Prompt user to enter the authors DOB
                         System.out.print("Enter author Date of Birth (YYYY-MM-DD): ");
                         String authorDOBString = scanner.nextLine();
                         Date authorDOB = null;
 
                         while (true) {
-                            // validate author DOB using the method in Author class
+                            // Validate author DOB using the method in Author class
                             if (Author.validateAuthorDOB(authorDOBString)) {
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                 try {
@@ -166,14 +172,13 @@ public class LibraryMenu {
                         }
                         Author author = new Author(authorName, authorDOB);
 
-                        // NEW ISBN PROMPT
+                        // Prompt user to enter ISBN
                         String ISBN = "";
                         while (true) {
-                            // prompt user to enter new ISBN
                             System.out.print("Enter ISBN: ");
                             ISBN = scanner.nextLine();
 
-                            // validate ISBN to not be empty, and to only contain 10/13 numbers
+                            // Validate ISBN to not be empty, and to only contain 10/13 numbers
                             if (!ISBN.isEmpty()) {
                                 if (ISBN.matches("\\d{10}|\\d{13}")) {
                                     break;
@@ -193,27 +198,27 @@ public class LibraryMenu {
                             }
                         }
 
-                        // prompt user to enter publisher
+                        // Prompt user to enter publisher
                         System.out.print("Enter publisher: ");
                         String publisher = scanner.nextLine();
-                        // prompt user to enter total copies of item
+                        // Prompt user to enter total copies of item
                         System.out.print("Enter total copies in the system: ");
                         int totalCopies;
                         do {
-                            // validate total copies to not be negative
+                            // Validate total copies to not be negative
                             totalCopies = scanner.nextInt();
                             if (totalCopies < 0) {
                                 System.out.println("Total copies cannot be negative. Please enter a valid number.");
                             }
                         } while (totalCopies < 0);
 
-                        // prompt user to enter available copies
+                        // Prompt user to enter available copies
                         System.out.print("Enter available copies: ");
                         int availableCopies;
                         do {
                             availableCopies = scanner.nextInt();
                             if (availableCopies < 0) {
-                                // validate available copies to not be negative and not exceed total copies
+                                // Validate available copies to not be negative and not exceed total copies
                                 // entered
                                 System.out.print("Available copies cannot be negative. Please enter a valid number.");
                                 System.out.print("Enter available copies: ");
@@ -223,7 +228,6 @@ public class LibraryMenu {
                                 System.out.print("Enter available copies: ");
                             }
                         } while (availableCopies < 0 || availableCopies > totalCopies);
-
                         scanner.nextLine();
                         LibraryItem newItem = null;
 
@@ -237,50 +241,43 @@ public class LibraryMenu {
                                         && !bookType.equalsIgnoreCase("Audio")) {
                                     System.out.println("Book Type must be Printed, Electronic or Audio");
                                 } else {
-                                    // add new item if book Type is valid
+                                    // Add new item if book Type is valid
                                     newItem = new Book(itemID, title, author, ISBN, publisher, availableCopies,
                                             totalCopies, Status.AVAILABLE,
                                             bookType);
-
                                     break;
                                 }
-
                             }
-
                         }
 
-                        // Assume function to add periodical to inventory
+                        // Check if type is periodical
                         else if (itemType.equalsIgnoreCase("Periodical")) {
                             while (true) {
-                                // prompt user to enter periodical type
+                                // Prompt user to enter periodical type
                                 System.out.print("Enter periodical type (Printed, Electronic): ");
                                 String periodicalType = scanner.nextLine();
-                                // validate periodical type to be electronic or printed
+                                // Validate periodical type to be electronic or printed
                                 if (!periodicalType.equalsIgnoreCase("Printed")
                                         && !periodicalType.equalsIgnoreCase("Electronic")) {
                                     System.out.println("Periodical Type must be Printed or Electronic");
                                 } else {
-                                    // add new periodical if input is valid
+                                    // Add new periodical if input is valid
                                     newItem = new Periodical(itemID, title, author, ISBN, publisher, availableCopies,
                                             totalCopies, Status.AVAILABLE,
                                             periodicalType);
-
                                     break;
                                 }
-
                             }
-
                         }
-
                         library.addLibraryItem(newItem); // add new library item to library
-                        // Also handles adding the author to the author list
-                        // and adding the item to the author's authored items list
-
-                        // library.displayAllItems();
-                        // library.displayAllPatrons();
                         break;
 
-                    // Edit a library item
+                    /**
+                     * Edits an existing library item based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     * @param library The library instance from which the item is edited.
+                     */
                     case 2:
                         System.out.print(
                                 "Editing an existing library item...\nPlease enter item ID (leave blank to exit this step): ");
@@ -298,7 +295,6 @@ public class LibraryMenu {
                         }
 
                         LibraryItem itemToEdit = library.getItemByID(editItemID);
-
                         if (itemToEdit == null) {
                             System.out.println("Item not found.");
                             break;
@@ -307,75 +303,55 @@ public class LibraryMenu {
                                     + itemToEdit.getAuthor().getName() + ".");
 
                             System.out.println("Please enter new details for the item");
-
-                            // display all current details to user including prompts to edit information.
-                            // user has the option to leave specific fields unchanged, but leaving the
-                            // field blank.
-
-                            // edit title
-                            // display current value
                             System.out.println("Current title: " + itemToEdit.getTitle());
-                            // prompt user to input new title
+
+                            // Prompt user to input new title
                             System.out.print("Enter new title (leave blank and hit enter to keep unchanged): ");
                             String newTitle = scanner.nextLine();
 
-                            // if empty, keep the same
+                            // If empty, keep the same
                             if (!newTitle.isEmpty()) {
                                 itemToEdit.setTitle(newTitle);
                             }
 
-                            // edit author info
-                            // display current value
+                            // Edit author info
+                            // Display current value
                             System.out.println("Current Author: " + itemToEdit.getAuthor().getName());
                             // prompt user to enter new name
                             System.out.print("Enter new author (leave blank and hit enter to keep unchanged): ");
                             String newAuthorName = scanner.nextLine();
 
                             if (!newAuthorName.isEmpty()) {
-
-                                // only prompt DOB to be changed if a new author name is entered.
-                                // logically, DOB should not change unless the author does.
-
-                                // prompt user to enter new DOB
-                                // if empty, keep the same
+                                // Prompt user to enter new DOB. If empty, keep the same
                                 System.out.print("Enter the new author's date of birth (yyyy-mm-dd): ");
                                 String newAuthorDOBString = scanner.nextLine();
                                 Date newAuthorDOB = null;
-
                                 while (true) {
-                                    // validate author DOB entered using the method in Author class
-
+                                    // Validate author DOB entered using the method in Author class
                                     if (Author.validateAuthorDOB(newAuthorDOBString)) {
                                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                         dateFormat.setLenient(false);
-
                                         try {
                                             newAuthorDOB = dateFormat.parse(newAuthorDOBString);
                                             itemToEdit.setAuthor(new Author(newAuthorName, newAuthorDOB));
                                             break;
                                         } catch (ParseException e) {
-
                                             newAuthorDOBString = scanner.nextLine();
                                         }
-
                                     } else {
-
                                         newAuthorDOBString = scanner.nextLine();
                                     }
                                 }
                             }
 
-                            // edit isbn
-                            // display current value
                             System.out.println("Current ISBN: " + itemToEdit.getISBN());
-
                             while (true) {
-                                // prompt user to input new ISBN
+                                // Prompt user to input new ISBN
                                 System.out.print("Enter new ISBN (leave blank and hit enter to keep unchanged): ");
                                 String newISBN = scanner.nextLine();
 
-                                // validate ISBN to be numbers only and 10/13 digits long.
-                                // if empty, keep the same
+                                // Validate ISBN to be numbers only and 10/13 digits long. If empty, keep the
+                                // same
 
                                 if (!newISBN.isEmpty()) {
                                     if (newISBN.matches("\\d{10}|\\d{13}")) {
@@ -395,29 +371,24 @@ public class LibraryMenu {
                                 }
                             }
 
-                            // edit publisher
-                            // display current value
                             System.out.println("Current Publisher: " + itemToEdit.getPublisher());
-                            // prompt user to enter new publisher
+                            // Prompt user to enter new publisher
                             System.out.print("Enter new publisher (leave blank and hit enter to keep unchanged): ");
                             String newPublisher = scanner.nextLine();
 
-                            // if empty, keep the same
+                            // If empty, keep the same
                             if (!newPublisher.isEmpty()) {
                                 itemToEdit.setPublisher(newPublisher);
                             }
 
-                            // edit total copies
-                            // display current value
                             System.out.println("Current Total Copies: " + itemToEdit.getTotalCopies());
-
                             while (true) {
-                                // prompt user to input new total copies value
+                                // Prompt user to input new total copies value
                                 System.out
                                         .print("Enter New Total Copies (keep blank and hit enter to keep unchanged): ");
                                 String newTotalCopies = scanner.nextLine();
 
-                                // validate total copies to be a positive number
+                                // Validate total copies to be a positive number
                                 // if empty, keep the same
 
                                 if (!newTotalCopies.isEmpty()) {
@@ -429,15 +400,12 @@ public class LibraryMenu {
                                         } else {
                                             System.err.println("Total Copies Must Exceed 0.");
                                         }
-
                                     } catch (NumberFormatException e) {
                                         System.out.println("Invalid input. Total copies must be a numeric value.");
                                     }
-
                                 } else {
                                     break;
                                 }
-
                             }
 
                             // edit available copies
@@ -468,28 +436,30 @@ public class LibraryMenu {
                                 } else {
                                     break;
                                 }
-                                // NEW LOCATION (for success message)=> had to change success message back to
-                                // old location.
-                                // success message was being printed every time the loop was iterated
-                                // through, whether the input was valid or invalid. moved it outside
-                                // the loop to only display after all fields have been successfully
-                                // changed.
-
                             }
 
                         }
-                        // OLD LOCATION => success message moved back here, explained above.
                         System.out.println("Item Edited Successfully!");
                         break;
 
-                    // Delete a library item
+                    /**
+                     * Deletes a library item based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     * @param library The library instance from which the item is deleted.
+                     */
                     case 3:
                         System.out.print("Deleting an existing library item...\nPlease enter item ID: ");
                         String deleteItemID = scanner.nextLine();
                         library.removeLibraryItem(deleteItemID);
                         break;
 
-                    // Borrow a library item
+                    /**
+                     * Borrows a library item by a patron based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     * @param library The library instance from which the item is borrowed.
+                     */
                     case 4:
                         System.out.print("Borrowing a library item...\nPlease enter item ID: ");
                         String borrowItemID = scanner.nextLine();
@@ -533,6 +503,12 @@ public class LibraryMenu {
                         System.out.println("Item borrowed successfully.");
                         break;
 
+                    /**
+                     * Returns a borrowed library item based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     * @param library The library instance to which the item is returned.
+                     */
                     case 5:
                         // Add logic to return a library item
                         System.out.print("Returning a library item...\nPlease enter item ID: ");
@@ -569,6 +545,12 @@ public class LibraryMenu {
                         break;
 
                     // Add an author
+                    /**
+                     * Adds a new author based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     * @param library The library instance where the author is added.
+                     */
                     case 6:
                         System.out.println("Adding an author..");
                         authorName = "";
@@ -584,15 +566,6 @@ public class LibraryMenu {
                                 break;
                             }
                         }
-
-                        // OLD CODE FOR ADDING AN AUTHOR
-                        // System.out.print("Enter author name: ");
-                        // authorName = scanner.nextLine();
-                        // if (Author.getAuthorByName(authorName) != null) {
-                        // System.out.println(
-                        // "Author " + authorName + " already exists. Please enter a different name.");
-                        // break;
-                        // }
 
                         System.out.print("Enter author Date of Birth (YYYY-MM-DD): ");
                         authorDOBString = scanner.nextLine();
@@ -677,8 +650,6 @@ public class LibraryMenu {
 
                                 System.out.print("Enter title: ");
                                 title = scanner.nextLine();
-
-                                // NEW ISBN PROMPT
                                 ISBN = "";
                                 while (true) {
                                     System.out.print("Enter ISBN: ");
@@ -732,7 +703,7 @@ public class LibraryMenu {
                                 scanner.nextLine();
                                 newItem = null;
 
-                                // Assume function to add book to inventory
+                                // Check if item type is book
                                 if (itemType.equalsIgnoreCase("Book")) {
                                     System.out.print("Enter book type (e.g. Print, Electronic, Audio): ");
                                     String bookType = scanner.nextLine();
@@ -741,7 +712,7 @@ public class LibraryMenu {
                                             bookType);
                                 }
 
-                                // Assume function to add periodical to inventory
+                                // Check if item type is periodical
                                 else if (itemType.equalsIgnoreCase("Periodical")) {
                                     System.out.print("Enter periodical type (e.g. Print, Electronic): ");
                                     String periodicalType = scanner.nextLine();
@@ -749,15 +720,17 @@ public class LibraryMenu {
                                             totalCopies, Status.AVAILABLE,
                                             periodicalType);
                                 }
-
                                 library.addLibraryItem(newItem); // add new library item to library
-
-                                ////
                             }
                         }
                         break;
 
-                    // Edit an author
+                    /**
+                     * Edits an existing author based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     */
+
                     case 7:
                         System.out.println("Editing an author..");
                         authorName = "";
@@ -803,7 +776,13 @@ public class LibraryMenu {
                         Author.editAuthor(authorName, newAuthorName, authorDOB);
                         break;
 
-                    // Delete an author
+                    /**
+                     * Deletes an author and all their associated items from the library based on
+                     * user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     * @param library The library instance from which the author is deleted.
+                     */
                     case 8:
                         System.out.println("Deleting an author...");
                         System.out.print("Enter author name to delete: ");
@@ -812,18 +791,20 @@ public class LibraryMenu {
                         // Remove the author from the author list and delete their items from the
                         // library
                         if (Author.removeAuthor(authorName)) {
-                            library.removeAuthorItems(Author.getAuthorByName(authorName)); // Get author object by name
-                                                                                           // then pass the object to
-                                                                                           // remove their items from
-                                                                                           // library
+                            library.removeAuthorItems(Author.getAuthorByName(authorName));
                             System.out.println("Author " + authorName + " and all associated items have been deleted.");
                         } else {
                             System.out.println("Author " + authorName + " not found.");
                         }
                         break;
 
+                    /**
+                     * Adds a new patron based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     * @param library The library instance where the patron is added.
+                     */
                     case 9:
-                        // add a patron
                         String addPatronID;
 
                         while (true) {
@@ -894,8 +875,13 @@ public class LibraryMenu {
                         System.out.print("Patron added successfully!");
                         break;
 
+                    /**
+                     * Edits an existing patron based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     * @param library The library instance from which the patron is edited.
+                     */
                     case 10:
-                        // edit a patron
                         // prompt user to enter patron ID
                         System.out.print("Edit a Patron...\nPlease Enter Patron ID: ");
                         String editPatronID = scanner.nextLine();
@@ -944,7 +930,12 @@ public class LibraryMenu {
                         System.out.println("Patron Edited Sucessfully!");
                         break;
 
-                    // Delete a patron
+                    /**
+                     * Deletes a patron from the library based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     * @param library The library instance from which the patron is deleted.
+                     */
                     case 11:
                         System.out.println("Delete a Patron...\nEnter Patron ID: ");
                         patronID = scanner.nextLine();
@@ -958,7 +949,12 @@ public class LibraryMenu {
                         }
                         break;
 
-                    // Display library items
+                    /**
+                     * Displays library items based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     * @param library The library instance whose items are displayed.
+                     */
                     case 12:
                         System.out.println("Displaying library items...");
                         System.out.println(
@@ -966,13 +962,19 @@ public class LibraryMenu {
                         String itemIDs = scanner.nextLine();
                         library.displayItems(itemIDs);
 
-                        // Created a pause to allow the user to read the output before returning to the
+                        // Pause system and prompt user to read the output before returning to the
                         // main menu
                         System.out.println();
                         System.out.print("Press 'Enter/Return' to return to the main menu...");
                         scanner.nextLine();
                         break;
-                    // Display patrons
+
+                    /**
+                     * Displays patrons based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     * @param library The library instance whose patrons are displayed.
+                     */
                     case 13:
                         System.out.println("Displaying patrons...");
                         System.out.println(
@@ -980,13 +982,18 @@ public class LibraryMenu {
                         String patronIDs = scanner.nextLine();
                         library.displayPatrons(patronIDs);
 
-                        // Created a pause to allow the user to read the output before returning to the
+                        // Pause system and prompt user to read the output before returning to the
                         // main menu
                         System.out.println();
                         System.out.print("Press 'Enter/Return' to return to the main menu...");
                         scanner.nextLine();
                         break;
-                    // Display Authors
+
+                    /**
+                     * Displays authors based on user input.
+                     *
+                     * @param scanner Scanner object for reading user input.
+                     */
                     case 14:
                         System.out.println("Displaying authors...");
                         System.out.println(
@@ -994,7 +1001,7 @@ public class LibraryMenu {
                         String authorNames = scanner.nextLine();
                         Author.displayAuthors(authorNames);
 
-                        // Created a pause to allow the user to read the output before returning to the
+                        // Pause system and prompt user to read the output before returning to the
                         // main menu
                         System.out.println();
                         System.out.print("Press 'Enter/Return' to return to the main menu...");
@@ -1009,7 +1016,6 @@ public class LibraryMenu {
                             Thread.currentThread().interrupt();
                         }
                         break;
-
                 }
             } catch (NumberFormatException e) {
                 System.out.println("\u001B[31mInvalid input. Please enter a numeric value.\u001B[0m");
@@ -1023,5 +1029,4 @@ public class LibraryMenu {
         } while (choice != 15);
         scanner.close();
     }
-
 }

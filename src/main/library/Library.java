@@ -1,7 +1,5 @@
-// declare package 
 package main.library;
 
-// import required libraries 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
@@ -10,7 +8,6 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
-// import required files
 import main.items.Book;
 import main.items.LibraryItem;
 import main.items.Periodical;
@@ -20,19 +17,43 @@ import main.patrons.Employee;
 import main.patrons.Patron;
 import main.patrons.Student;
 
-// Main class for the library
+/**
+ * The Library class models a library system, handling library items, authors,
+ * and patrons.
+ * It includes methods to add, edit, and remove items and patrons, and to lend
+ * and return items.
+ */
 public class Library {
-      // create maps for LibraryItem and Patron so that adding, deleting or editing a field/item/patron
-    // is easier - all items can be located through a match (id for example) rather than a loop being 
-    // iterated through (alternative option) which would take longer and require validation.
-    private static HashMap<String, LibraryItem> itemMap = new HashMap<>(); // String = itemID
+    // create maps for LibraryItem and Patron so that adding, deleting or editing a
+    // field/item/patron
+    // is easier - all items can be located through a match (id for example) rather
+    // than a loop being
+    // iterated through (alternative option) which would take longer and require
+    // validation.
+
+    /**
+     * Maps item IDs to library items, allowing for efficient retrieval and
+     * management of items.
+     */
+    private static HashMap<String, LibraryItem> itemMap = new HashMap<>(); // String = itemID\
+    /**
+     * Maps patron IDs to patrons, allowing for efficient retrieval and management
+     * of patrons.
+     */
     private static HashMap<String, Patron> patronMap = new HashMap<>(); // String = patronID
 
+    /**
+     * Initializes mock data, including library items and patrons, for testing
+     * purposes.
+     */
     public void initializeMockData() {
         initializeMockItems();
         initializeMockPatrons();
     }
 
+    /**
+     * Initializes mock authors for the library system.
+     */
     public void initializeMockAuthors() {
         Author author1 = new Author("Joshua Bloch", parseDate("1970-01-01"));
         Author author2 = new Author("Robert C. Martin", parseDate("1970-01-01"));
@@ -47,12 +68,11 @@ public class Library {
         Author.authorList.add(author5);
     }
 
+    /**
+     * Initializes mock items in the library, linking each item to an author.
+     */
     public void initializeMockItems() {
-        // Initialize 5 authors. Create authors first so that they can be linked to the
-        // books
         initializeMockAuthors(); // Ensure authors are initialized first
-
-        // Retrieve authors from the author list
         Author author1 = Author.authorList.get(0); // Joshua Bloch
         Author author2 = Author.authorList.get(1); // Robert C. Martin
         Author author3 = Author.authorList.get(2); // Erich Gamma
@@ -112,7 +132,9 @@ public class Library {
                 "American Association for the Advancement of Science", 20, 23, Status.AVAILABLE, "Print"));
     }
 
-    // Add 10 patrons
+    /**
+     * Initializes mock patrons in the library system.
+     */
     public void initializeMockPatrons() {
         addPatron(new Student("001", "John Doe", "1234 Elm St, Springfield, IL", "123-555-1234"));
         addPatron(new Employee("002", "Jane Doe", "5678 Oak St, Springfield, IL", "123-555-5678"));
@@ -126,7 +148,12 @@ public class Library {
         addPatron(new Employee("010", "Sally Brown", "3344 Birch St, Springfield, IL", "789-555-3344"));
     }
 
-    // parse date objects for DOB in menu cases
+    /**
+     * Parses a date from a string in the format "yyyy-MM-dd".
+     * 
+     * @param date The date string to parse.
+     * @return The parsed Date object, or today's date if parsing fails.
+     */
     private Date parseDate(String date) {
         try {
             return new SimpleDateFormat("yyyy-MM-dd").parse(date);
@@ -136,11 +163,21 @@ public class Library {
         }
     }
 
-    // returns a list of all library items
+    /**
+     * Retrieves all library items in the system.
+     * 
+     * @return A list of all library items.
+     */
     public List<LibraryItem> getAllItems() {
         return new ArrayList<>(itemMap.values());
     }
 
+    /**
+     * Displays library items based on specified item IDs. If no IDs are specified,
+     * displays all items.
+     * 
+     * @param itemIDs The IDs of items to display.
+     */
     public void displayItems(String... itemIDs) {
         if (itemIDs.length == 0) {
             // No item IDs provided, display all items
@@ -158,10 +195,21 @@ public class Library {
         }
     }
 
+    /**
+     * Retrieves all patrons in the system.
+     * 
+     * @return A list of all patrons.
+     */
     public List<Patron> getAllPatrons() {
         return new ArrayList<>(patronMap.values());
     }
 
+    /**
+     * Displays patrons based on specified patron IDs. If no IDs are specified,
+     * displays all patrons.
+     * 
+     * @param patronIDs The IDs of patrons to display.
+     */
     public void displayPatrons(String... patronIDs) {
         if (patronIDs.length == 0) {
             // No patron IDs provided, display all patrons
@@ -179,6 +227,12 @@ public class Library {
         }
     }
 
+    /**
+     * Retrieves a library item by its ID.
+     * 
+     * @param itemID The ID of the item to retrieve.
+     * @return The library item with the specified ID, or null if not found.
+     */
     public LibraryItem getItemByID(String itemID) {
         if (itemMap.containsKey(itemID)) {
             return itemMap.get(itemID);
@@ -188,6 +242,12 @@ public class Library {
         }
     }
 
+    /**
+     * Retrieves a patron by their ID.
+     * 
+     * @param patronID The ID of the patron to retrieve.
+     * @return The patron with the specified ID, or null if not found.
+     */
     public Patron getPatronByID(String patronID) {
         if (patronMap.containsKey(patronID)) {
             return patronMap.get(patronID);
@@ -197,26 +257,48 @@ public class Library {
         }
     }
 
-    // Search for library items by title, author, or ISBN
+    /**
+     * Searches for library items by title.
+     * 
+     * @param title The title of the item to search for.
+     * @return A list of items with the specified title.
+     */
     public List<LibraryItem> searchByTitle(String title) {
         return itemMap.values().stream()
                 .filter(item -> item.getTitle().equalsIgnoreCase(title))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Searches for library items by author.
+     * 
+     * @param author The author of the items to search for.
+     * @return A list of items authored by the specified author.
+     */
     public List<LibraryItem> searchByAuthor(Author author) {
         return itemMap.values().stream()
                 .filter(item -> item.getAuthor().equals(author))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Searches for library items by ISBN.
+     * 
+     * @param ISBN The ISBN of the item to search for.
+     * @return A list of items with the specified ISBN.
+     */
     public List<LibraryItem> searchByISBN(String ISBN) {
         return itemMap.values().stream()
                 .filter(item -> item.getISBN().equals(ISBN))
                 .collect(Collectors.toList());
     }
 
-    // Add a library item
+    /**
+     * Adds a library item to the system and associates it with the appropriate
+     * author.
+     * 
+     * @param item The library item to add.
+     */
     public void addLibraryItem(LibraryItem item) {
         if (itemMap.containsKey(item.getItemID())) {
             System.out.println("Item already exists in the library");
@@ -233,9 +315,12 @@ public class Library {
         }
     }
 
-    // Remove a library item
-    // FIX - Need to check if the item is borrowed by any patron before deleting, if
-    // so opt to delete from the patrons borrowed items list
+    /**
+     * Removes a library item from the system, ensuring that borrowed items are
+     * returned first.
+     * 
+     * @param itemID The ID of the item to remove.
+     */
     public void removeLibraryItem(String itemID) {
         if (itemMap.containsKey(itemID)) {
             patronMap.values().forEach(patron -> {
@@ -263,6 +348,11 @@ public class Library {
         }
     }
 
+    /**
+     * Adds an author to the system.
+     * 
+     * @param author The author to add.
+     */
     public void addAuthor(Author author) {
         if (Author.authorList.contains(author)) {
             System.out.println("Author already exists in the library");
@@ -271,6 +361,11 @@ public class Library {
         }
     }
 
+    /**
+     * Removes all items associated with an author from the system.
+     * 
+     * @param author The author whose items should be removed.
+     */
     public void removeAuthorItems(Author author) {
         List<LibraryItem> itemsToRemove = searchByAuthor(author);
         for (LibraryItem item : itemsToRemove) {
@@ -278,21 +373,11 @@ public class Library {
         }
     }
 
-    // public void removeAuthor(String authorName) {
-    // for (Author author : Author.authorList) {
-    // if (author.getName().equals(authorName)) {
-    // removeAuthorBooks(author);
-    // Author.authorList.remove(author);
-    // System.out.println("Author " + authorName + " deleted successfully!");
-    // return;
-    // }
-    // }
-    // System.out.println("Author " + authorName + " is not currently in the system.
-    // Cannot be deleted.");
-    // }
-
-    // Patron methods
-    // Add a patron to the library
+    /**
+     * Adds a patron to the library system.
+     * 
+     * @param patron The patron to add.
+     */
     public void addPatron(Patron patron) {
         if (patronMap.containsKey(patron.getId())) {
             System.out.println("Patron already exists in the library");
@@ -301,31 +386,31 @@ public class Library {
         }
     }
 
-    // Remove a patron from the library
+    /**
+     * Removes a patron from the library system, returning all borrowed items first.
+     * 
+     * @param patron The patron to remove.
+     */
     public void removePatron(Patron patron) {
         if (!patronMap.containsKey(patron.getId())) {
             System.err.println("Patron does not exist in the library");
         } else {
-            //  Return all borrowed items to library before removing the patron
+            // Return all borrowed items to library before removing the patron
             patron.getBorrowedLibraryItems().forEach((itemID, quantity) -> {
                 LibraryItem item = itemMap.get(itemID);
                 item.setAvailableCopies(item.getAvailableCopies() + quantity);
             });
-            // Remove patron from the library referece from patron class. - Might not need
-            // patron.deletePatron();
-
-            // Remove patron from the library
             patronMap.remove(patron.getId());
         }
-
     }
 
-    // Library methods - lend and return library items
-
-    // Library methods - lend and return library items
-
-    // Lend a library item to a patron if the item is available in requested
-    // quantity and the patron exists
+    /**
+     * Lends a specified quantity of a library item to a patron if available.
+     * 
+     * @param libraryItem The item to lend.
+     * @param patron      The patron borrowing the item.
+     * @param quantity    The quantity of the item to lend.
+     */
     public void lendLibraryItem(LibraryItem libraryItem, Patron patron, int quantity) {
 
         // Check if library item exists in the library
@@ -350,7 +435,16 @@ public class Library {
         }
     }
 
-    // Return a library item to the library
+    /**
+     * Returns a specified quantity of a borrowed library item from a patron back to
+     * the library.
+     * Validates the item and patron exists and checks that the quantity returned
+     * does not exceed the quantity borrowed.
+     *
+     * @param libraryItem The library item being returned.
+     * @param patron      The patron returning the item.
+     * @param quantity    The quantity of the item being returned.
+     */
     public void returnLibraryItem(LibraryItem libraryItem, Patron patron, int quantity) {
         // Check if library item exists in the library
         if (libraryItem == null) {
@@ -379,9 +473,6 @@ public class Library {
             libraryItem.setAvailableCopies(libraryItem.getAvailableCopies() + quantity);
             patron.returnBorrowedItem(libraryItem.getItemID(), quantity);
             System.out.println("Returned " + quantity + " copies of " + libraryItem.getTitle() + ".");
-
         }
-
     }
-
 }

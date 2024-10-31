@@ -130,24 +130,6 @@ public abstract class Patron {
     }
 
 
-//     /** -- Setting to null unnecesary. removePatron() in Library hanldes this
-//      * Deletes the patron's information and clears borrowed items.
-//      */
-//     public void deletePatron() {
-//         this.name = null;
-//         this.address = null;
-//         this.phoneNumber = null;
-//         borrowedLibraryItems = null;
-//     }
-
-
-
-    /**
-     * Adds borrowed items to the patron's list or updates the quantity if the item already exists.
-     * 
-     * @param itemID  ID of the borrowed item
-     * @param quantity quantity of the borrowed item
-     */
     public void addBorrowedItems(String itemID, int quantity) {
         this.borrowedLibraryItems.put(itemID, (this.checkQuantityBorrowed(itemID) + quantity));
     }
@@ -160,9 +142,6 @@ public abstract class Patron {
      */
     public void returnBorrowedItem(String itemID, int quantity) {
         this.borrowedLibraryItems.remove(itemID, quantity);
-
-        // Possible fix for the returns working only if the quantity is the same as
-        // borrowed
         if (this.borrowedLibraryItems.containsKey(itemID)) {
             int currentQuantity = this.borrowedLibraryItems.get(itemID);
             if (currentQuantity > quantity) {

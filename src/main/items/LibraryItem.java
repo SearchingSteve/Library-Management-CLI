@@ -25,8 +25,6 @@ public abstract class LibraryItem {
     /** Status of the library item (e.g., available, checked out). */
     private Status status;
 
-    // Constructor
-
     /**
      * Constructs a new LibraryItem with the specified attributes.
      * 
@@ -199,9 +197,6 @@ public abstract class LibraryItem {
         this.status = status;
     }
 
-    // Abstract method for returning type of item. (will need same method naming and
-    // override in book/periodical subclasses - getItemType())
-
     /**
      * Gets the type of the library item (e.g., book, periodical). This method is
      * abstract and must be implemented in subclasses.
@@ -210,7 +205,5 @@ public abstract class LibraryItem {
      */
     public abstract String getItemType(); // if using same method name getItemType() in book/periodicals wiht @override
 
-    // No setItemType() method here as we don't want to change the type of an item
-    // once it's created
-
+    // ADDITIONAL METHODS FOR BOOK/PERIODICAL SUBCLASSES
 }
