@@ -14,8 +14,6 @@ import main.items.LibraryItem;
  * It also provides methods to manage authors in a simulated database.
  */
 public class Author {
-    // ASSIGN ATTRIBUTES
-
     /** The name of the author. */
     private String author_name;
     /** The date of birth of the author. */
@@ -23,16 +21,11 @@ public class Author {
     /** List of library items authored by this author. */
     private List<LibraryItem> authoredItems;
 
-    // create static list so authors are kept track of
-    // memory/ database is simulated for methods that manage author info
-
     /** 
      * Static list to keep track of all authors in the system. 
      * Simulates an in-memory database.
      */
     public static List<Author> authorList = new ArrayList<>();
-
-    // CONSTRUCTOR
 
     /**
      * Constructs an Author with the given name and date of birth.
@@ -46,8 +39,6 @@ public class Author {
         // authoredItems tracks LibraryItem s for gievn author
         this.authoredItems = new ArrayList<>();
     }
-
-    // GETTERS AND SETTERS
 
     /**
      * Sets the name of the author.
@@ -102,8 +93,6 @@ public class Author {
     public List<LibraryItem> getAuthoredItems() {
         return authoredItems;
     }
-
-    // validate author DOB object for menu error handling
 
     /**
      * Validates the date of birth input for an author based on specified 
@@ -170,12 +159,6 @@ public class Author {
         return true;
     }
 
-    // METHODS
-    // newAuthor, editAuthor and removeAuthor manage author's info
-    // becuase the system is not connected to a memory or database, the
-    // author managment methods simulate information being updated by
-    // printing success messages
-
     /**
      * Adds a new author to the author list if they are not already present.
      *
@@ -191,7 +174,6 @@ public class Author {
         System.out.println("Author " + author.getName() + "is already in the system.");
         return false;
     }
-
 
     /**
      * Edits the information of an existing author.
@@ -214,8 +196,6 @@ public class Author {
         System.out.println("Author " + newName + "is not currently in the system. cannot edit.");
         return false;
     }
-
-    // Remove author and associated items
 
     /**
      * Removes an author and their associated items from the system after confirmation.
@@ -251,9 +231,6 @@ public class Author {
         return itemCanBeRemoved;
     }
 
-    // addLibraryItem and removeLibraryItem manage library items associated
-    // with given author
-
     /**
      * Adds a library item to the author's list of authored items.
      *
@@ -264,7 +241,6 @@ public class Author {
 
         System.out.println("Library item " + item.getTitle() + "added successfully!");
     }
-
 
     /**
      * Removes a library item from the author's list of authored items.
@@ -293,12 +269,10 @@ public class Author {
         return null;
     }
 
-    // displayAuthors method displays all authors or authors with given names
-
     /**
-     * Displays information of all authors or only those with the specified names.
+     * Displays information of authors with the specified names.
      *
-     * @param authorNames Optional names of authors to display. If none are provided, displays all authors.
+     * @param authorNames Optional names of authors to display
      */
     public static void displayAuthors(String... authorNames) {
         if (authorNames.length == 0) {
