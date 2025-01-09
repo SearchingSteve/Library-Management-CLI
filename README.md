@@ -1,8 +1,7 @@
 
-# MidtermSprint-Java-Sem3 
-## Library Management System (LMS)
+# Library Management CLI
 
-Welcome to the **Library Management System (LMS)** project, hosted in the repository **MidtermSprint-Java-Sem3**. This application provides functionality to manage library items, authors, and patrons within a console-based interface.
+Welcome to the **Library Management System CLI**. This application provides functionality to manage library items, authors, and patrons within a console-based interface.
 
 
 ## Table of Contents
